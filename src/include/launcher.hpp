@@ -16,7 +16,7 @@ namespace launcher {
           };
 
         std::string gameId;
-        uint64_t memberNo{0};
+        ui nt64_t memberNo{0};
         std::string loginId;
         std::string authKey;
         std::string installUrl;
@@ -46,7 +46,7 @@ namespace launcher {
         //!
         //! @param webInfoId Web info Id.
         //! @param webInfo Web info.
-        void host(std::string webInfoId, WebInfo& webInfo);
+        void host(std::string webInfoId, WebInfo webInfo);
 
     private:
         void create();
