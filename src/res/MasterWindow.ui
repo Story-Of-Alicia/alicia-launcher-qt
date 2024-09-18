@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1115</width>
-    <height>693</height>
+    <width>1400</width>
+    <height>850</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,11 +18,13 @@
 	border-image: url(&quot;:/img/bg.png&quot;);
 }
 
+QPushButton {
+	background: transparent;
+}
+
 QPushButton#btn_exit {
     border-image: url(:/img/btn/close.png);
     background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
 }
 
 QPushButton#btn_exit:hover {
@@ -31,17 +33,50 @@ QPushButton#btn_exit:hover {
 }
 
 QPushButton#btn_exit:pressed  {
-    border-image: url(:/img/btn/close_clicked.png);
+    border-image: url(:/img/btn/close_pressed.png);
     background-repeat: no-repeat;
-}</string>
+}
+
+QPushButton#btn_minimize {
+    border-image: url(:/img/btn/minimize.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:hover {
+    border-image: url(:/img/btn/minimize_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:pressed  {
+    border-image: url(:/img/btn/minimize_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_settings {
+    border-image: url(:/img/btn/settings.png);
+    background-repeat: no-repeat;
+}
+QPushButton#btn_settings:hover {
+    border-image: url(:/img/btn/settings_hover.png);
+    background-repeat: no-repeat;
+}
+QPushButton#btn_settings:pressed  {
+    border-image: url(:/img/btn/settings_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QLabel {
+	color: #4F1717;
+}
+</string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>-70</x>
+     <x>0</x>
      <y>0</y>
-     <width>1152</width>
-     <height>648</height>
+     <width>1400</width>
+     <height>850</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -53,10 +88,10 @@ QPushButton#btn_exit:pressed  {
    <widget class="QPushButton" name="btn_exit">
     <property name="geometry">
      <rect>
-      <x>1007</x>
-      <y>55</y>
-      <width>26</width>
-      <height>26</height>
+      <x>1318</x>
+      <y>41</y>
+      <width>36</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -69,6 +104,79 @@ QPushButton#btn_exit:pressed  {
      <size>
       <width>26</width>
       <height>26</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_minimize">
+    <property name="geometry">
+     <rect>
+      <x>1268</x>
+      <y>41</y>
+      <width>36</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>26</width>
+      <height>26</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_settings">
+    <property name="geometry">
+     <rect>
+      <x>85</x>
+      <y>742</y>
+      <width>48</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>72</width>
+      <height>51</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>620</y>
+      <width>102</width>
+      <height>105</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="master.qrc">
+      <normaloff>:/img/game_select_locked.png</normaloff>:/img/game_select_locked.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>102</width>
+      <height>105</height>
      </size>
     </property>
     <property name="flat">

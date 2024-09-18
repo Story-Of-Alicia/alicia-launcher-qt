@@ -12,12 +12,15 @@ namespace Ui {
         explicit MasterWindow(QWidget *parent = nullptr);
         private slots:
             void handle_btn_exit();
+            void handle_btn_launch();
 
     private:
         MasterWindowWidget _widget{};
         void mousePressEvent(QMouseEvent *event) override;
         void mouseMoveEvent(QMouseEvent *event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
         QPoint _mouseEventPos;
+        bool   _windowDragActive = false;
     };
 }
 

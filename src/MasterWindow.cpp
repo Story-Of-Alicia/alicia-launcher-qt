@@ -2,6 +2,7 @@
 
 #include <QMessageBox>
 #include <QWidget>
+#include <QFontDatabase>
 #include <format>
 
 #include "launcher.hpp"
@@ -25,24 +26,29 @@ MasterWindow::MasterWindow(QWidget* parent)
 
 void MasterWindow::mousePressEvent(QMouseEvent *event)
 {
-
+    _windowDragActive = true;
     _mouseEventPos = event->pos();
+}
+
+void MasterWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+  _windowDragActive = false;
 }
 
 void MasterWindow::mouseMoveEvent(QMouseEvent *event)
 {
-  auto grabber =mouseGrabber();
-  if (mouseGrabber() != NULL)
-    return;
-  move(event->globalPosition().toPoint() - _mouseEventPos);
+    if (!_windowDragActive)
+      return;
+
+    move(event->globalPosition().toPoint() - _mouseEventPos);
 }
 
 void MasterWindow::handle_btn_exit()
 {
-  //QCoreApplication::quit();
+  QCoreApplication::quit();
 }
 
-/* void launch()
+void MasterWindow::handle_btn_launch()
 {
   const std::string _webInfoId = "927628CA6D76A6E9162C56D4E3E6D6E3";
 
@@ -114,5 +120,5 @@ void MasterWindow::handle_btn_exit()
     CloseHandle(&processInfo);
     exit(0);
   }
-} */
+}
 } // namespace Ui

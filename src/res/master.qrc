@@ -3,9 +3,13 @@
     <file>img/bg.png</file>
     <file>img/btn/close.png</file>
     <file>img/btn/close_hover.png</file>
-    <file>img/btn/close_clicked.png</file>
+    <file>img/btn/close_pressed.png</file>
     <file>img/btn/minimize.png</file>
     <file>img/btn/minimize_hover.png</file>
-    <file>img/btn/minimize_clicked.png</file>
+    <file>img/btn/minimize_pressed.png</file>
+    <file>img/btn/settings.png</file>
+    <file>img/btn/settings_hover.png</file>
+    <file>img/btn/settings_pressed.png</file>
+    <file>img/game_select_locked.png</file>
   </qresource>
 </RCC>
