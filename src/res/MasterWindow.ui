@@ -6,27 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>371</height>
+    <width>1115</width>
+    <height>693</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Launcher</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <property name="styleSheet">
+   <string notr="true">QFrame#frame {
+	border-image: url(&quot;:/img/bg.png&quot;);
+}
+
+QPushButton#btn_exit {
+    border-image: url(:/img/btn/close.png);
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+}
+
+QPushButton#btn_exit:hover {
+    border-image: url(:/img/btn/close_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:pressed  {
+    border-image: url(:/img/btn/close_clicked.png);
+    background-repeat: no-repeat;
+}</string>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>140</y>
-     <width>151</width>
-     <height>91</height>
+     <x>-70</x>
+     <y>0</y>
+     <width>1152</width>
+     <height>648</height>
     </rect>
    </property>
-   <property name="text">
-    <string>LAUNCH</string>
+   <property name="frameShape">
+    <enum>QFrame::Shape::StyledPanel</enum>
    </property>
+   <property name="frameShadow">
+    <enum>QFrame::Shadow::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="btn_exit">
+    <property name="geometry">
+     <rect>
+      <x>1007</x>
+      <y>55</y>
+      <width>26</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>26</width>
+      <height>26</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="master.qrc"/>
+ </resources>
  <connections/>
 </ui>

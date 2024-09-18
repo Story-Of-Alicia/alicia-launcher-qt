@@ -6,6 +6,7 @@
 
 #include "launcher.hpp"
 #include "util.hpp"
+#include <QFile>
 
 namespace Ui
 {
@@ -14,16 +15,40 @@ MasterWindow::MasterWindow(QWidget* parent)
     : QWidget(parent)
 {
   _widget.setupUi(this);
-  connect(_widget.pushButton, SIGNAL(clicked()), this, SLOT(launch()));
+  connect(_widget.btn_exit, SIGNAL(clicked()), this, SLOT(handle_btn_exit()));
+  setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+  setAttribute(Qt::WA_NoSystemBackground, true);
+  setAttribute(Qt::WA_TranslucentBackground, true);
+
+  _widget.frame->setFrameStyle(QFrame::StyledPanel);
 }
 
-void MasterWindow::launch()
+void MasterWindow::mousePressEvent(QMouseEvent *event)
+{
+
+    _mouseEventPos = event->pos();
+}
+
+void MasterWindow::mouseMoveEvent(QMouseEvent *event)
+{
+  auto grabber =mouseGrabber();
+  if (mouseGrabber() != NULL)
+    return;
+  move(event->globalPosition().toPoint() - _mouseEventPos);
+}
+
+void MasterWindow::handle_btn_exit()
+{
+  //QCoreApplication::quit();
+}
+
+/* void launch()
 {
   const std::string _webInfoId = "927628CA6D76A6E9162C56D4E3E6D6E3";
 
   const launcher::WebInfo _webInfoContent{
     .gameId = "Alicia",
-    .memberNo = -1,
+    .memberNo = 0,
     .loginId = "<name>",
     .authKey = "<auth_key>",
     .installUrl = "<install_url>",
@@ -89,5 +114,5 @@ void MasterWindow::launch()
     CloseHandle(&processInfo);
     exit(0);
   }
-}
+} */
 } // namespace Ui

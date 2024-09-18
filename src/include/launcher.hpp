@@ -16,7 +16,7 @@ namespace launcher {
           };
 
         std::string gameId;
-        ui nt64_t memberNo{0};
+        uint64_t memberNo{0};
         std::string loginId;
         std::string authKey;
         std::string installUrl;
