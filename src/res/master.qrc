@@ -11,5 +11,9 @@
     <file>img/btn/settings_hover.png</file>
     <file>img/btn/settings_pressed.png</file>
     <file>img/game_select_locked.png</file>
+    <file>img/game_select_1.png</file>
+    <file>img/game_select_2.png</file>
+    <file>img/game_select_frame.png</file>
+    <file>tmp/game_selected_1.png</file>
   </qresource>
 </RCC>

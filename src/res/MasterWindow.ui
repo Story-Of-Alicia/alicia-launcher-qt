@@ -183,6 +183,35 @@ QLabel {
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>500</y>
+      <width>102</width>
+      <height>105</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="master.qrc">
+      <normaloff>:/tmp/game_selected_1.png</normaloff>:/tmp/game_selected_1.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>102</width>
+      <height>105</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>
