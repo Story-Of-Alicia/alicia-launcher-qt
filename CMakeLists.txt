@@ -19,8 +19,6 @@ qt_add_executable(launcher
         src/include/MasterWindow.hpp src/include/launcher.hpp src/include/util.hpp
 )
 
-qt_add_resources(launcher src/res/master.qrc)
-
 target_include_directories(launcher PRIVATE src/include)
 
 target_link_libraries(launcher PUBLIC
@@ -31,11 +29,9 @@ target_link_libraries(launcher PUBLIC
 
 set_target_properties(launcher PROPERTIES
         WIN32_EXECUTABLE TRUE
-        MACOSX_BUNDLE TRUE
 )
 
 install(TARGETS launcher
-        BUNDLE  DESTINATION .
         RUNTIME DESTINATION bin/
 )
 
