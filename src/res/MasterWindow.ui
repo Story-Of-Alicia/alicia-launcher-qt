@@ -98,7 +98,7 @@ QLabel {
      <bool>false</bool>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="iconSize">
      <size>
@@ -120,7 +120,7 @@ QLabel {
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="iconSize">
      <size>
@@ -142,7 +142,7 @@ QLabel {
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="iconSize">
      <size>
@@ -167,7 +167,7 @@ QLabel {
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="icon">
      <iconset resource="master.qrc">
@@ -196,7 +196,7 @@ QLabel {
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="icon">
      <iconset resource="master.qrc">

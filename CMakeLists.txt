@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
 project(launcher LANGUAGES CXX)
-add_compile_options(-g)
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS -static-libstdc++)
-
-endif()
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
@@ -17,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
+qt_standard_project_setup()
 qt_add_executable(launcher
         src/main.cpp src/launcher.cpp src/MasterWindow.cpp src/util.cpp
         src/res/MasterWindow.ui src/res/master.qrc
@@ -37,3 +33,18 @@ set_target_properties(launcher PROPERTIES
         WIN32_EXECUTABLE TRUE
         MACOSX_BUNDLE TRUE
 )
+
+install(TARGETS launcher
+        BUNDLE  DESTINATION .
+        RUNTIME DESTINATION bin/
+)
+
+qt6_generate_deploy_app_script(
+        TARGET launcher
+        OUTPUT_SCRIPT deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+        NO_TRANSLATIONS
+)
+
+message(${deploy_script})
+install(SCRIPT ${deploy_script})
