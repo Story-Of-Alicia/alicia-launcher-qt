@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1400</width>
-    <height>850</height>
+    <height>901</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,17 +65,36 @@ QPushButton#btn_settings:pressed  {
     background-repeat: no-repeat;
 }
 
+QCheckBox {
+	color: #392518;
+}
+
+
 QLabel {
 	color: #4F1717;
 }
+
+QLabel#l_story_awaits {
+	color: #453327;
+}
+
+QLabel#l_sign_up {
+	color: #FF441C;
+}
+
+
+QLineEdit {
+	border-radius: 3px;
+	padding: 0px 25px;
+};
 </string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>1400</width>
+     <y>30</y>
+     <width>1390</width>
      <height>850</height>
     </rect>
    </property>
@@ -154,7 +173,7 @@ QLabel {
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="alicia2">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -183,7 +202,7 @@ QLabel {
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="alicia1">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -212,6 +231,298 @@ QLabel {
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLabel" name="l_troubleshoot">
+    <property name="geometry">
+     <rect>
+      <x>765</x>
+      <y>569</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>EurostileBla</family>
+      <pointsize>14</pointsize>
+      <fontweight>Black</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string notr="true">TROUBLESHOOT</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_corrupted">
+    <property name="geometry">
+     <rect>
+      <x>765</x>
+      <y>593</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>NanumGothic</family>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Corrupted files?</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_repair">
+    <property name="geometry">
+     <rect>
+      <x>765</x>
+      <y>623</y>
+      <width>160</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="master.qrc">
+      <normaloff>:/img/btn/repair.png</normaloff>:/img/btn/repair.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>160</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_issues">
+    <property name="geometry">
+     <rect>
+      <x>1021</x>
+      <y>593</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>NanumGothic</family>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Ran into issues?</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_ticket">
+    <property name="geometry">
+     <rect>
+      <x>1017</x>
+      <y>623</y>
+      <width>160</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="master.qrc">
+      <normaloff>:/img/btn/ticket.png</normaloff>:/img/btn/ticket.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>160</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_support">
+    <property name="geometry">
+     <rect>
+      <x>1021</x>
+      <y>569</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>EurostileBla</family>
+      <pointsize>14</pointsize>
+      <fontweight>Black</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string notr="true">SUPPORT</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="login_frame">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>245</y>
+      <width>496</width>
+      <height>272</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="input_password">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>104</y>
+       <width>304</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Eurostile</family>
+       <pointsize>16</pointsize>
+       <fontweight>Black</fontweight>
+      </font>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::EchoMode::Password</enum>
+     </property>
+     <property name="placeholderText">
+      <string>PASSWORD</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_login">
+     <property name="geometry">
+      <rect>
+       <x>351</x>
+       <y>40</y>
+       <width>112</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="master.qrc">
+       <normaloff>:/img/btn/login.png</normaloff>:/img/btn/login.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>112</width>
+       <height>111</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="input_username">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>40</y>
+       <width>304</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>EurostileBla</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>USERNAME</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_story_awaits">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>220</y>
+       <width>140</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>NanumGothic</family>
+       <pointsize>13</pointsize>
+       <bold>true</bold>
+       <stylestrategy>PreferAntialias</stylestrategy>
+      </font>
+     </property>
+     <property name="text">
+      <string>Your Story awaits!</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_sign_up">
+     <property name="geometry">
+      <rect>
+       <x>402</x>
+       <y>217</y>
+       <width>63</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>EurostileBla</family>
+       <pointsize>13</pointsize>
+       <bold>true</bold>
+       <underline>true</underline>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sign Up</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="check_remember">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>184</y>
+       <width>451</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>NanumGothic</family>
+       <pointsize>13</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Remember me</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <zorder>login_frame</zorder>
+   <zorder>btn_exit</zorder>
+   <zorder>btn_minimize</zorder>
+   <zorder>btn_settings</zorder>
+   <zorder>alicia2</zorder>
+   <zorder>alicia1</zorder>
+   <zorder>l_troubleshoot</zorder>
+   <zorder>l_corrupted</zorder>
+   <zorder>btn_repair</zorder>
+   <zorder>l_issues</zorder>
+   <zorder>btn_ticket</zorder>
+   <zorder>l_support</zorder>
   </widget>
  </widget>
  <resources>

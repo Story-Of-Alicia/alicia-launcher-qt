@@ -13,6 +13,7 @@ namespace Ui {
         private slots:
             void handle_btn_exit();
             void handle_btn_launch();
+            void handle_login();
 
     private:
         MasterWindowWidget _widget{};

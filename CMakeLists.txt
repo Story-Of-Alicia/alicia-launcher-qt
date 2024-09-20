@@ -42,5 +42,4 @@ qt6_generate_deploy_app_script(
         NO_TRANSLATIONS
 )
 
-message(${deploy_script})
 install(SCRIPT ${deploy_script})

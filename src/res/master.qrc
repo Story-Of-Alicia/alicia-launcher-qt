@@ -15,5 +15,8 @@
     <file>img/game_select_2.png</file>
     <file>img/game_select_frame.png</file>
     <file>tmp/game_selected_1.png</file>
+    <file>img/btn/repair.png</file>
+    <file>img/btn/ticket.png</file>
+    <file>img/btn/login.png</file>
   </qresource>
 </RCC>
