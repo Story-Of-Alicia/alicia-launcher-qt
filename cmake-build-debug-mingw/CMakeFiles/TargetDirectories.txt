@@ -1,9 +1,0 @@
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/launcher.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/edit_cache.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/rebuild_cache.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/list_install_components.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/install.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/install/local.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/install/strip.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/launcher_autogen_timestamp_deps.dir
-C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/CMakeFiles/launcher_autogen.dir
