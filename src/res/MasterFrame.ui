@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MasterFrame</class>
+ <widget class="QFrame" name="MasterFrame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1400</width>
+    <height>850</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QFrame#MasterFrame {
+	background-image: url(&quot;:/img/bg.png&quot;);
+}
+
+QPushButton {
+	background: transparent;
+}
+
+QPushButton#btn_exit {
+    border-image: url(:/img/btn/close.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:hover {
+    border-image: url(:/img/btn/close_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:pressed  {
+    border-image: url(:/img/btn/close_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize {
+    border-image: url(:/img/btn/minimize.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:hover {
+    border-image: url(:/img/btn/minimize_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:pressed  {
+    border-image: url(:/img/btn/minimize_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_settings {
+    border-image: url(:/img/btn/settings.png);
+    background-repeat: no-repeat;
+}
+QPushButton#btn_settings:hover {
+    border-image: url(:/img/btn/settings_hover.png);
+    background-repeat: no-repeat;
+}
+QPushButton#btn_settings:pressed  {
+    border-image: url(:/img/btn/settings_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QCheckBox {
+	color: #392518;
+}
+
+
+QLabel {
+	color: #4F1717;
+}
+
+QLabel#l_story_awaits {
+	color: #453327;
+}
+
+QLabel#l_sign_up {
+	color: #FF441C;
+}
+
+
+QLineEdit {
+	border-radius: 3px;
+	padding: 0px 25px;
+};
+</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::Shape::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Shadow::Raised</enum>
+  </property>
+  <widget class="QPushButton" name="btn_exit">
+   <property name="geometry">
+    <rect>
+     <x>1318</x>
+     <y>41</y>
+     <width>36</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>26</width>
+     <height>26</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_corrupted">
+   <property name="geometry">
+    <rect>
+     <x>765</x>
+     <y>593</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Corrupted files?</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_settings">
+   <property name="geometry">
+    <rect>
+     <x>85</x>
+     <y>742</y>
+     <width>48</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>72</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_troubleshoot">
+   <property name="geometry">
+    <rect>
+     <x>765</x>
+     <y>569</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>14</pointsize>
+     <fontweight>Black</fontweight>
+    </font>
+   </property>
+   <property name="text">
+    <string notr="true">TROUBLESHOOT</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_support">
+   <property name="geometry">
+    <rect>
+     <x>1021</x>
+     <y>569</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>14</pointsize>
+     <fontweight>Black</fontweight>
+    </font>
+   </property>
+   <property name="text">
+    <string notr="true">SUPPORT</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="launcher_widget" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>724</x>
+     <y>245</y>
+     <width>496</width>
+     <height>272</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="alicia1">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>500</y>
+     <width>102</width>
+     <height>105</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/tmp/game_selected_1.png</normaloff>:/tmp/game_selected_1.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>102</width>
+     <height>105</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="alicia2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>620</y>
+     <width>102</width>
+     <height>105</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/game_select_locked.png</normaloff>:/img/game_select_locked.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>102</width>
+     <height>105</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_repair">
+   <property name="geometry">
+    <rect>
+     <x>765</x>
+     <y>623</y>
+     <width>160</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/btn/repair.png</normaloff>:/img/btn/repair.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>160</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_minimize">
+   <property name="geometry">
+    <rect>
+     <x>1268</x>
+     <y>41</y>
+     <width>36</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>26</width>
+     <height>26</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_ticket">
+   <property name="geometry">
+    <rect>
+     <x>1021</x>
+     <y>623</y>
+     <width>160</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/btn/ticket.png</normaloff>:/img/btn/ticket.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>160</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="login_widget" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>725</x>
+     <y>245</y>
+     <width>496</width>
+     <height>272</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_issues">
+   <property name="geometry">
+    <rect>
+     <x>1021</x>
+     <y>593</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Ran into issues?</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="master.qrc"/>
+ </resources>
+ <connections/>
+</ui>

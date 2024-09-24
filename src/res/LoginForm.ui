@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginWidget</class>
+ <widget class="QWidget" name="LoginWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>664</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="l_story_awaits">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>220</y>
+     <width>140</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+    </font>
+   </property>
+   <property name="text">
+    <string>Your Story awaits!</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_login">
+   <property name="geometry">
+    <rect>
+     <x>351</x>
+     <y>40</y>
+     <width>112</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/btn/login.png</normaloff>:/img/btn/login.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>112</width>
+     <height>111</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_sign_up">
+   <property name="geometry">
+    <rect>
+     <x>402</x>
+     <y>217</y>
+     <width>63</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+     <underline>true</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sign Up</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="input_username">
+   <property name="geometry">
+    <rect>
+     <x>32</x>
+     <y>40</y>
+     <width>304</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>USERNAME</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="check_remember">
+   <property name="geometry">
+    <rect>
+     <x>32</x>
+     <y>184</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Remember me</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="input_password">
+   <property name="geometry">
+    <rect>
+     <x>32</x>
+     <y>104</y>
+     <width>304</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Eurostile</family>
+     <pointsize>16</pointsize>
+     <fontweight>Black</fontweight>
+    </font>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::EchoMode::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>PASSWORD</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="master.qrc"/>
+ </resources>
+ <connections/>
+</ui>

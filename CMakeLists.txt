@@ -14,9 +14,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 qt_standard_project_setup()
 qt_add_executable(launcher
-        src/main.cpp src/launcher.cpp src/MasterWindow.cpp src/util.cpp
-        src/res/MasterWindow.ui src/res/master.qrc
-        src/include/MasterWindow.hpp src/include/launcher.hpp src/include/util.hpp
+        src/main.cpp src/launcher.cpp src/MasterWidget.cpp src/util.cpp
+        src/res/MasterWindow.ui src/res/LoginForm.ui src/res/master.qrc
+        src/include/MasterWidget.hpp src/include/launcher.hpp src/include/util.hpp
 )
 
 target_include_directories(launcher PRIVATE src/include)
