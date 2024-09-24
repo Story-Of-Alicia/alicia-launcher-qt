@@ -13,6 +13,23 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QCheckBox {
+	color: #392518;
+}
+QLabel#l_story_awaits {
+	color: #453327;
+}
+
+QLabel#l_sign_up {
+	color: #FF441C;
+}
+
+QLineEdit {
+	border-radius: 3px;
+	padding: 0px 25px;
+}</string>
+  </property>
   <widget class="QLabel" name="l_story_awaits">
    <property name="geometry">
     <rect>

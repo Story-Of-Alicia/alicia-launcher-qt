@@ -1,0 +1,14 @@
+# ninja log v6
+24	2446	7488846584706059	launcher_autogen/timestamp	afab28006c06e505
+24	2446	7488846584706059	launcher_autogen/mocs_compilation.cpp	afab28006c06e505
+24	2446	7488846584706059	C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/launcher_autogen/timestamp	afab28006c06e505
+24	2446	7488846584706059	C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/launcher_autogen/mocs_compilation.cpp	afab28006c06e505
+2460	2801	7488846589543107	launcher_autogen/IIA6HZ5L7L/qrc_master.cpp	1b3b185fffcf3999
+2460	2801	7488846589543107	C:/Users/Martin/cxx/launcher/cmake-build-debug-mingw/launcher_autogen/IIA6HZ5L7L/qrc_master.cpp	1b3b185fffcf3999
+2847	12509	7488846590181408	CMakeFiles/launcher.dir/launcher_autogen/IIA6HZ5L7L/qrc_master.cpp.obj	6947788b36feb3b8
+2836	13010	7488846590061792	CMakeFiles/launcher.dir/src/util.cpp.obj	5d6ca8f5396dc91
+2802	18248	7488846589722640	CMakeFiles/launcher.dir/launcher_autogen/mocs_compilation.cpp.obj	294358fd0f86818d
+2816	18738	7488846589862272	CMakeFiles/launcher.dir/src/launcher.cpp.obj	a19afb075233dfb8
+2809	21584	7488846589802425	CMakeFiles/launcher.dir/src/main.cpp.obj	826747b9bc4a08fb
+2822	24213	7488846589932071	CMakeFiles/launcher.dir/src/MasterWidget.cpp.obj	1881b0a622203dee
+24213	24714	7488846803840390	launcher.exe	e3e7aa421c376828

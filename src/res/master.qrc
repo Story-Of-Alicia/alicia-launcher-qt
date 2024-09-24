@@ -18,5 +18,9 @@
     <file>img/btn/repair.png</file>
     <file>img/btn/ticket.png</file>
     <file>img/btn/login.png</file>
+    <file>img/btn/logout.png</file>
+    <file>img/btn/info.png</file>
+    <file>img/menu.png</file>
+    <file>tmp/MENU_preview.png</file>
   </qresource>
 </RCC>

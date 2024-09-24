@@ -86,7 +86,12 @@ QLabel#l_sign_up {
 QLineEdit {
 	border-radius: 3px;
 	padding: 0px 25px;
-};
+}
+
+QWidget#MenuWidget {
+	background-image: url(&quot;:img/menu.png&quot;);
+	background-repeat: no-repeat;
+}
 </string>
   </property>
   <property name="frameShape">

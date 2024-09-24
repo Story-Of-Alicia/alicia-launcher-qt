@@ -3,7 +3,7 @@
 
 #include "ui_MasterFrame.h"
 #include "ui_LoginWidget.h"
-#include "ui_LauncherWidget.h"
+#include "ui_MenuWidget.h"
 
 #include <QMouseEvent>
 
@@ -21,7 +21,7 @@ namespace Ui {
         QFrame *master_frame = new QFrame(this);
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
-        LauncherWidget _launcherWidgetUI{};
+        MenuWidget _menuWidgetUI{};
         void mousePressEvent(QMouseEvent *event) override;
         void mouseMoveEvent(QMouseEvent *event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;

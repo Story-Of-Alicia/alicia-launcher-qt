@@ -20,7 +20,7 @@ MasterWidget::MasterWidget(QWidget* parent)
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
   _masterFrameUI.login_widget->show();
 
-  _launcherWidgetUI.setupUi(_masterFrameUI.launcher_widget);
+  _menuWidgetUI.setupUi(_masterFrameUI.launcher_widget);
   _masterFrameUI.launcher_widget->hide();
 
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_btn_exit()));

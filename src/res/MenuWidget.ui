@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MenuWidget</class>
+ <widget class="QWidget" name="MenuWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>545</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#MenuWidget {
+	background-image: url(&quot;:tmp/MENU_preview.png&quot;);
+	background-repeat: no-repeat;
+}</string>
+  </property>
+  <widget class="QPushButton" name="btn_logout">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>204</y>
+     <width>116</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/btn/logout.png</normaloff>:/img/btn/logout.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>116</width>
+     <height>364</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_last_login">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>209</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>last login</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_guild">
+   <property name="geometry">
+    <rect>
+     <x>213</x>
+     <y>160</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Guild</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_level">
+   <property name="geometry">
+    <rect>
+     <x>217</x>
+     <y>132</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Level</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_player">
+   <property name="geometry">
+    <rect>
+     <x>209</x>
+     <y>103</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Player</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_info">
+   <property name="geometry">
+    <rect>
+     <x>376</x>
+     <y>43</y>
+     <width>100</width>
+     <height>37</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="master.qrc">
+     <normaloff>:/img/btn/info.png</normaloff>:/img/btn/info.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>100</width>
+     <height>37</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_last_login_d">
+   <property name="geometry">
+    <rect>
+     <x>288</x>
+     <y>212</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>12-09-24  10:49 PM</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_player_d">
+   <property name="geometry">
+    <rect>
+     <x>267</x>
+     <y>104</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Alicia</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_level_d">
+   <property name="geometry">
+    <rect>
+     <x>266</x>
+     <y>132</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_guild_d">
+   <property name="geometry">
+    <rect>
+     <x>267</x>
+     <y>161</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>13</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Not joined yet</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>48</x>
+     <y>45</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>18</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Welcome,</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_username_d">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>50</y>
+     <width>49</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="master.qrc"/>
+ </resources>
+ <connections/>
+</ui>
