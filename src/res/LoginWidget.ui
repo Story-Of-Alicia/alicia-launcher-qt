@@ -21,6 +21,7 @@
 QCheckBox {
 	color: #392518;
 }
+
 QLabel#l_story_awaits {
 	color: #453327;
 }
@@ -144,6 +145,12 @@ QLabel {
    </property>
    <property name="text">
     <string>Remember me</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>18</width>
+     <height>18</height>
+    </size>
    </property>
    <property name="checked">
     <bool>true</bool>
