@@ -20,8 +20,8 @@ MasterWidget::MasterWidget(QWidget* parent)
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
   _masterFrameUI.login_widget->show();
 
-  _menuWidgetUI.setupUi(_masterFrameUI.launcher_widget);
-  _masterFrameUI.launcher_widget->hide();
+  _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
+  _masterFrameUI.menu_widget->hide();
 
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_btn_exit()));
   connect(_loginWidgetUI.btn_login, SIGNAL(clicked()), this, SLOT(handle_login()));
@@ -29,8 +29,6 @@ MasterWidget::MasterWidget(QWidget* parent)
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   this->setAttribute(Qt::WA_NoSystemBackground, true);
   this->setAttribute(Qt::WA_TranslucentBackground, true);
-
-  //this->master_frame->setFrameStyle(QFrame::StyledPanel);
 }
 
 void MasterWidget::mousePressEvent(QMouseEvent *event)
@@ -60,7 +58,7 @@ void MasterWidget::handle_btn_exit()
 void MasterWidget::handle_login()
 {
   this->_masterFrameUI.login_widget->hide();
-  this->_masterFrameUI.launcher_widget->show();
+  this->_masterFrameUI.menu_widget->show();
 }
 
 void MasterWidget::handle_btn_launch()

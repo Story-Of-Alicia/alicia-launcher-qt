@@ -15,15 +15,15 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#MenuWidget {
-	background-image: url(&quot;:tmp/MENU_preview.png&quot;);
+	background-image: url(&quot;:tmp/menu.png&quot;);
 	background-repeat: no-repeat;
 }</string>
   </property>
   <widget class="QPushButton" name="btn_logout">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>204</y>
+     <x>30</x>
+     <y>198</y>
      <width>116</width>
      <height>36</height>
     </rect>
@@ -45,8 +45,8 @@
   <widget class="QLabel" name="l_last_login">
    <property name="geometry">
     <rect>
-     <x>215</x>
-     <y>209</y>
+     <x>205</x>
+     <y>205</y>
      <width>171</width>
      <height>21</height>
     </rect>
@@ -65,8 +65,8 @@
   <widget class="QLabel" name="l_guild">
    <property name="geometry">
     <rect>
-     <x>213</x>
-     <y>160</y>
+     <x>204</x>
+     <y>156</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -85,8 +85,8 @@
   <widget class="QLabel" name="l_level">
    <property name="geometry">
     <rect>
-     <x>217</x>
-     <y>132</y>
+     <x>207</x>
+     <y>127</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -105,8 +105,8 @@
   <widget class="QLabel" name="l_player">
    <property name="geometry">
     <rect>
-     <x>209</x>
-     <y>103</y>
+     <x>200</x>
+     <y>99</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -125,8 +125,8 @@
   <widget class="QPushButton" name="btn_info">
    <property name="geometry">
     <rect>
-     <x>376</x>
-     <y>43</y>
+     <x>366</x>
+     <y>38</y>
      <width>100</width>
      <height>37</height>
     </rect>
@@ -148,8 +148,8 @@
   <widget class="QLabel" name="l_last_login_d">
    <property name="geometry">
     <rect>
-     <x>288</x>
-     <y>212</y>
+     <x>277</x>
+     <y>207</y>
      <width>141</width>
      <height>16</height>
     </rect>
@@ -168,8 +168,8 @@
   <widget class="QLabel" name="l_player_d">
    <property name="geometry">
     <rect>
-     <x>267</x>
-     <y>104</y>
+     <x>256</x>
+     <y>99</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -188,8 +188,8 @@
   <widget class="QLabel" name="l_level_d">
    <property name="geometry">
     <rect>
-     <x>266</x>
-     <y>132</y>
+     <x>256</x>
+     <y>126</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -208,8 +208,8 @@
   <widget class="QLabel" name="l_guild_d">
    <property name="geometry">
     <rect>
-     <x>267</x>
-     <y>161</y>
+     <x>256</x>
+     <y>156</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -228,8 +228,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>48</x>
-     <y>45</y>
+     <x>39</x>
+     <y>41</y>
      <width>111</width>
      <height>31</height>
     </rect>

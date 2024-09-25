@@ -28,6 +28,9 @@ QLabel#l_sign_up {
 QLineEdit {
 	border-radius: 3px;
 	padding: 0px 25px;
+}
+QLabel {
+	color: #4F1717;
 }</string>
   </property>
   <widget class="QLabel" name="l_story_awaits">
