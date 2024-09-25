@@ -14,7 +14,11 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QCheckBox {
+   <string notr="true">QWidget#LoginWidget {
+	background-image: url(&quot;:img/login.png&quot;);
+	background-repeat: no-repeat;
+}
+QCheckBox {
 	color: #392518;
 }
 QLabel#l_story_awaits {
@@ -26,8 +30,10 @@ QLabel#l_sign_up {
 }
 
 QLineEdit {
-	border-radius: 3px;
-	padding: 0px 25px;
+
+	background-color: transparent;
+ 	padding: 0px 25px;
+	border: none;
 }
 QLabel {
 	color: #4F1717;
@@ -123,8 +129,8 @@ QLabel {
   <widget class="QCheckBox" name="check_remember">
    <property name="geometry">
     <rect>
-     <x>32</x>
-     <y>184</y>
+     <x>35</x>
+     <y>183</y>
      <width>151</width>
      <height>20</height>
     </rect>

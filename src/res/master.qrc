@@ -21,6 +21,7 @@
     <file>img/btn/logout.png</file>
     <file>img/btn/info.png</file>
     <file>img/menu.png</file>
+    <file>img/login.png</file>
     <file>tmp/menu.png</file>
   </qresource>
 </RCC>

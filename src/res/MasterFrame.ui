@@ -56,20 +56,28 @@ QPushButton#btn_settings {
     border-image: url(:/img/btn/settings.png);
     background-repeat: no-repeat;
 }
+
 QPushButton#btn_settings:hover {
     border-image: url(:/img/btn/settings_hover.png);
     background-repeat: no-repeat;
 }
+
 QPushButton#btn_settings:pressed  {
     border-image: url(:/img/btn/settings_pressed.png);
     background-repeat: no-repeat;
 }
+
 QLabel {
 	color: #4F1717;
 }
 
 QWidget#menu_widget {
 	background-image: url(&quot;:img/menu.png&quot;);
+	background-repeat: no-repeat;
+}
+
+QWidget#login_widget {
+	background-image: url(&quot;:img/login.png&quot;);
 	background-repeat: no-repeat;
 }
 </string>
@@ -83,8 +91,8 @@ QWidget#menu_widget {
   <widget class="QPushButton" name="btn_exit">
    <property name="geometry">
     <rect>
-     <x>1318</x>
-     <y>41</y>
+     <x>1319</x>
+     <y>40</y>
      <width>36</width>
      <height>36</height>
     </rect>
@@ -129,8 +137,8 @@ QWidget#menu_widget {
   <widget class="QPushButton" name="btn_settings">
    <property name="geometry">
     <rect>
-     <x>85</x>
-     <y>742</y>
+     <x>86</x>
+     <y>741</y>
      <width>48</width>
      <height>48</height>
     </rect>
@@ -288,8 +296,8 @@ QWidget#menu_widget {
   <widget class="QPushButton" name="btn_minimize">
    <property name="geometry">
     <rect>
-     <x>1268</x>
-     <y>41</y>
+     <x>1269</x>
+     <y>40</y>
      <width>36</width>
      <height>36</height>
     </rect>
