@@ -22,6 +22,10 @@ QCheckBox {
 	color: #392518;
 }
 
+QLabel#l_remember_me {
+	color: #453327;
+}
+
 QLabel#l_story_awaits {
 	color: #453327;
 }
@@ -31,9 +35,9 @@ QLabel#l_sign_up {
 }
 
 QLineEdit {
-
+	color:#392518;
 	background-color: transparent;
- 	padding: 0px 25px;
+ 	padding: 0px 23px;
 	border: none;
 }
 QLabel {
@@ -60,18 +64,19 @@ QPushButton#btn_login:pressed  {
   <widget class="QLabel" name="l_story_awaits">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>220</y>
-     <width>140</width>
+     <x>255</x>
+     <y>213</y>
+     <width>135</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>NanumGothic</family>
-     <pointsize>13</pointsize>
-     <bold>true</bold>
+     <pointsize>12</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight>DemiBold</fontweight>
     </font>
    </property>
    <property name="text">
@@ -100,18 +105,19 @@ QPushButton#btn_login:pressed  {
   <widget class="QLabel" name="l_sign_up">
    <property name="geometry">
     <rect>
-     <x>402</x>
-     <y>217</y>
-     <width>63</width>
+     <x>395</x>
+     <y>210</y>
+     <width>65</width>
      <height>22</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>EurostileBla</family>
-     <pointsize>13</pointsize>
+     <pointsize>14</pointsize>
      <bold>true</bold>
      <underline>true</underline>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -130,7 +136,8 @@ QPushButton#btn_login:pressed  {
    <property name="font">
     <font>
      <family>EurostileBla</family>
-     <pointsize>16</pointsize>
+     <pointsize>12</pointsize>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -145,7 +152,7 @@ QPushButton#btn_login:pressed  {
     <rect>
      <x>35</x>
      <y>183</y>
-     <width>151</width>
+     <width>13</width>
      <height>20</height>
     </rect>
    </property>
@@ -153,11 +160,11 @@ QPushButton#btn_login:pressed  {
     <font>
      <family>NanumGothic</family>
      <pointsize>13</pointsize>
-     <bold>true</bold>
+     <fontweight>DemiBold</fontweight>
     </font>
    </property>
    <property name="text">
-    <string>Remember me</string>
+    <string/>
    </property>
    <property name="iconSize">
     <size>
@@ -181,7 +188,8 @@ QPushButton#btn_login:pressed  {
    <property name="font">
     <font>
      <family>Eurostile</family>
-     <pointsize>16</pointsize>
+     <pointsize>12</pointsize>
+     <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>Black</fontweight>
     </font>
    </property>
@@ -190,6 +198,28 @@ QPushButton#btn_login:pressed  {
    </property>
    <property name="placeholderText">
     <string>PASSWORD</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_remember_me">
+   <property name="geometry">
+    <rect>
+     <x>57</x>
+     <y>184</y>
+     <width>120</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>NanumGothic</family>
+     <pointsize>13</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight>DemiBold</fontweight>
+    </font>
+   </property>
+   <property name="text">
+    <string>Remember me</string>
    </property>
   </widget>
  </widget>

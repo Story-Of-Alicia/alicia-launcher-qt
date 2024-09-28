@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1400</width>
-    <height>850</height>
+    <height>848</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -150,9 +150,9 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_corrupted">
    <property name="geometry">
     <rect>
-     <x>765</x>
-     <y>593</y>
-     <width>141</width>
+     <x>770</x>
+     <y>595</y>
+     <width>161</width>
      <height>16</height>
     </rect>
    </property>
@@ -161,7 +161,8 @@ QWidget#login_widget {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <italic>false</italic>
-     <bold>false</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight>DemiBold</fontweight>
     </font>
    </property>
    <property name="text">
@@ -193,9 +194,9 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_troubleshoot">
    <property name="geometry">
     <rect>
-     <x>765</x>
-     <y>569</y>
-     <width>171</width>
+     <x>770</x>
+     <y>568</y>
+     <width>161</width>
      <height>21</height>
     </rect>
    </property>
@@ -203,6 +204,7 @@ QWidget#login_widget {
     <font>
      <family>EurostileBla</family>
      <pointsize>14</pointsize>
+     <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>Black</fontweight>
     </font>
    </property>
@@ -213,9 +215,9 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_support">
    <property name="geometry">
     <rect>
-     <x>1021</x>
-     <y>569</y>
-     <width>171</width>
+     <x>1018</x>
+     <y>568</y>
+     <width>161</width>
      <height>21</height>
     </rect>
    </property>
@@ -223,6 +225,7 @@ QWidget#login_widget {
     <font>
      <family>EurostileBla</family>
      <pointsize>14</pointsize>
+     <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>Black</fontweight>
     </font>
    </property>
@@ -307,9 +310,9 @@ QWidget#login_widget {
   <widget class="QPushButton" name="btn_repair">
    <property name="geometry">
     <rect>
-     <x>765</x>
+     <x>770</x>
      <y>623</y>
-     <width>160</width>
+     <width>158</width>
      <height>32</height>
     </rect>
    </property>
@@ -348,9 +351,9 @@ QWidget#login_widget {
   <widget class="QPushButton" name="btn_ticket">
    <property name="geometry">
     <rect>
-     <x>1021</x>
+     <x>1018</x>
      <y>623</y>
-     <width>160</width>
+     <width>158</width>
      <height>32</height>
     </rect>
    </property>
@@ -380,9 +383,9 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_issues">
    <property name="geometry">
     <rect>
-     <x>1021</x>
-     <y>593</y>
-     <width>141</width>
+     <x>1018</x>
+     <y>595</y>
+     <width>161</width>
      <height>16</height>
     </rect>
    </property>
@@ -391,7 +394,8 @@ QWidget#login_widget {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <italic>false</italic>
-     <bold>false</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight>DemiBold</fontweight>
     </font>
    </property>
    <property name="text">

@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#MenuWidget {
-	background-image: url(&quot;:tmp/menu.png&quot;);
+	background-image: url(&quot;:img/menu.png&quot;);
 	background-repeat: no-repeat;
 }
 
@@ -86,6 +86,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -106,6 +107,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -126,6 +128,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -146,6 +149,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -185,6 +189,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -205,6 +210,7 @@ QPushButton#btn_info:pressed  {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -225,6 +231,7 @@ QPushButton#btn_info:pressed  {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -245,6 +252,7 @@ QPushButton#btn_info:pressed  {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -265,6 +273,7 @@ QPushButton#btn_info:pressed  {
      <family>NanumGothic</family>
      <pointsize>18</pointsize>
      <bold>true</bold>
+     <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -279,6 +288,11 @@ QPushButton#btn_info:pressed  {
      <width>49</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+    </font>
    </property>
    <property name="text">
     <string>TextLabel</string>
