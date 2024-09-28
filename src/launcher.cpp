@@ -4,9 +4,26 @@
 #include <iomanip>
 #include <sstream>
 
+#include "../../../../../Program Files/JetBrains/CLion 2024.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/thread"
 #include "util.hpp"
 
 namespace launcher
+{
+void authenticate_async(std::string_view username, std::string_view password, std::function<void(void)> cb)
+{
+  std::thread([cb]() -> void
+  {
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    cb();
+  }).detach();
+}
+void launch()
+{
+
+}
+}
+
+namespace launcher_legacy
 {
 
 namespace

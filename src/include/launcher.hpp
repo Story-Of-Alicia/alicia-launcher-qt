@@ -1,13 +1,20 @@
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
 
-#include <string>
 #include <cstdint>
 #include <filesystem>
+#include <functional>
+#include <string>
 
 #include <windows.h>
 
-namespace launcher {
+namespace launcher
+{
+void authenticate_async(std::string_view username, std::string_view password, std::function<void(void)> cb);
+void launch();
+}
+
+namespace launcher_legacy {
     //! Web launch information.
     struct WebInfo
     {
@@ -66,5 +73,6 @@ namespace launcher {
         void loadMod(std::filesystem::path path);
     };
 } // namespace launcher
+
 
 #endif // LAUNCHER_HPP

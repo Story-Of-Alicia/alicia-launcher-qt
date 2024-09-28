@@ -7,11 +7,17 @@
 
 #include <QMouseEvent>
 
-namespace Ui {
-    class MasterWidget final : public QWidget {
+using namespace Ui;
+
+namespace ui {
+    int start(int argc, char *argv[]);
+
+    class Window final : public QWidget {
         Q_OBJECT
         public:
-        explicit MasterWidget(QWidget *parent = nullptr);
+        explicit Window(QWidget *parent = nullptr);
+        private:
+            void cb_logged() const;
         private slots:
             void handle_exit();
             void handle_launch();

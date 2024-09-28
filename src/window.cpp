@@ -1,18 +1,26 @@
-#include "MasterWidget.hpp"
+#include "window.hpp"
 
 #include <format>
 #include <QFontDatabase>
-#include <QMessageBox>
 #include <QWidget>
 
 #include "launcher.hpp"
-#include "util.hpp"
 #include <QFile>
 
-namespace Ui
+namespace ui
 {
 
-MasterWidget::MasterWidget(QWidget* parent)
+int start(int argc, char *argv[])
+{
+  QApplication application(argc, argv);
+
+  Window window{};
+  window.show();
+
+  return QApplication::exec();
+}
+
+Window::Window(QWidget* parent)
     : QWidget(parent)
 {
   _masterFrameUI.setupUi(this->master_frame);
@@ -40,67 +48,87 @@ MasterWidget::MasterWidget(QWidget* parent)
   this->setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
-void MasterWidget::mousePressEvent(QMouseEvent *event)
+void Window::mousePressEvent(QMouseEvent *event)
 {
-    _windowDragActive = true;
-    _mouseEventPos = event->pos();
+  _windowDragActive = true;
+  _mouseEventPos = event->pos();
 }
 
-void MasterWidget::mouseReleaseEvent(QMouseEvent *event)
+void Window::mouseReleaseEvent(QMouseEvent *event)
 {
   _windowDragActive = false;
 }
 
-void MasterWidget::mouseMoveEvent(QMouseEvent *event)
+void Window::mouseMoveEvent(QMouseEvent *event)
 {
-    if (!_windowDragActive)
-      return;
+  if (!_windowDragActive)
+    return;
 
-    move(event->globalPosition().toPoint() - _mouseEventPos);
+  move(event->globalPosition().toPoint() - _mouseEventPos);
 }
 
-void MasterWidget::handle_exit()
+void Window::handle_exit()
 {
   QCoreApplication::quit();
 }
 
-void MasterWidget::handle_minimize()
+void Window::handle_minimize()
 {
   this->showMinimized();
 }
 
-void MasterWidget::handle_settings()
+void Window::handle_settings()
 {
   //TODO: implement settings
 }
 
-void MasterWidget::handle_repair()
+void Window::handle_repair()
 {
   //TODO: implement repair
 }
 
-void MasterWidget::handle_ticket()
+void Window::handle_ticket()
 {
   //TODO: implement ticket
 }
 
-void MasterWidget::handle_logout()
+void Window::handle_logout()
 {
   this->_masterFrameUI.login_widget->show();
   this->_masterFrameUI.menu_widget->hide();
 }
 
-void MasterWidget::handle_login()
+void Window::handle_launch()
 {
-  this->_masterFrameUI.login_widget->hide();
-  this->_masterFrameUI.menu_widget->show();
+ //TODO: implement launch
 }
 
-void MasterWidget::handle_info()
+void Window::handle_login()
+{
+  this->_loginWidgetUI.btn_login->setDisabled(true);
+  launcher::authenticate_async(
+  this->_loginWidgetUI.input_username->text().toStdString(),
+  this->_loginWidgetUI.input_password->text().toStdString(),
+  [this]() -> void {
+    this->cb_logged();
+  });
+}
+
+void Window::cb_logged() const
+{
+  this->_masterFrameUI.menu_widget->show();
+  this->_masterFrameUI.login_widget->hide();
+  this->_loginWidgetUI.btn_login->setDisabled(false);
+}
+
+void Window::handle_info()
 {
   //TODO: implement info
 }
 
+}
+
+/*
 void MasterWidget::handle_launch()
 {
   const std::string _webInfoId = "927628CA6D76A6E9162C56D4E3E6D6E3";
@@ -175,3 +203,5 @@ void MasterWidget::handle_launch()
   }
 }
 } // namespace Ui
+
+*/

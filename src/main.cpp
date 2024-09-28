@@ -1,14 +1,7 @@
-#include "MasterWidget.hpp"
-
-#include "launcher.hpp"
+#include "window.hpp"
 
 int main(int argc, char** argv) {
-    QApplication application(argc, argv);
-
-    Ui::MasterWidget window{};
-    window.show();
-
-    return QApplication::exec();
+  return ui::start(argc, argv);
 }
 
 
