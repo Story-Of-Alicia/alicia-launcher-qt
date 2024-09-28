@@ -17,6 +17,40 @@
    <string notr="true">QWidget#MenuWidget {
 	background-image: url(&quot;:tmp/menu.png&quot;);
 	background-repeat: no-repeat;
+}
+
+QPushButton {
+	background: transparent;
+}
+
+QPushButton#btn_logout {
+    border-image: url(:/img/btn/logout.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_logout:hover {
+    border-image: url(:/img/btn/logout_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_logout:pressed  {
+    border-image: url(:/img/btn/logout_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_info {
+    border-image: url(:/img/btn/info.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_info:hover {
+    border-image: url(:/img/btn/info_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_info:pressed  {
+    border-image: url(:/img/btn/info_pressed.png);
+    background-repeat: no-repeat;
 }</string>
   </property>
   <widget class="QPushButton" name="btn_logout">
@@ -30,10 +64,6 @@
    </property>
    <property name="text">
     <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="master.qrc">
-     <normaloff>:/img/btn/logout.png</normaloff>:/img/btn/logout.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -133,10 +163,6 @@
    </property>
    <property name="text">
     <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="master.qrc">
-     <normaloff>:/img/btn/info.png</normaloff>:/img/btn/info.png</iconset>
    </property>
    <property name="iconSize">
     <size>

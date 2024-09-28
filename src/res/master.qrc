@@ -16,12 +16,21 @@
     <file>img/game_select_frame.png</file>
     <file>tmp/game_selected_1.png</file>
     <file>img/btn/repair.png</file>
+    <file>img/btn/repair_hover.png</file>
+    <file>img/btn/repair_pressed.png</file>
     <file>img/btn/ticket.png</file>
+    <file>img/btn/ticket_hover.png</file>
+    <file>img/btn/ticket_pressed.png</file>
     <file>img/btn/login.png</file>
+    <file>img/btn/login_hover.png</file>
+    <file>img/btn/login_pressed.png</file>
     <file>img/btn/logout.png</file>
+    <file>img/btn/logout_hover.png</file>
+    <file>img/btn/logout_pressed.png</file>
     <file>img/btn/info.png</file>
+    <file>img/btn/info_hover.png</file>
+    <file>img/btn/info_pressed.png</file>
     <file>img/menu.png</file>
     <file>img/login.png</file>
-    <file>tmp/menu.png</file>
   </qresource>
 </RCC>

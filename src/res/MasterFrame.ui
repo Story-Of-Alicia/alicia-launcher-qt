@@ -22,6 +22,7 @@ QPushButton {
 	background: transparent;
 }
 
+
 QPushButton#btn_exit {
     border-image: url(:/img/btn/close.png);
     background-repeat: no-repeat;
@@ -36,6 +37,7 @@ QPushButton#btn_exit:pressed  {
     border-image: url(:/img/btn/close_pressed.png);
     background-repeat: no-repeat;
 }
+
 
 QPushButton#btn_minimize {
     border-image: url(:/img/btn/minimize.png);
@@ -52,6 +54,7 @@ QPushButton#btn_minimize:pressed  {
     background-repeat: no-repeat;
 }
 
+
 QPushButton#btn_settings {
     border-image: url(:/img/btn/settings.png);
     background-repeat: no-repeat;
@@ -64,6 +67,37 @@ QPushButton#btn_settings:hover {
 
 QPushButton#btn_settings:pressed  {
     border-image: url(:/img/btn/settings_pressed.png);
+    background-repeat: no-repeat;
+}
+
+
+QPushButton#btn_repair {
+    border-image: url(:/img/btn/repair.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_repair:hover {
+    border-image: url(:/img/btn/repair_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_repair:pressed  {
+    border-image: url(:/img/btn/repair_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_ticket {
+    border-image: url(:/img/btn/ticket.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_ticket:hover {
+    border-image: url(:/img/btn/ticket_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_ticket:pressed  {
+    border-image: url(:/img/btn/ticket_pressed.png);
     background-repeat: no-repeat;
 }
 
@@ -282,10 +316,6 @@ QWidget#login_widget {
    <property name="text">
     <string/>
    </property>
-   <property name="icon">
-    <iconset resource="master.qrc">
-     <normaloff>:/img/btn/repair.png</normaloff>:/img/btn/repair.png</iconset>
-   </property>
    <property name="iconSize">
     <size>
      <width>160</width>
@@ -326,10 +356,6 @@ QWidget#login_widget {
    </property>
    <property name="text">
     <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="master.qrc">
-     <normaloff>:/img/btn/ticket.png</normaloff>:/img/btn/ticket.png</iconset>
    </property>
    <property name="iconSize">
     <size>
