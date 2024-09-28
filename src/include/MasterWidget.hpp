@@ -13,9 +13,16 @@ namespace Ui {
         public:
         explicit MasterWidget(QWidget *parent = nullptr);
         private slots:
-            void handle_btn_exit();
-            void handle_btn_launch();
+            void handle_exit();
+            void handle_launch();
             void handle_login();
+            void handle_logout();
+            void handle_info();
+            void handle_repair();
+            void handle_ticket();
+            void handle_minimize();
+            void handle_settings();
+
 
     private:
         QFrame *master_frame = new QFrame(this);
