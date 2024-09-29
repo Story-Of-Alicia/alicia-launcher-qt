@@ -133,7 +133,10 @@ QPushButton#btn_login:disabled {
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
-    <string>Sign Up</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://storyofalicia.com&quot;&gt;&lt;span style=&quot; font-size:18px; color:#FF441C;&quot;&gt;Sign Up&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLineEdit" name="input_username">
