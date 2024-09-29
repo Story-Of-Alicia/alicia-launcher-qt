@@ -39,6 +39,7 @@ QLineEdit {
 	background-color: transparent;
  	padding: 0px 23px;
 	border: none;
+	placeholder-text-color: #392518;
 }
 QLabel {
 	color: #4F1717;
@@ -56,6 +57,11 @@ QPushButton#btn_login:hover {
 
 QPushButton#btn_login:pressed  {
     border-image: url(:/img/btn/login_pressed.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_login:disabled {
+	 border-image: url(:/img/btn/login_disabled.png);
     background-repeat: no-repeat;
 }
 
