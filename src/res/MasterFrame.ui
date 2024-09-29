@@ -70,7 +70,6 @@ QPushButton#btn_settings:pressed  {
     background-repeat: no-repeat;
 }
 
-
 QPushButton#btn_repair {
     border-image: url(:/img/btn/repair.png);
     background-repeat: no-repeat;
@@ -105,6 +104,10 @@ QLabel {
 	color: #4F1717;
 }
 
+QLabel#l_version {
+		color: #E4E8EA;
+}
+
 QWidget#menu_widget {
 	background-image: url(&quot;:img/menu.png&quot;);
 	background-repeat: no-repeat;
@@ -131,6 +134,9 @@ QWidget#login_widget {
      <height>36</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
@@ -150,7 +156,7 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_corrupted">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>769</x>
      <y>595</y>
      <width>161</width>
      <height>16</height>
@@ -178,6 +184,9 @@ QWidget#login_widget {
      <height>48</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string notr="true"/>
    </property>
@@ -194,7 +203,7 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_troubleshoot">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>769</x>
      <y>568</y>
      <width>161</width>
      <height>21</height>
@@ -215,7 +224,7 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_support">
    <property name="geometry">
     <rect>
-     <x>1018</x>
+     <x>1017</x>
      <y>568</y>
      <width>161</width>
      <height>21</height>
@@ -239,10 +248,10 @@ QWidget#login_widget {
    </property>
    <property name="geometry">
     <rect>
-     <x>724</x>
-     <y>245</y>
-     <width>496</width>
-     <height>272</height>
+     <x>715</x>
+     <y>240</y>
+     <width>516</width>
+     <height>292</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -310,11 +319,14 @@ QWidget#login_widget {
   <widget class="QPushButton" name="btn_repair">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>769</x>
      <y>623</y>
-     <width>158</width>
+     <width>160</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string/>
@@ -335,6 +347,9 @@ QWidget#login_widget {
      <height>36</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string notr="true"/>
    </property>
@@ -351,11 +366,14 @@ QWidget#login_widget {
   <widget class="QPushButton" name="btn_ticket">
    <property name="geometry">
     <rect>
-     <x>1018</x>
+     <x>1017</x>
      <y>623</y>
-     <width>158</width>
+     <width>160</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string/>
@@ -373,17 +391,17 @@ QWidget#login_widget {
    </property>
    <property name="geometry">
     <rect>
-     <x>725</x>
-     <y>245</y>
-     <width>496</width>
-     <height>272</height>
+     <x>715</x>
+     <y>240</y>
+     <width>516</width>
+     <height>292</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="l_issues">
    <property name="geometry">
     <rect>
-     <x>1018</x>
+     <x>1017</x>
      <y>595</y>
      <width>161</width>
      <height>16</height>
@@ -400,6 +418,29 @@ QWidget#login_widget {
    </property>
    <property name="text">
     <string>Ran into issues?</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_version">
+   <property name="geometry">
+    <rect>
+     <x>1128</x>
+     <y>764</y>
+     <width>211</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>GAME VERSION 1.0.0</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
    </property>
   </widget>
  </widget>
