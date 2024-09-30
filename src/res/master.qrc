@@ -24,6 +24,7 @@
     <file>img/btn/login.png</file>
     <file>img/btn/login_hover.png</file>
     <file>img/btn/login_pressed.png</file>
+    <file>img/btn/login_disabled.png</file>
     <file>img/btn/logout.png</file>
     <file>img/btn/logout_hover.png</file>
     <file>img/btn/logout_pressed.png</file>
