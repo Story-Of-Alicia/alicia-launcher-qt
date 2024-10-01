@@ -43,6 +43,8 @@ Window::Window(QWidget* parent)
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
+  connect(this, &Window::loginSuccessful, this, &Window::cb_logged, Qt::QueuedConnection);
+
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   this->setAttribute(Qt::WA_NoSystemBackground, true);
   this->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -107,11 +109,11 @@ void Window::handle_login()
 {
   this->_loginWidgetUI.btn_login->setDisabled(true);
   launcher::authenticate_async(
-  this->_loginWidgetUI.input_username->text().toStdString(),
-  this->_loginWidgetUI.input_password->text().toStdString(),
-  [this]() -> void {
-    this->cb_logged();
-  });
+    this->_loginWidgetUI.input_username->text().toStdString(),
+    this->_loginWidgetUI.input_password->text().toStdString(),
+    [this]() -> void {
+      emit loginSuccessful();
+    });
 }
 
 void Window::cb_logged() const
