@@ -29,7 +29,7 @@ namespace ui {
             void handle_minimize();
             void handle_settings();    
         signals:
-            void loginSuccessful();
+            void login_finished();
 
     private:
         QFrame *master_frame = new QFrame(this);

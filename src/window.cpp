@@ -43,7 +43,7 @@ Window::Window(QWidget* parent)
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
-  connect(this, &Window::loginSuccessful, this, &Window::cb_logged, Qt::QueuedConnection);
+  connect(this, &Window::login_finished, this, &Window::cb_logged, Qt::QueuedConnection);
 
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   this->setAttribute(Qt::WA_NoSystemBackground, true);
@@ -112,8 +112,13 @@ void Window::handle_login()
     this->_loginWidgetUI.input_username->text().toStdString(),
     this->_loginWidgetUI.input_password->text().toStdString(),
     [this]() -> void {
-      emit loginSuccessful();
+      emit login_finished();
     });
+}
+
+void Window::handle_info()
+{
+  //TODO: implement info
 }
 
 void Window::cb_logged() const
@@ -121,11 +126,6 @@ void Window::cb_logged() const
   this->_masterFrameUI.menu_widget->show();
   this->_masterFrameUI.login_widget->hide();
   this->_loginWidgetUI.btn_login->setDisabled(false);
-}
-
-void Window::handle_info()
-{
-  //TODO: implement info
 }
 
 }
