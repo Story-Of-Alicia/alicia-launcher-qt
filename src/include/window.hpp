@@ -16,8 +16,6 @@ namespace ui {
         Q_OBJECT
         public:
         explicit Window(QWidget *parent = nullptr);
-        private:
-            void cb_logged() const;
         private slots:
             void handle_exit();
             void handle_launch();
@@ -27,7 +25,8 @@ namespace ui {
             void handle_repair();
             void handle_ticket();
             void handle_minimize();
-            void handle_settings();    
+            void handle_settings();
+            void cb_logged();
         signals:
             void login_finished();
 

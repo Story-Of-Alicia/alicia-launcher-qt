@@ -43,7 +43,7 @@ Window::Window(QWidget* parent)
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
-  connect(this, &Window::login_finished, this, &Window::cb_logged, Qt::QueuedConnection);
+  connect(this, SIGNAL(login_finished()), this, SLOT(cb_logged()));
 
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   this->setAttribute(Qt::WA_NoSystemBackground, true);
@@ -121,7 +121,7 @@ void Window::handle_info()
   //TODO: implement info
 }
 
-void Window::cb_logged() const
+void Window::cb_logged()
 {
   this->_masterFrameUI.menu_widget->show();
   this->_masterFrameUI.login_widget->hide();
