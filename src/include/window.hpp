@@ -27,8 +27,9 @@ namespace ui {
             void handle_repair();
             void handle_ticket();
             void handle_minimize();
-            void handle_settings();
-
+            void handle_settings();    
+        signals:
+            void login_finished();
 
     private:
         QFrame *master_frame = new QFrame(this);
