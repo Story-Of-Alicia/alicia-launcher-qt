@@ -25,6 +25,8 @@ Window::Window(QWidget* parent)
 {
   _masterFrameUI.setupUi(this->master_frame);
 
+  networkManager = new QNetworkAccessManager(this);
+
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
   _masterFrameUI.login_widget->show();
 
@@ -108,12 +110,22 @@ void Window::handle_launch()
 void Window::handle_login()
 {
   this->_loginWidgetUI.btn_login->setDisabled(true);
+
   launcher::authenticate_async(
     this->_loginWidgetUI.input_username->text().toStdString(),
     this->_loginWidgetUI.input_password->text().toStdString(),
     [this]() -> void {
-      emit login_finished();
-    });
+      QMetaObject::invokeMethod(this, [this]() {
+          QNetworkRequest request(QUrl("http://localhost:3000/player/1"));
+          QNetworkReply *reply = networkManager->get(request);
+
+          connect(reply, SIGNAL(finished()), this, SLOT(handle_authenticate()));
+
+          currentReply = reply;
+                
+      }, Qt::QueuedConnection);
+    }
+  );
 }
 
 void Window::handle_info()
@@ -128,7 +140,38 @@ void Window::cb_logged()
   this->_loginWidgetUI.btn_login->setDisabled(false);
 }
 
+void Window::handle_authenticate()
+{
+  if (!currentReply)
+    return;
+
+  if (currentReply->error()) 
+  {
+    qDebug() << "Error:" << currentReply->errorString();
+    this->_loginWidgetUI.btn_login->setDisabled(false);
+  } 
+  else 
+  {
+    QByteArray response = currentReply->readAll();
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
+    QJsonObject jsonObj = jsonDoc.object();
+
+    qDebug() << "player data:";
+    qDebug().noquote() << QJsonDocument(jsonObj).toJson(QJsonDocument::Indented);
+
+    qDebug() << "nickname:" << jsonObj["nickName"].toString();
+    qDebug() << "level:" << jsonObj["level"].toInt();
+
+    emit login_finished();
+  }
+    
+  currentReply->deleteLater();
+  currentReply = nullptr;
 }
+
+}
+
+
 
 /*
 void MasterWidget::handle_launch()

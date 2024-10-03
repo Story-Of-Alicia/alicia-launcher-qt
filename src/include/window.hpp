@@ -6,6 +6,10 @@
 #include "ui_MenuWidget.h"
 
 #include <QMouseEvent>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 using namespace Ui;
 
@@ -20,6 +24,7 @@ namespace ui {
             void handle_exit();
             void handle_launch();
             void handle_login();
+            void handle_authenticate();
             void handle_logout();
             void handle_info();
             void handle_repair();
@@ -32,6 +37,8 @@ namespace ui {
 
     private:
         QFrame *master_frame = new QFrame(this);
+        QNetworkAccessManager *networkManager;
+        QNetworkReply* currentReply = nullptr;
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
         MenuWidget _menuWidgetUI{};
