@@ -33,6 +33,7 @@ namespace ui {
 
     private:
         QFrame *master_frame = new QFrame(this);
+        QLabel *loading_frame = new QLabel(this);
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
         MenuWidget _menuWidgetUI{};
