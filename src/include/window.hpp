@@ -6,6 +6,7 @@
 #include "ui_MenuWidget.h"
 
 #include <QMouseEvent>
+#include <QPaintEvent>
 
 using namespace Ui;
 
@@ -34,14 +35,17 @@ namespace ui {
     private:
         QFrame *master_frame = new QFrame(this);
         QLabel *loading_frame = new QLabel(this);
+
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
         MenuWidget _menuWidgetUI{};
+
+        QPoint _mouseEventPos;
+        bool   _windowDragActive = false;
+
         void mousePressEvent(QMouseEvent *event) override;
         void mouseMoveEvent(QMouseEvent *event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;
-        QPoint _mouseEventPos;
-        bool   _windowDragActive = false;
     };
 }
 

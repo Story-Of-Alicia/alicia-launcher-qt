@@ -9,7 +9,7 @@
 
 namespace launcher
 {
-void authenticate_async(std::string_view username, std::string_view password, std::function<void(void)> cb)
+void authenticate_async(std::string_view username, std::string_view password, const std::function<void(void)> &cb)
 {
   std::thread([cb]() -> void
   {

@@ -33,7 +33,6 @@
     <file>img/btn/info_pressed.png</file>
     <file>img/menu.png</file>
     <file>img/login.png</file>
-    <file>tmp/loading.gif</file>
     <file>tmp/bg_front.png</file>
   </qresource>
 </RCC>

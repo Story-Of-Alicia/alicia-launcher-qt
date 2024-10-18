@@ -452,6 +452,16 @@ QWidget#login_widget {
     <string/>
    </property>
   </widget>
+  <widget class="QOpenGLWidget" name="openGLWidget">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>410</y>
+     <width>300</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
   <zorder>frame</zorder>
   <zorder>btn_exit</zorder>
   <zorder>l_corrupted</zorder>
@@ -467,6 +477,7 @@ QWidget#login_widget {
   <zorder>login_widget</zorder>
   <zorder>l_issues</zorder>
   <zorder>l_version</zorder>
+  <zorder>openGLWidget</zorder>
  </widget>
  <resources>
   <include location="master.qrc"/>

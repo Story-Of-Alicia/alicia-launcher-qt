@@ -4,14 +4,14 @@
 #include <cstdint>
 #include <filesystem>
 #include <functional>
-#include <string>
+#include <string_view>
 
 #include <windows.h>
 
 namespace launcher
 {
-void authenticate_async(std::string_view username, std::string_view password, std::function<void(void)> cb);
-void launch();
+  void authenticate_async(std::string_view username, std::string_view password, const std::function<void(void)> &cb);
+  void launch();
 }
 
 namespace launcher_legacy {

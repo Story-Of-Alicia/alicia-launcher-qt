@@ -1,14 +1,14 @@
 #include "window.hpp"
+#include "launcher.hpp"
 
 #include <format>
 #include <QFontDatabase>
 #include <QWidget>
-
-#include "launcher.hpp"
 #include <QApplication>
 #include <QFile>
 #include <QMovie>
 #include <thread>
+#include <QPainter>
 
 namespace ui
 {
