@@ -3,6 +3,8 @@
 #include <format>
 #include <QFontDatabase>
 #include <QWidget>
+#include <QtConcurrent>
+#include <Windows.h>
 
 #include "launcher.hpp"
 #include <QFile>
@@ -105,16 +107,42 @@ void Window::handle_launch()
  //TODO: implement launch
 }
 
+void login_cb(bool success, std::string_view msg)
+{
+
+}
+
 void Window::handle_login()
 {
-  this->_loginWidgetUI.btn_login->setDisabled(true);
-  launcher::authenticate_async(
-    this->_loginWidgetUI.input_username->text().toStdString(),
-    this->_loginWidgetUI.input_password->text().toStdString(),
-    [this]() -> void {
-      emit login_finished();
+  this->_loginWidgetUI.btn_login->setDisabled(true); // probably a valid mutex?
+
+  auto username = this->_loginWidgetUI.input_username->text().toStdString();
+  auto password = this->_loginWidgetUI.input_password->text().toStdString();
+
+  this->login_thread = std::make_unique<std::thread>([username, password, this]() -> void
+  {
+    try
+    {
+      launcher::authenticate(username, password);
+
+      auto future = QtConcurrent::run([=]() {
+        this->_masterFrameUI.menu_widget->show();
+        this->_masterFrameUI.login_widget->hide();
+      });
+
+    } catch(std::exception &e)
+    {
+
+    }
+
+    auto future = QtConcurrent::run([=]() {
+      this->_loginWidgetUI.btn_login->setDisabled(false);
     });
+  });
+
+  this->login_thread->detach();
 }
+
 
 void Window::handle_info()
 {

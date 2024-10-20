@@ -6,6 +6,8 @@
 #include "ui_MenuWidget.h"
 
 #include <QMouseEvent>
+#include <memory>
+#include <thread>
 
 using namespace Ui;
 
@@ -32,6 +34,8 @@ namespace ui {
             void login_finished();
 
     private:
+        std::unique_ptr<std::thread> login_thread;
+        std::atomic<bool> processing_login = false;
         QFrame *master_frame = new QFrame(this);
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
