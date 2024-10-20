@@ -34,6 +34,10 @@ QLabel#l_sign_up {
 	color: #FF441C;
 }
 
+QLabel#l_error {
+	color: red;
+}
+
 QLineEdit {
 	color:#392518;
 	background-color: transparent;
@@ -235,6 +239,24 @@ QPushButton#btn_login:disabled {
    </property>
    <property name="text">
     <string>Remember me</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_error">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>0</y>
+     <width>301</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>%BAD PASSWORD%</string>
    </property>
   </widget>
  </widget>

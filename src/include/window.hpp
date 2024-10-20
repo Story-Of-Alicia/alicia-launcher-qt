@@ -18,8 +18,6 @@ namespace ui {
         Q_OBJECT
         public:
         explicit Window(QWidget *parent = nullptr);
-        private:
-            void cb_logged() const;
         private slots:
             void handle_exit();
             void handle_launch();
@@ -29,13 +27,10 @@ namespace ui {
             void handle_repair();
             void handle_ticket();
             void handle_minimize();
-            void handle_settings();    
-        signals:
-            void login_finished();
+            void handle_settings();
 
     private:
         std::unique_ptr<std::thread> login_thread;
-        std::atomic<bool> processing_login = false;
         QFrame *master_frame = new QFrame(this);
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
