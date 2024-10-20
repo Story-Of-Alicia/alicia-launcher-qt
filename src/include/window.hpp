@@ -1,11 +1,11 @@
 #ifndef LAUNCHER_MASTERWINDOW_HPP
 #define LAUNCHER_MASTERWINDOW_HPP
 
-#include "ui_MasterFrame.h"
+#include "GameStartWidget.hpp"
 #include "ui_LoginWidget.h"
+#include "ui_MasterFrame.h"
 #include "ui_MenuWidget.h"
 
-#include <QMouseEvent>
 #include <QPaintEvent>
 
 using namespace Ui;
@@ -34,7 +34,7 @@ namespace ui {
 
     private:
         QFrame *master_frame = new QFrame(this);
-        QLabel *loading_frame = new QLabel(this);
+        GameStartWidget *start_widget = new GameStartWidget(this);
 
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};

@@ -33,29 +33,7 @@ Window::Window(QWidget* parent)
 
   _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
   _masterFrameUI.menu_widget->hide();
-
-  loading_frame->setObjectName("loading_frame");
-  loading_frame->setGeometry(QRect(345, 620, 240, 100));
-  loading_frame->lower();
-  loading_frame->show();
-  auto movie = new QMovie();
-  movie->setFileName(":/tmp/loading.gif");
-  movie->setScaledSize(loading_frame->size());
-  std::thread([this,movie]() -> void {
-    for(int i = 0; i < 400; i++)
-    {
-      loading_frame->move(loading_frame->pos() - QPoint(0, 1));
-      auto geometry = loading_frame->geometry();
-      geometry.setHeight(geometry.height()+1);
-      geometry.setWidth(geometry.width()+1);
-      movie->setScaledSize(loading_frame->size());
-      loading_frame->setGeometry(geometry);;
-      std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    }
-  }).detach();
-
-  loading_frame->setMovie(movie);
-  movie->start();
+  start_widget->setGeometry(QRect(320, 410, 300, 261));
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_exit()));
   connect(_masterFrameUI.btn_minimize, SIGNAL(clicked()), this, SLOT(handle_minimize()));
   connect(_masterFrameUI.btn_settings, SIGNAL(clicked()), this, SLOT(handle_settings()));

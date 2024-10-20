@@ -6,11 +6,10 @@ namespace ui
 {
 class GameStartWidget : public QOpenGLWidget
 {
+Q_OBJECT
 public:
   GameStartWidget(QWidget *parent) : QOpenGLWidget(parent) {};
 protected:
-  void initializeGL() override;
-  void resizeGL(int w, int h) override;
   void paintGL() override;
 };
 }

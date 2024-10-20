@@ -22,6 +22,9 @@ namespace ui
     "}\n";
 
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+
+    f->glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     float vertices[] = {
       -0.5f, -0.5f, 0.0f,
        0.5f, -0.5f, 0.0f,
@@ -64,11 +67,12 @@ namespace ui
     f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     f->glEnableVertexAttribArray(0);
     f->glUseProgram(shaderProgram);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    f->glDrawArrays(GL_TRIANGLES, 0, 3);
 
 
     f->glDeleteShader(vertexShader);
     f->glDeleteShader(fragmentShader);
+    vao.release();
   }
 
 }
