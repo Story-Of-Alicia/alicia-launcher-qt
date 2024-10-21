@@ -21,6 +21,8 @@ struct Profile
 
 Profile authenticate(std::string_view username, std::string_view password);
 
+bool check_files();
+
 bool launch(Profile &profile);
 }
 

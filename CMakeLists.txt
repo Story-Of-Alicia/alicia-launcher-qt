@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.29)
 project(launcher LANGUAGES CXX)
 
+option(BUILD_TESTS "Build tests" ON)
+
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
@@ -26,6 +28,8 @@ target_link_libraries(launcher PUBLIC
         Qt::Gui
         Qt::Widgets
         Qt::Concurrent
+        ssl
+        crypto
 )
 
 set_target_properties(launcher PROPERTIES
@@ -44,3 +48,8 @@ qt6_generate_deploy_app_script(
 )
 
 install(SCRIPT ${deploy_script})
+
+if (BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

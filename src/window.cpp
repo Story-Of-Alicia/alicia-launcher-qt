@@ -99,7 +99,7 @@ void Window::handle_logout()
 
 void Window::handle_launch()
 {
- //TODO: implement launch
+  // TODO implement
 }
 
 void Window::handle_login()
@@ -115,19 +115,19 @@ void Window::handle_login()
     {
       launcher::authenticate(username, password);
 
-      auto future = QtConcurrent::run([=]() {
+      auto future = QtConcurrent::run([this]() {
         this->_masterFrameUI.menu_widget->show();
         this->_masterFrameUI.login_widget->hide();
       });
 
     } catch(std::exception &e)
     {
-      auto future = QtConcurrent::run([=]() {
+      auto future = QtConcurrent::run([this]() {
         this->_loginWidgetUI.l_error->show();
       });
     }
 
-    auto future = QtConcurrent::run([=]() {
+    auto future = QtConcurrent::run([this]() {
       this->_loginWidgetUI.btn_login->setDisabled(false);
     });
   });
