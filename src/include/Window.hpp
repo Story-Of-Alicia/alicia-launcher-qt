@@ -6,8 +6,9 @@
 #include "ui_MenuWidget.h"
 
 #include <memory>
-#include <QMouseEvent>
 #include <thread>
+
+#include <QMouseEvent>
 
 using namespace Ui;
 
