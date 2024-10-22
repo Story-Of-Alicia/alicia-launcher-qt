@@ -32,10 +32,6 @@ Window::Window(QWidget* parent)
 
   _masterFrameUI.setupUi(this->_masterFrame);
 
-  // auto start_button = new QLabel(this->master_frame);
-  // start_button->setGeometry(this->_masterFrameUI.l_game_start_frame->geometry());
-  // start_button->setMovie(game_start_movie);
-
   _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
@@ -62,9 +58,12 @@ Window::Window(QWidget* parent)
   this->setAttribute(Qt::WA_NoSystemBackground, true);
   this->setAttribute(Qt::WA_TranslucentBackground, true);
 
+
+  // handle l_game_start_frame mouse tracking, because it sits at the top of Z-axis
   this->_masterFrameUI.l_game_start_frame->setMouseTracking(true);
   this->_masterFrameUI.l_game_start_frame->installEventFilter(this);
 
+  // to be able to stop the animation cleanly at frame 0
   connect(this->_gameStartMovie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
 }
 
@@ -88,6 +87,8 @@ bool Window::eventFilter(QObject* object, QEvent* event)
 {
   if (object == this->_masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove))
   {
+    // sqrt((x1 - x2)^2 + (y1 - y2)^2)
+    // using "scene" coordinates (window coordinates)
     double distance = std::sqrt(
       std::pow(
         dynamic_cast<QMouseEvent*>(event)->scenePosition().x() -
@@ -97,6 +98,7 @@ bool Window::eventFilter(QObject* object, QEvent* event)
         dynamic_cast<QMouseEvent*>(event)->scenePosition().y() -
           this->_masterFrameUI.l_game_start->geometry().center().y(),
         2));
+    // game start button radius is 119 pixels
     if (distance <= 119)
     {
       this->_shouldAnimateGameStart = true;
@@ -143,11 +145,12 @@ void Window::handle_launch()
 
 void Window::handle_login()
 {
-  this->_loginWidgetUI.btn_login->setDisabled(true); // probably a valid mutex?
+  this->_loginWidgetUI.btn_login->setDisabled(true); // lock mutex (probably safe?)
 
   auto username = this->_loginWidgetUI.input_username->text().toStdString();
   auto password = this->_loginWidgetUI.input_password->text().toStdString();
 
+  //authorization leaves the Qt Application thread, calls Qt functions trough QtConcurrent
   this->_loginThread = std::make_unique<std::thread>(
     [username, password, this]() -> void
     {
@@ -167,6 +170,7 @@ void Window::handle_login()
         auto future = QtConcurrent::run([this]() { this->_loginWidgetUI.l_error->show(); });
       }
 
+      // release "mutex"
       auto future =
         QtConcurrent::run([this]() { this->_loginWidgetUI.btn_login->setDisabled(false); });
     });
@@ -181,12 +185,9 @@ void Window::handle_info()
 
 void Window::handle_frame_changed(int frameNumber)
 {
-  if (!this->_shouldAnimateGameStart)
+  if (!this->_shouldAnimateGameStart && frameNumber == 0)
   {
-    if (frameNumber == 0)
-    {
-      this->_gameStartMovie->stop();
-    }
+    this->_gameStartMovie->setPaused(true);
   }
 }
 
