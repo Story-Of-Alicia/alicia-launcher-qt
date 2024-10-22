@@ -8,7 +8,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "launcher.hpp"
+#include "Launcher.hpp"
 
 namespace ui
 {
@@ -26,17 +26,17 @@ int start(int argc, char *argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
-  this->game_start_movie = new QMovie(":/img/game_start_hover.gif");
-  this->game_start_movie->start();
-  this->game_start_movie->setPaused(true);
+  this->_gameStartMovie = new QMovie(":/img/game_start_hover.gif");
+  this->_gameStartMovie->start();
+  this->_gameStartMovie->setPaused(true);
 
-  _masterFrameUI.setupUi(this->master_frame);
+  _masterFrameUI.setupUi(this->_masterFrame);
 
   //auto start_button = new QLabel(this->master_frame);
   //start_button->setGeometry(this->_masterFrameUI.l_game_start_frame->geometry());
   //start_button->setMovie(game_start_movie);
 
-  _masterFrameUI.l_game_start->setMovie(game_start_movie);
+  _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
   _loginWidgetUI.l_error->hide();
@@ -65,7 +65,7 @@ Window::Window(QWidget* parent)
   this->_masterFrameUI.l_game_start_frame->setMouseTracking(true);
   this->_masterFrameUI.l_game_start_frame->installEventFilter(this);
 
-  connect(this->game_start_movie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
+  connect(this->_gameStartMovie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
 }
 
 void Window::mousePressEvent(QMouseEvent *event)
@@ -98,7 +98,7 @@ bool Window::eventFilter(QObject *object, QEvent *event)
     if (distance <= 119)
     {
       this->_shouldAnimateGameStart = true;
-      this->game_start_movie->start();
+      this->_gameStartMovie->start();
     } else
     {
       this->_shouldAnimateGameStart = false;
@@ -151,7 +151,7 @@ void Window::handle_login()
   auto username = this->_loginWidgetUI.input_username->text().toStdString();
   auto password = this->_loginWidgetUI.input_password->text().toStdString();
 
-  this->login_thread = std::make_unique<std::thread>([username, password, this]() -> void
+  this->_loginThread = std::make_unique<std::thread>([username, password, this]() -> void
   {
     try
     {
@@ -174,7 +174,7 @@ void Window::handle_login()
     });
   });
 
-  this->login_thread->detach();
+  this->_loginThread->detach();
 }
 
 
@@ -189,7 +189,7 @@ void Window::handle_frame_changed(int frameNumber)
   {
     if (frameNumber == 0)
     {
-      this->game_start_movie->stop();
+      this->_gameStartMovie->stop();
     }
   }
 }

@@ -31,9 +31,9 @@ namespace ui {
             void handle_frame_changed(int frameNumber);
 
     private:
-        std::unique_ptr<std::thread> login_thread;
-        QMovie *game_start_movie = nullptr;
-        QFrame *master_frame = new QFrame(this);
+        std::unique_ptr<std::thread> _loginThread;
+        QMovie *_gameStartMovie = nullptr;
+        QFrame *_masterFrame = new QFrame(this);
 
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
