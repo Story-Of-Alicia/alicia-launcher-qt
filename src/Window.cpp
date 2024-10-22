@@ -1,19 +1,19 @@
 #include "window.hpp"
 
+#include <cmath>
 #include <QFontDatabase>
+#include <QMouseEvent>
 #include <QMovie>
+#include <QPainter>
 #include <QtConcurrent>
 #include <QWidget>
-#include <cmath>
-#include <QMouseEvent>
-#include <QPainter>
 
 #include "Launcher.hpp"
 
 namespace ui
 {
 
-int start(int argc, char *argv[])
+int start(int argc, char* argv[])
 {
   QApplication application(argc, argv);
 
@@ -32,9 +32,9 @@ Window::Window(QWidget* parent)
 
   _masterFrameUI.setupUi(this->_masterFrame);
 
-  //auto start_button = new QLabel(this->master_frame);
-  //start_button->setGeometry(this->_masterFrameUI.l_game_start_frame->geometry());
-  //start_button->setMovie(game_start_movie);
+  // auto start_button = new QLabel(this->master_frame);
+  // start_button->setGeometry(this->_masterFrameUI.l_game_start_frame->geometry());
+  // start_button->setMovie(game_start_movie);
 
   _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
@@ -68,18 +68,15 @@ Window::Window(QWidget* parent)
   connect(this->_gameStartMovie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
 }
 
-void Window::mousePressEvent(QMouseEvent *event)
+void Window::mousePressEvent(QMouseEvent* event)
 {
   _windowDragActive = true;
   _mouseEventPos = event->pos();
 }
 
-void Window::mouseReleaseEvent(QMouseEvent *event)
-{
-  _windowDragActive = false;
-}
+void Window::mouseReleaseEvent(QMouseEvent* event) { _windowDragActive = false; }
 
-void Window::mouseMoveEvent(QMouseEvent *event)
+void Window::mouseMoveEvent(QMouseEvent* event)
 {
   if (!_windowDragActive)
     return;
@@ -87,19 +84,25 @@ void Window::mouseMoveEvent(QMouseEvent *event)
   move(event->globalPosition().toPoint() - _mouseEventPos);
 }
 
-bool Window::eventFilter(QObject *object, QEvent *event)
+bool Window::eventFilter(QObject* object, QEvent* event)
 {
   if (object == this->_masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove))
   {
     double distance = std::sqrt(
-      std::pow(dynamic_cast<QMouseEvent*>(event)->scenePosition().x() - this->_masterFrameUI.l_game_start->geometry().center().x(), 2)
-          + std::pow(dynamic_cast<QMouseEvent*>(event)->scenePosition().y() -  this->_masterFrameUI.l_game_start->geometry().center().y(), 2)
-      );
+      std::pow(
+        dynamic_cast<QMouseEvent*>(event)->scenePosition().x() -
+          this->_masterFrameUI.l_game_start->geometry().center().x(),
+        2) +
+      std::pow(
+        dynamic_cast<QMouseEvent*>(event)->scenePosition().y() -
+          this->_masterFrameUI.l_game_start->geometry().center().y(),
+        2));
     if (distance <= 119)
     {
       this->_shouldAnimateGameStart = true;
       this->_gameStartMovie->start();
-    } else
+    }
+    else
     {
       this->_shouldAnimateGameStart = false;
     }
@@ -108,29 +111,23 @@ bool Window::eventFilter(QObject *object, QEvent *event)
   return false;
 }
 
-void Window::handle_exit()
-{
-  QCoreApplication::quit();
-}
+void Window::handle_exit() { QCoreApplication::quit(); }
 
-void Window::handle_minimize()
-{
-  this->showMinimized();
-}
+void Window::handle_minimize() { this->showMinimized(); }
 
 void Window::handle_settings()
 {
-  //TODO: implement settings
+  // TODO: implement settings
 }
 
 void Window::handle_repair()
 {
-  //TODO: implement repair
+  // TODO: implement repair
 }
 
 void Window::handle_ticket()
 {
-  //TODO: implement ticket
+  // TODO: implement ticket
 }
 
 void Window::handle_logout()
@@ -151,36 +148,35 @@ void Window::handle_login()
   auto username = this->_loginWidgetUI.input_username->text().toStdString();
   auto password = this->_loginWidgetUI.input_password->text().toStdString();
 
-  this->_loginThread = std::make_unique<std::thread>([username, password, this]() -> void
-  {
-    try
+  this->_loginThread = std::make_unique<std::thread>(
+    [username, password, this]() -> void
     {
-      launcher::authenticate(username, password);
+      try
+      {
+        launcher::authenticate(username, password);
 
-      auto future = QtConcurrent::run([this]() {
-        this->_masterFrameUI.menu_widget->show();
-        this->_masterFrameUI.login_widget->hide();
-      });
+        auto future = QtConcurrent::run(
+          [this]()
+          {
+            this->_masterFrameUI.menu_widget->show();
+            this->_masterFrameUI.login_widget->hide();
+          });
+      }
+      catch (std::exception& e)
+      {
+        auto future = QtConcurrent::run([this]() { this->_loginWidgetUI.l_error->show(); });
+      }
 
-    } catch(std::exception &e)
-    {
-      auto future = QtConcurrent::run([this]() {
-        this->_loginWidgetUI.l_error->show();
-      });
-    }
-
-    auto future = QtConcurrent::run([this]() {
-      this->_loginWidgetUI.btn_login->setDisabled(false);
+      auto future =
+        QtConcurrent::run([this]() { this->_loginWidgetUI.btn_login->setDisabled(false); });
     });
-  });
 
   this->_loginThread->detach();
 }
 
-
 void Window::handle_info()
 {
-  //TODO: implement info
+  // TODO: implement info
 }
 
 void Window::handle_frame_changed(int frameNumber)
@@ -194,4 +190,4 @@ void Window::handle_frame_changed(int frameNumber)
   }
 }
 
-}
+} // namespace ui
