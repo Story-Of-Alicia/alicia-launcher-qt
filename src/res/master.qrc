@@ -31,6 +31,9 @@
     <file>img/btn/info.png</file>
     <file>img/btn/info_hover.png</file>
     <file>img/btn/info_pressed.png</file>
+    <file>img/game_start.png</file>
+    <file>img/game_start_hover.gif</file>
+    <file>img/game_start_frame.png</file>
     <file>img/menu.png</file>
     <file>img/login.png</file>
   </qresource>

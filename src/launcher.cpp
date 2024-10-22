@@ -11,11 +11,6 @@ struct file_info
 {
   std::map<std::string, std::string> files;
 };
-Profile authenticate(std::string_view username, std::string_view password)
-{
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-  return Profile {};
-}
 
 std::string sha256_checksum(const std::string& path)
 {
@@ -44,7 +39,12 @@ std::string sha256_checksum(const std::string& path)
       input.close();
       throw std::logic_error("failed to read file");
     }
-    EVP_DigestUpdate(mdctx, buffer, input.gcount());
+    if (EVP_DigestUpdate(mdctx, buffer, input.gcount()))
+    {
+      input.close();
+      throw std::logic_error("failed to update digest");
+    }
+
   } while(!input.eof());
 
   input.close();
@@ -64,6 +64,12 @@ std::string sha256_checksum(const std::string& path)
   return ss.str();
 }
 
+Profile authenticate(std::string_view username, std::string_view password)
+{
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  return Profile {};
+}
+
 //todo maybe Qt progress stuff here
 bool check_files()
 {
@@ -74,4 +80,5 @@ bool launch(Profile &profile)
 {
   return false;
 }
+
 }

@@ -1,12 +1,7 @@
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
 
-#include <cstdint>
 #include <filesystem>
-#include <functional>
-#include <string>
-
-#include <windows.h>
 
 namespace launcher
 {

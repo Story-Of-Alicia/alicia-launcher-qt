@@ -443,6 +443,51 @@ QWidget#login_widget {
     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="l_game_start_frame">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>375</y>
+     <width>365</width>
+     <height>298</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="master.qrc">:/img/game_start_frame.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_game_start">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>375</y>
+     <width>365</width>
+     <height>298</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>l_game_start</zorder>
+  <zorder>btn_exit</zorder>
+  <zorder>l_corrupted</zorder>
+  <zorder>btn_settings</zorder>
+  <zorder>l_troubleshoot</zorder>
+  <zorder>l_support</zorder>
+  <zorder>menu_widget</zorder>
+  <zorder>alicia1</zorder>
+  <zorder>alicia2</zorder>
+  <zorder>btn_repair</zorder>
+  <zorder>btn_minimize</zorder>
+  <zorder>btn_ticket</zorder>
+  <zorder>login_widget</zorder>
+  <zorder>l_issues</zorder>
+  <zorder>l_version</zorder>
+  <zorder>l_game_start_frame</zorder>
  </widget>
  <resources>
   <include location="master.qrc"/>

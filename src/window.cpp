@@ -1,10 +1,15 @@
 #include "window.hpp"
 
 #include <QFontDatabase>
-#include <QWidget>
+#include <QMovie>
 #include <QtConcurrent>
+#include <QWidget>
+#include <cmath>
+#include <QMouseEvent>
+#include <QPainter>
 
 #include "launcher.hpp"
+
 namespace ui
 {
 
@@ -21,10 +26,21 @@ int start(int argc, char *argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
+  this->game_start_movie = new QMovie(":/img/game_start_hover.gif");
+  this->game_start_movie->start();
+  this->game_start_movie->setPaused(true);
+
   _masterFrameUI.setupUi(this->master_frame);
+
+  //auto start_button = new QLabel(this->master_frame);
+  //start_button->setGeometry(this->_masterFrameUI.l_game_start_frame->geometry());
+  //start_button->setMovie(game_start_movie);
+
+  _masterFrameUI.l_game_start->setMovie(game_start_movie);
 
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
   _loginWidgetUI.l_error->hide();
+
   _masterFrameUI.login_widget->show();
 
   _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
@@ -45,6 +61,11 @@ Window::Window(QWidget* parent)
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   this->setAttribute(Qt::WA_NoSystemBackground, true);
   this->setAttribute(Qt::WA_TranslucentBackground, true);
+
+  this->_masterFrameUI.l_game_start_frame->setMouseTracking(true);
+  this->_masterFrameUI.l_game_start_frame->installEventFilter(this);
+
+  connect(this->game_start_movie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
 }
 
 void Window::mousePressEvent(QMouseEvent *event)
@@ -64,6 +85,27 @@ void Window::mouseMoveEvent(QMouseEvent *event)
     return;
 
   move(event->globalPosition().toPoint() - _mouseEventPos);
+}
+
+bool Window::eventFilter(QObject *object, QEvent *event)
+{
+  if (object == this->_masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove))
+  {
+    double distance = std::sqrt(
+      std::pow(dynamic_cast<QMouseEvent*>(event)->scenePosition().x() - this->_masterFrameUI.l_game_start->geometry().center().x(), 2)
+          + std::pow(dynamic_cast<QMouseEvent*>(event)->scenePosition().y() -  this->_masterFrameUI.l_game_start->geometry().center().y(), 2)
+      );
+    if (distance <= 119)
+    {
+      this->_shouldAnimateGameStart = true;
+      this->game_start_movie->start();
+    } else
+    {
+      this->_shouldAnimateGameStart = false;
+    }
+  }
+
+  return false;
 }
 
 void Window::handle_exit()
@@ -139,6 +181,17 @@ void Window::handle_login()
 void Window::handle_info()
 {
   //TODO: implement info
+}
+
+void Window::handle_frame_changed(int frameNumber)
+{
+  if (!this->_shouldAnimateGameStart)
+  {
+    if (frameNumber == 0)
+    {
+      this->game_start_movie->stop();
+    }
+  }
 }
 
 }

@@ -28,18 +28,25 @@ namespace ui {
             void handle_ticket();
             void handle_minimize();
             void handle_settings();
+            void handle_frame_changed(int frameNumber);
 
     private:
         std::unique_ptr<std::thread> login_thread;
+        QMovie *game_start_movie = nullptr;
         QFrame *master_frame = new QFrame(this);
+
         MasterFrame _masterFrameUI{};
         LoginWidget _loginWidgetUI{};
         MenuWidget _menuWidgetUI{};
+
         void mousePressEvent(QMouseEvent *event) override;
         void mouseMoveEvent(QMouseEvent *event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;
+        bool eventFilter(QObject *object, QEvent *event) override;
+
         QPoint _mouseEventPos;
         bool   _windowDragActive = false;
+        bool   _shouldAnimateGameStart = false;
     };
 }
 
