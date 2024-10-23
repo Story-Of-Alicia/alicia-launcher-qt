@@ -1,20 +1,17 @@
 #include "Window.hpp"
 #include "Launcher.hpp"
 
+#include <QDesktopServices>
 #include <QMessageBox>
-#include <QStyle>
-#include <QFontDatabase>
 #include <QMouseEvent>
 #include <QMovie>
 #include <QPainter>
 #include <QtConcurrent>
 #include <QWidget>
-#include <QDesktopServices>
-#include <QDate>
 
 #include <cmath>
 
-constexpr char const * const WEB_STORYOFALICIA_TICKET = "https://storyofalicia.com/ticket";
+constexpr char const* const WEB_STORYOFALICIA_TICKET = "https://storyofalicia.com/ticket";
 
 namespace ui
 {
@@ -49,6 +46,8 @@ Window::Window(QWidget* parent)
 
   _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
   _masterFrameUI.menu_widget->hide();
+
+  _progressWidgetUI.setupUi(_currentDialog);
 
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_exit()));
   connect(_masterFrameUI.btn_minimize, SIGNAL(clicked()), this, SLOT(handle_minimize()));
@@ -118,7 +117,9 @@ bool Window::eventFilter(QObject* object, QEvent* event)
         _shouldAnimateGameStart = true;
         _gameStartMovie->setPaused(false);
       }
-      else if (event->type() == QEvent::MouseButtonPress && dynamic_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
+      else if (
+        event->type() == QEvent::MouseButtonPress &&
+        dynamic_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
       {
         // launching the game when the mouse is pressed within the button
         handle_launch();
@@ -148,19 +149,41 @@ void Window::handle_settings()
 
 void Window::handle_repair()
 {
-  //todo: implement
+  // todo: implement
 }
 
-void Window::handle_ticket()
-{
-  QDesktopServices::openUrl(QString(WEB_STORYOFALICIA_TICKET));
-}
+void Window::handle_ticket() { QDesktopServices::openUrl(QString(WEB_STORYOFALICIA_TICKET)); }
+
 
 void Window::handle_logout()
 {
   _authenticated = false;
   _masterFrameUI.login_widget->show();
   _masterFrameUI.menu_widget->hide();
+}
+
+
+void Window::createProgressDialog(std::string const & title)
+{
+  QMetaObject::invokeMethod(this, [this, title]
+   {
+    _progressWidgetUI.progressBar->setValue(0);
+    _progressWidgetUI.l_status->setText(QString("0%"));
+    _progressWidgetUI.l_title->setText(QString(title.data()));
+    _currentDialog->exec();
+   }, Qt::QueuedConnection);
+}
+void Window::updateProgressDialog(int progress)
+{
+  QMetaObject::invokeMethod(this, [this, progress]
+   {
+    if (progress == 100)
+    {
+      _currentDialog->accept();
+    }
+    _progressWidgetUI.l_status->setText(QString("%1%").arg(progress));
+    _progressWidgetUI.progressBar->setValue(progress);
+   }, Qt::QueuedConnection);
 }
 
 // maybe remove slot specifier
@@ -188,34 +211,42 @@ void Window::handle_launch()
             box.setIcon(QMessageBox::Icon::Critical);
             box.setText(QString("%1 files need patching. Patch them?").arg(files.size()));
             return box.exec() == QMessageBox::Yes;
-          }, Qt::BlockingQueuedConnection, qReturnArg(patched));
+          },
+          Qt::BlockingQueuedConnection,
+          qReturnArg(patched));
+        // patched will be set to true, if user picked the yes option
         if (patched)
         {
+          createProgressDialog("Patching");
           try
           {
-            launcher::fileUpdate(files);
-          } catch (const std::exception& e)
+            launcher::fileUpdate(files, [this](int progress) -> void
+            {
+              updateProgressDialog(progress);
+            });
+            updateProgressDialog(100);
+          }
+          catch (const std::exception& e)
           {
-            //TODO: log patching error
+            // TODO: log patching error
             patched = false;
           }
         }
+      } else
+      {
+        patched = true; // all files have the correct checksum
       }
 
+      // if the files were recently patched
       if (patched)
       {
-        if (launcher::launch(this->_profile) )
+        if (launcher::launch(this->_profile))
         {
-          QMetaObject::invokeMethod(
-            this,
-            [this]
-            {
-              this->showMinimized();
-            },
-            Qt::QueuedConnection);
-        } else
+          //QMetaObject::invokeMethod(this, [this] { this->showMinimized(); }, Qt::QueuedConnection);
+        }
+        else
         {
-          //TODO: log error
+          // TODO: log error
         }
       }
 
@@ -238,7 +269,8 @@ void Window::handle_post_login()
 
     _masterFrameUI.menu_widget->show();
     _masterFrameUI.login_widget->hide();
-  } else
+  }
+  else
   {
     _loginWidgetUI.l_error->setText("Authentication failed");
     _loginWidgetUI.l_error->show();
@@ -268,17 +300,11 @@ void Window::handle_login()
       {
         this->_profile = launcher::authenticate(username, password);
         this->_authenticated = true;
-        QMetaObject::invokeMethod(
-          this,
-          Window::handle_post_login,
-          Qt::QueuedConnection);
-        }
+        QMetaObject::invokeMethod(this, Window::handle_post_login, Qt::QueuedConnection);
+      }
       catch (std::exception& e)
       {
-        QMetaObject::invokeMethod(
-          this,
-          Window::handle_post_login,
-          Qt::QueuedConnection);
+        QMetaObject::invokeMethod(this, Window::handle_post_login, Qt::QueuedConnection);
       }
 
       // release mutex

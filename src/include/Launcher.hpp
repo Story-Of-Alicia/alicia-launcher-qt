@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <vector>
 
+#include <QPromise>
+
 namespace launcher
 {
 
@@ -23,7 +25,7 @@ Profile authenticate(std::string_view const & username, std::string_view const &
 std::vector<std::string> fileCheck() noexcept;
 
 // updates files
-bool fileUpdate(std::vector<std::string> const &files);
+bool fileUpdate(std::vector<std::string> const &files, const std::function<void(int)>&);
 
 bool launch(Profile const &profile);
 }

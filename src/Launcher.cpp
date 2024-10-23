@@ -7,6 +7,8 @@
 #include <thread>
 #include <vector>
 
+#include <QString>
+
 namespace launcher
 {
 
@@ -87,7 +89,6 @@ std::vector<std::string> fileCheck() noexcept
 {
   auto expected = obtainFileInfo();
   auto unexpected = std::vector<std::string>();
-
   for (const auto& [path, expected_sum] : expected)
   {
     try
@@ -105,7 +106,15 @@ std::vector<std::string> fileCheck() noexcept
   return unexpected;
 }
 
-bool fileUpdate(std::vector<std::string> const& files) { return false; }
+bool fileUpdate(std::vector<std::string> const &files, const std::function<void(int)>& cb)
+{
+  cb(30);
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  cb(65);
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  cb(90);
+  return true;
+}
 
 bool launch(Profile const& profile) { return true; }
 
