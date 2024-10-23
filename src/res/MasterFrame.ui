@@ -446,8 +446,8 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_game_start_frame">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>375</y>
+     <x>287</x>
+     <y>383</y>
      <width>365</width>
      <height>298</height>
     </rect>
@@ -462,8 +462,8 @@ QWidget#login_widget {
   <widget class="QLabel" name="l_game_start">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>375</y>
+     <x>287</x>
+     <y>383</y>
      <width>365</width>
      <height>298</height>
     </rect>
