@@ -33,13 +33,15 @@ private slots:
   void handle_minimize();
   void handle_settings();
   void handle_frame_changed(int frameNumber);
+  void handle_post_login();
 
 private:
-  std::atomic<launcher::Profile> profile;
+  //not thread-safe
+  launcher::Profile _profile;
 
   std::unique_ptr<std::thread> _workerThread;
   std::atomic_bool _workerRunning = false;
-  std::atomic_bool _authorized = false;
+  std::atomic_bool _authenticated = false;
 
   QMovie* _gameStartMovie = nullptr;
   QFrame* _masterFrame = new QFrame(this);

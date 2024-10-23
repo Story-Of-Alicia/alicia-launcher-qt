@@ -8,8 +8,12 @@
 #include <QPainter>
 #include <QtConcurrent>
 #include <QWidget>
+#include <QDesktopServices>
+#include <QDate>
 
 #include <cmath>
+
+constexpr char const * const WEB_STORYOFALICIA_TICKET = "https://storyofalicia.com/ticket";
 
 namespace ui
 {
@@ -111,9 +115,9 @@ bool Window::eventFilter(QObject* object, QEvent* event)
       {
         // playing animation when the mouse is within the button
         _shouldAnimateGameStart = true;
-        _gameStartMovie->start();
+        _gameStartMovie->setPaused(false);
       }
-      else if (event->type() == QEvent::MouseButtonPress)
+      else if (event->type() == QEvent::MouseButtonPress && dynamic_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
       {
         // launching the game when the mouse is pressed within the button
         handle_launch();
@@ -143,17 +147,17 @@ void Window::handle_settings()
 
 void Window::handle_repair()
 {
-  // TODO: implement repair
+  //todo: implement
 }
 
 void Window::handle_ticket()
 {
-  // TODO: implement ticket
+  QDesktopServices::openUrl(QString(WEB_STORYOFALICIA_TICKET));
 }
 
 void Window::handle_logout()
 {
-  this->_authorized = false;
+  _authenticated = false;
   _masterFrameUI.login_widget->show();
   _masterFrameUI.menu_widget->hide();
 }
@@ -164,7 +168,7 @@ void Window::handle_launch()
   if (_workerRunning)
     return;
 
-  if (!_authorized)
+  if (!_authenticated)
     return;
 
   _workerRunning = true;
@@ -183,7 +187,7 @@ void Window::handle_launch()
           },
           Qt::QueuedConnection);
       }
-      else if (!launcher::launch(this->profile.load()))
+      else if (!launcher::launch(this->_profile))
       {
         //TODO: launch
       }
@@ -193,11 +197,34 @@ void Window::handle_launch()
   _workerThread->detach();
 }
 
+void Window::handle_post_login()
+{
+  if (_authenticated)
+  {
+    _menuWidgetUI.l_username_d->setText(QString(_profile.username.data()));
+    _menuWidgetUI.l_player_d->setText(QString(_profile.character_name.data()));
+
+    _menuWidgetUI.l_level_d->setText(QString::number(_profile.level));
+    _menuWidgetUI.l_guild_d->setText(QString(_profile.guild.data()));
+    auto const date = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(_profile.last_login));
+    _menuWidgetUI.l_last_login_d->setText(date.toString("yy-MM-dd HH:mm:ss"));
+
+    _masterFrameUI.menu_widget->show();
+    _masterFrameUI.login_widget->hide();
+  } else
+  {
+    _loginWidgetUI.l_error->setText("Authentication failed");
+    _loginWidgetUI.l_error->show();
+  }
+  _masterFrameUI.login_widget->setDisabled(false);
+}
+
 void Window::handle_login()
 {
   if (_workerRunning)
     return;
 
+  _loginWidgetUI.l_error->hide();
   _masterFrameUI.login_widget->setDisabled(true);
 
   auto const username = _loginWidgetUI.input_username->text().toStdString();
@@ -212,26 +239,21 @@ void Window::handle_login()
     {
       try
       {
-        this->profile = launcher::authenticate(username, password);
-
+        this->_profile = launcher::authenticate(username, password);
+        this->_authenticated = true;
         QMetaObject::invokeMethod(
           this,
-          [this]
-          {
-            this->_masterFrameUI.menu_widget->show();
-            this->_masterFrameUI.login_widget->hide();
-            this->_authorized = true;
-          },
+          Window::handle_post_login,
           Qt::QueuedConnection);
       }
       catch (std::exception& e)
       {
         QMetaObject::invokeMethod(
-          this, [this] { this->_loginWidgetUI.l_error->show(); }, Qt::QueuedConnection);
+          this,
+          Window::handle_post_login,
+          Qt::QueuedConnection);
       }
 
-      QMetaObject::invokeMethod(
-        this, [this] { _masterFrameUI.login_widget->setDisabled(false); }, Qt::QueuedConnection);
       // release mutex
       this->_workerRunning = false;
     });

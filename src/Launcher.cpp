@@ -74,7 +74,13 @@ std::string sha256_checksum(const std::string& path)
 Profile authenticate(std::string_view const& username, std::string_view const& password)
 {
   std::this_thread::sleep_for(std::chrono::seconds(2));
-  return Profile{};
+  return Profile{
+  .username = "%USERNAME%",
+  .character_name = "%CHARACTER%",
+  .guild = "%GUILD%",
+  .level = 69,
+  .last_login = 0,
+  };
 }
 
 std::vector<std::string> fileCheck()
