@@ -33,6 +33,7 @@
     <file>img/btn/info_pressed.png</file>
     <file>img/game_start_hover.gif</file>
     <file>img/game_start_frame.png</file>
+    <file>img/progress_bg.png</file>
     <file>img/menu.png</file>
     <file>img/login.png</file>
   </qresource>

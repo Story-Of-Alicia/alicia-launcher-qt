@@ -8,6 +8,7 @@
 #include <QPainter>
 #include <QtConcurrent>
 #include <QWidget>
+#include <QGraphicsBlurEffect>
 
 #include <cmath>
 
@@ -168,7 +169,17 @@ void Window::createProgressDialog(std::string const & title)
     _progressWidgetUI.progressBar->setValue(0);
     _progressWidgetUI.l_status->setText(QString("0%"));
     _progressWidgetUI.l_title->setText(QString(title.data()));
+    _currentDialog->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+
+    auto geometry = _masterFrame->geometry().center();
+    _currentDialog->move(geometry.x() - _currentDialog->width() / 2, geometry.y() - _currentDialog->height() / 2);
+
+    auto blur = QGraphicsBlurEffect();
+
+    _masterFrame->setGraphicsEffect(&blur);
+
     _currentDialog->exec();
+
    }, Qt::QueuedConnection);
 }
 
