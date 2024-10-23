@@ -87,6 +87,7 @@ void Window::mouseMoveEvent(QMouseEvent* event)
 
 bool Window::eventFilter(QObject* object, QEvent* event)
 {
+  // handling MouseButtonPress and MouseMove for _masterFrameUI.l_game_start_frame
   if (
     object == _masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove) ||
     (event->type() == QEvent::MouseButtonPress))
@@ -108,11 +109,13 @@ bool Window::eventFilter(QObject* object, QEvent* event)
     {
       if (event->type() == QEvent::MouseMove)
       {
+        // playing animation when the mouse is within the button
         _shouldAnimateGameStart = true;
         _gameStartMovie->start();
       }
       else if (event->type() == QEvent::MouseButtonPress)
       {
+        // launching the game when the mouse is pressed within the button
         handle_launch();
       }
     }
@@ -120,6 +123,7 @@ bool Window::eventFilter(QObject* object, QEvent* event)
     {
       if (event->type() == QEvent::MouseMove)
       {
+        // signal to stop the animation when the mouse leaves the button
         _shouldAnimateGameStart = false;
       }
     }
@@ -165,9 +169,9 @@ void Window::handle_launch()
 
   _workerRunning = true;
   _workerThread = std::make_unique<std::thread>(
-    [this]()
+    [this]
     {
-      if (auto files = launcher::fileCheck(); !files.empty())
+      if (const auto files = launcher::fileCheck(); !files.empty())
       {
         QMetaObject::invokeMethod(
           this,
@@ -175,13 +179,13 @@ void Window::handle_launch()
           {
             QDialog d(this);
             d.exec();
-            // TODO: cleanup
+            // TODO: ui
           },
           Qt::QueuedConnection);
       }
       else if (!launcher::launch(this->profile.load()))
       {
-        // TODO: launch
+        //TODO: launch
       }
 
       this->_workerRunning = false;
@@ -212,7 +216,7 @@ void Window::handle_login()
 
         QMetaObject::invokeMethod(
           this,
-          [this]()
+          [this]
           {
             this->_masterFrameUI.menu_widget->show();
             this->_masterFrameUI.login_widget->hide();
@@ -223,11 +227,11 @@ void Window::handle_login()
       catch (std::exception& e)
       {
         QMetaObject::invokeMethod(
-          this, [this]() { this->_loginWidgetUI.l_error->show(); }, Qt::QueuedConnection);
+          this, [this] { this->_loginWidgetUI.l_error->show(); }, Qt::QueuedConnection);
       }
 
       QMetaObject::invokeMethod(
-        this, [this]() { _masterFrameUI.login_widget->setDisabled(false); }, Qt::QueuedConnection);
+        this, [this] { _masterFrameUI.login_widget->setDisabled(false); }, Qt::QueuedConnection);
       // release mutex
       this->_workerRunning = false;
     });
