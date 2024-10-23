@@ -154,14 +154,12 @@ void Window::handle_repair()
 
 void Window::handle_ticket() { QDesktopServices::openUrl(QString(WEB_STORYOFALICIA_TICKET)); }
 
-
 void Window::handle_logout()
 {
   _authenticated = false;
   _masterFrameUI.login_widget->show();
   _masterFrameUI.menu_widget->hide();
 }
-
 
 void Window::createProgressDialog(std::string const & title)
 {
@@ -173,6 +171,7 @@ void Window::createProgressDialog(std::string const & title)
     _currentDialog->exec();
    }, Qt::QueuedConnection);
 }
+
 void Window::updateProgressDialog(int progress)
 {
   QMetaObject::invokeMethod(this, [this, progress]
@@ -220,11 +219,12 @@ void Window::handle_launch()
           createProgressDialog("Patching");
           try
           {
-            launcher::fileUpdate(files, [this](int progress) -> void
+            launcher::fileUpdate(files, [this](const int progress) -> void
             {
               updateProgressDialog(progress);
             });
-            updateProgressDialog(100);
+
+            updateProgressDialog(100); // make the widget close itself
           }
           catch (const std::exception& e)
           {
@@ -240,14 +240,17 @@ void Window::handle_launch()
       // if the files were recently patched
       if (patched)
       {
+        QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
         if (launcher::launch(this->_profile))
         {
-          //QMetaObject::invokeMethod(this, [this] { this->showMinimized(); }, Qt::QueuedConnection);
+          std::this_thread::sleep_for(std::chrono::seconds(5));
         }
         else
         {
           // TODO: log error
         }
+
+        QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
       }
 
       this->_workerRunning = false;
