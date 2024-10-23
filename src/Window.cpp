@@ -1,7 +1,8 @@
 #include "Window.hpp"
 #include "Launcher.hpp"
 
-#include <QDialog>
+#include <QMessageBox>
+#include <QStyle>
 #include <QFontDatabase>
 #include <QMouseEvent>
 #include <QMovie>
@@ -175,21 +176,47 @@ void Window::handle_launch()
   _workerThread = std::make_unique<std::thread>(
     [this]
     {
+      bool patched = false;
       if (const auto files = launcher::fileCheck(); !files.empty())
       {
         QMetaObject::invokeMethod(
           this,
-          [this]()
+          [this, files]()
           {
-            QDialog d(this);
-            d.exec();
-            // TODO: ui
-          },
-          Qt::QueuedConnection);
+            QMessageBox box(this);
+            box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            box.setIcon(QMessageBox::Icon::Critical);
+            box.setText(QString("%1 files need patching. Patch them?").arg(files.size()));
+            return box.exec() == QMessageBox::Yes;
+          }, Qt::BlockingQueuedConnection, qReturnArg(patched));
+        if (patched)
+        {
+          try
+          {
+            launcher::fileUpdate(files);
+          } catch (const std::exception& e)
+          {
+            //TODO: log patching error
+            patched = false;
+          }
+        }
       }
-      else if (!launcher::launch(this->_profile))
+
+      if (patched)
       {
-        //TODO: launch
+        if (launcher::launch(this->_profile) )
+        {
+          QMetaObject::invokeMethod(
+            this,
+            [this]
+            {
+              this->showMinimized();
+            },
+            Qt::QueuedConnection);
+        } else
+        {
+          //TODO: log error
+        }
       }
 
       this->_workerRunning = false;
@@ -245,7 +272,7 @@ void Window::handle_login()
           this,
           Window::handle_post_login,
           Qt::QueuedConnection);
-      }
+        }
       catch (std::exception& e)
       {
         QMetaObject::invokeMethod(

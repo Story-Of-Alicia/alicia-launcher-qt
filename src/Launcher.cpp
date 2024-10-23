@@ -83,7 +83,7 @@ Profile authenticate(std::string_view const& username, std::string_view const& p
   };
 }
 
-std::vector<std::string> fileCheck()
+std::vector<std::string> fileCheck() noexcept
 {
   auto expected = obtainFileInfo();
   auto unexpected = std::vector<std::string>();
@@ -107,6 +107,6 @@ std::vector<std::string> fileCheck()
 
 bool fileUpdate(std::vector<std::string> const& files) { return false; }
 
-bool launch(Profile const& profile) { return false; }
+bool launch(Profile const& profile) { return true; }
 
 } // namespace launcher

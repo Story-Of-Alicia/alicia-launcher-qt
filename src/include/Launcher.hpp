@@ -20,7 +20,7 @@ struct Profile
 Profile authenticate(std::string_view const & username, std::string_view const & password);
 
 // checks file sums
-std::vector<std::string> fileCheck();
+std::vector<std::string> fileCheck() noexcept;
 
 // updates files
 bool fileUpdate(std::vector<std::string> const &files);
