@@ -2,23 +2,25 @@
 #define LAUNCHER_HPP
 
 #include <filesystem>
+#include <vector>
 
 namespace launcher
 {
 
 struct Profile
 {
-  std::string_view username;
-  std::string_view secret;
 
-  unsigned level;
 };
 
-Profile authenticate(std::string_view username, std::string_view password);
+Profile authenticate(std::string_view const & username, std::string_view const & password);
 
-bool check_files();
+// checks file sums
+std::vector<std::string> fileCheck();
 
-bool launch(Profile &profile);
+// updates files
+bool fileUpdate(std::vector<std::string> const &files);
+
+bool launch(Profile const &profile);
 }
 
 #endif // LAUNCHER_HPP

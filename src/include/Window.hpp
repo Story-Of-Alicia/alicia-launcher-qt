@@ -1,6 +1,7 @@
 #ifndef LAUNCHER_MASTERWINDOW_HPP
 #define LAUNCHER_MASTERWINDOW_HPP
 
+#include "Launcher.hpp"
 #include "ui_LoginWidget.h"
 #include "ui_MasterFrame.h"
 #include "ui_MenuWidget.h"
@@ -34,7 +35,12 @@ private slots:
   void handle_frame_changed(int frameNumber);
 
 private:
-  std::unique_ptr<std::thread> _loginThread;
+  std::atomic<launcher::Profile> profile;
+
+  std::unique_ptr<std::thread> _workerThread;
+  std::atomic_bool _workerRunning = false;
+  std::atomic_bool _authorized = false;
+
   QMovie* _gameStartMovie = nullptr;
   QFrame* _masterFrame = new QFrame(this);
 

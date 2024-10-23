@@ -1,6 +1,7 @@
 #include "Window.hpp"
 #include "Launcher.hpp"
 
+#include <QDialog>
 #include <QFontDatabase>
 #include <QMouseEvent>
 #include <QMovie>
@@ -27,6 +28,8 @@ Window::Window(QWidget* parent)
     : QWidget(parent)
 {
   _gameStartMovie = new QMovie(":/img/game_start_hover.gif");
+
+  // to display frame 0, so the button is not empty
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
 
@@ -58,7 +61,6 @@ Window::Window(QWidget* parent)
   setAttribute(Qt::WA_NoSystemBackground, true);
   setAttribute(Qt::WA_TranslucentBackground, true);
 
-
   // handle l_game_start_frame mouse tracking, because it sits at the top of Z-axis
   _masterFrameUI.l_game_start_frame->setMouseTracking(true);
   _masterFrameUI.l_game_start_frame->installEventFilter(this);
@@ -85,7 +87,9 @@ void Window::mouseMoveEvent(QMouseEvent* event)
 
 bool Window::eventFilter(QObject* object, QEvent* event)
 {
-  if (object == _masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove))
+  if (
+    object == _masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove) ||
+    (event->type() == QEvent::MouseButtonPress))
   {
     // sqrt((x1 - x2)^2 + (y1 - y2)^2)
     // using "scene" coordinates (window coordinates)
@@ -98,15 +102,26 @@ bool Window::eventFilter(QObject* object, QEvent* event)
         dynamic_cast<QMouseEvent*>(event)->scenePosition().y() -
           _masterFrameUI.l_game_start->geometry().center().y(),
         2));
+
     // game start button radius is 119 pixels
     if (distance <= 119)
     {
-      _shouldAnimateGameStart = true;
-      _gameStartMovie->start();
+      if (event->type() == QEvent::MouseMove)
+      {
+        _shouldAnimateGameStart = true;
+        _gameStartMovie->start();
+      }
+      else if (event->type() == QEvent::MouseButtonPress)
+      {
+        handle_launch();
+      }
     }
     else
     {
-      _shouldAnimateGameStart = false;
+      if (event->type() == QEvent::MouseMove)
+      {
+        _shouldAnimateGameStart = false;
+      }
     }
   }
 
@@ -134,48 +149,90 @@ void Window::handle_ticket()
 
 void Window::handle_logout()
 {
+  this->_authorized = false;
   _masterFrameUI.login_widget->show();
   _masterFrameUI.menu_widget->hide();
 }
 
+// maybe remove slot specifier
 void Window::handle_launch()
 {
-  // TODO implement
+  if (_workerRunning)
+    return;
+
+  if (!_authorized)
+    return;
+
+  _workerRunning = true;
+  _workerThread = std::make_unique<std::thread>(
+    [this]()
+    {
+      if (auto files = launcher::fileCheck(); !files.empty())
+      {
+        QMetaObject::invokeMethod(
+          this,
+          [this]()
+          {
+            QDialog d(this);
+            d.exec();
+            // TODO: cleanup
+          },
+          Qt::QueuedConnection);
+      }
+      else if (!launcher::launch(this->profile.load()))
+      {
+        // TODO: launch
+      }
+
+      this->_workerRunning = false;
+    });
+  _workerThread->detach();
 }
 
 void Window::handle_login()
 {
-  _loginWidgetUI.btn_login->setDisabled(true); // lock mutex (probably safe?)
+  if (_workerRunning)
+    return;
+
+  _masterFrameUI.login_widget->setDisabled(true);
 
   auto const username = _loginWidgetUI.input_username->text().toStdString();
   auto const password = _loginWidgetUI.input_password->text().toStdString();
 
-  //authorization leaves the Qt Application thread, calls Qt functions trough QtConcurrent
-  _loginThread = std::make_unique<std::thread>(
+  // lock mutex
+  _workerRunning = true;
+  // authorization leaves the Qt Application thread, calls Qt functions trough
+  // QMetaObject::invokeMethod
+  _workerThread = std::make_unique<std::thread>(
     [username, password, this]() -> void
     {
       try
       {
-        launcher::authenticate(username, password);
+        this->profile = launcher::authenticate(username, password);
 
-        auto future = QtConcurrent::run(
+        QMetaObject::invokeMethod(
+          this,
           [this]()
           {
-            _masterFrameUI.menu_widget->show();
-            _masterFrameUI.login_widget->hide();
-          });
+            this->_masterFrameUI.menu_widget->show();
+            this->_masterFrameUI.login_widget->hide();
+            this->_authorized = true;
+          },
+          Qt::QueuedConnection);
       }
       catch (std::exception& e)
       {
-        auto future = QtConcurrent::run([this]() { _loginWidgetUI.l_error->show(); });
+        QMetaObject::invokeMethod(
+          this, [this]() { this->_loginWidgetUI.l_error->show(); }, Qt::QueuedConnection);
       }
 
-      // release "mutex"
-      auto future =
-        QtConcurrent::run([this]() { _loginWidgetUI.btn_login->setDisabled(false); });
+      QMetaObject::invokeMethod(
+        this, [this]() { _masterFrameUI.login_widget->setDisabled(false); }, Qt::QueuedConnection);
+      // release mutex
+      this->_workerRunning = false;
     });
 
-  _loginThread->detach();
+  _workerThread->detach();
 }
 
 void Window::handle_info()
@@ -187,6 +244,7 @@ void Window::handle_frame_changed(int frameNumber)
 {
   if (!_shouldAnimateGameStart && frameNumber == 0)
   {
+    // stop the playback at frame 0, when _shouldAnimateGameStart is false
     _gameStartMovie->setPaused(true);
   }
 }
