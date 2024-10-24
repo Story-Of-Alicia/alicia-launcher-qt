@@ -52,7 +52,6 @@ Window::Window(QWidget* parent)
   _masterFrameUI.l_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
   _masterFrameUI.l_game_start_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_exit()));
   connect(_masterFrameUI.btn_minimize, SIGNAL(clicked()), this, SLOT(handle_minimize()));
   connect(_masterFrameUI.btn_settings, SIGNAL(clicked()), this, SLOT(handle_settings()));
@@ -69,7 +68,7 @@ Window::Window(QWidget* parent)
   setAttribute(Qt::WA_NoSystemBackground, true);
   setAttribute(Qt::WA_TranslucentBackground, true);
 
-  // handle l_game_start_frame mouse tracking, because it sits at the top of Z-axis
+  // handle l_game_start mouse tracking
   _masterFrameUI.l_game_start->setMouseTracking(true);
   _masterFrameUI.l_game_start->installEventFilter(this);
 
