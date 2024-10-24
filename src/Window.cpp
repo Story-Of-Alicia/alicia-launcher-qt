@@ -94,7 +94,7 @@ void Window::mouseMoveEvent(QMouseEvent* event)
 
 bool Window::eventFilter(QObject* object, QEvent* event)
 {
-  // handling MouseButtonPress and MouseMove for _masterFrameUI.l_game_start_frame
+  // handling MouseButtonPress and MouseMove for _masterFrameUI.l_game_start
   if (
     object == _masterFrameUI.l_game_start && (event->type() == QEvent::MouseMove) ||
     (event->type() == QEvent::MouseButtonPress))
