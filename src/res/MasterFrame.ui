@@ -14,11 +14,15 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame#MasterFrame {
+   <string notr="true">QLabel#l_bg {
 	background-image: url(&quot;:/img/bg.png&quot;);
 }
 
+QLabel#l_frame {
+	background-image: url(&quot;:/img/frame.png&quot;)
+}
 QPushButton {
+
 	background: transparent;
 }
 
@@ -128,7 +132,7 @@ QWidget#login_widget {
   <widget class="QPushButton" name="btn_exit">
    <property name="geometry">
     <rect>
-     <x>1319</x>
+     <x>1318</x>
      <y>40</y>
      <width>36</width>
      <height>36</height>
@@ -153,33 +157,11 @@ QWidget#login_widget {
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="l_corrupted">
-   <property name="geometry">
-    <rect>
-     <x>769</x>
-     <y>595</y>
-     <width>161</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>NanumGothic</family>
-     <pointsize>11</pointsize>
-     <italic>false</italic>
-     <hintingpreference>PreferNoHinting</hintingpreference>
-     <fontweight>DemiBold</fontweight>
-    </font>
-   </property>
-   <property name="text">
-    <string>Corrupted files?</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_settings">
    <property name="geometry">
     <rect>
-     <x>86</x>
-     <y>741</y>
+     <x>85</x>
+     <y>740</y>
      <width>48</width>
      <height>48</height>
     </rect>
@@ -198,64 +180,6 @@ QWidget#login_widget {
    </property>
    <property name="flat">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_troubleshoot">
-   <property name="geometry">
-    <rect>
-     <x>769</x>
-     <y>568</y>
-     <width>161</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>EurostileBla</family>
-     <pointsize>14</pointsize>
-     <hintingpreference>PreferNoHinting</hintingpreference>
-     <fontweight>Black</fontweight>
-    </font>
-   </property>
-   <property name="text">
-    <string notr="true">TROUBLESHOOT</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_support">
-   <property name="geometry">
-    <rect>
-     <x>1017</x>
-     <y>568</y>
-     <width>161</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>EurostileBla</family>
-     <pointsize>14</pointsize>
-     <hintingpreference>PreferNoHinting</hintingpreference>
-     <fontweight>Black</fontweight>
-    </font>
-   </property>
-   <property name="text">
-    <string notr="true">SUPPORT</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="menu_widget" native="true">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>715</x>
-     <y>240</y>
-     <width>516</width>
-     <height>292</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
    </property>
   </widget>
   <widget class="QPushButton" name="alicia1">
@@ -316,33 +240,11 @@ QWidget#login_widget {
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_repair">
-   <property name="geometry">
-    <rect>
-     <x>769</x>
-     <y>623</y>
-     <width>160</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>160</width>
-     <height>32</height>
-    </size>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_minimize">
    <property name="geometry">
     <rect>
-     <x>1269</x>
-     <y>40</y>
+     <x>1268</x>
+     <y>39</y>
      <width>36</width>
      <height>36</height>
     </rect>
@@ -363,131 +265,272 @@ QWidget#login_widget {
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_ticket">
+  <widget class="QLabel" name="l_frame">
    <property name="geometry">
     <rect>
-     <x>1017</x>
-     <y>623</y>
-     <width>160</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>160</width>
-     <height>32</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QWidget" name="login_widget" native="true">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>715</x>
-     <y>240</y>
-     <width>516</width>
-     <height>292</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_issues">
-   <property name="geometry">
-    <rect>
-     <x>1017</x>
-     <y>595</y>
-     <width>161</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>NanumGothic</family>
-     <pointsize>11</pointsize>
-     <italic>false</italic>
-     <hintingpreference>PreferNoHinting</hintingpreference>
-     <fontweight>DemiBold</fontweight>
-    </font>
-   </property>
-   <property name="text">
-    <string>Ran into issues?</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_version">
-   <property name="geometry">
-    <rect>
-     <x>1128</x>
-     <y>764</y>
-     <width>211</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>EurostileBla</family>
-     <pointsize>12</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>GAME VERSION 1.0.0</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_game_start_frame">
-   <property name="geometry">
-    <rect>
-     <x>287</x>
-     <y>383</y>
-     <width>365</width>
-     <height>298</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="master.qrc">:/img/game_start_frame.png</pixmap>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_game_start">
-   <property name="geometry">
-    <rect>
-     <x>287</x>
-     <y>383</y>
-     <width>365</width>
-     <height>298</height>
+     <x>0</x>
+     <y>0</y>
+     <width>1400</width>
+     <height>848</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <zorder>l_game_start</zorder>
-  <zorder>btn_exit</zorder>
-  <zorder>l_corrupted</zorder>
-  <zorder>btn_settings</zorder>
-  <zorder>l_troubleshoot</zorder>
-  <zorder>l_support</zorder>
-  <zorder>menu_widget</zorder>
-  <zorder>alicia1</zorder>
-  <zorder>alicia2</zorder>
-  <zorder>btn_repair</zorder>
+  <widget class="QFrame" name="content">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1400</width>
+     <height>840</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Shape::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Shadow::Raised</enum>
+   </property>
+   <widget class="QLabel" name="l_bg">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1400</width>
+      <height>848</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_corrupted">
+    <property name="geometry">
+     <rect>
+      <x>769</x>
+      <y>595</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>NanumGothic</family>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+      <fontweight>DemiBold</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string>Corrupted files?</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_repair">
+    <property name="geometry">
+     <rect>
+      <x>769</x>
+      <y>623</y>
+      <width>160</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>160</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_ticket">
+    <property name="geometry">
+     <rect>
+      <x>1017</x>
+      <y>623</y>
+      <width>160</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>160</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QWidget" name="login_widget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>715</x>
+      <y>240</y>
+      <width>516</width>
+      <height>292</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_issues">
+    <property name="geometry">
+     <rect>
+      <x>1017</x>
+      <y>595</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>NanumGothic</family>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+      <fontweight>DemiBold</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string>Ran into issues?</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_version">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1128</x>
+      <y>764</y>
+      <width>211</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>EurostileBla</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>GAME VERSION 1.0.0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_game_start_frame">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>266</x>
+      <y>383</y>
+      <width>365</width>
+      <height>298</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="master.qrc">:/img/game_start_frame.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_game_start">
+    <property name="geometry">
+     <rect>
+      <x>266</x>
+      <y>383</y>
+      <width>365</width>
+      <height>298</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="menu_widget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>715</x>
+      <y>240</y>
+      <width>516</width>
+      <height>292</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_troubleshoot">
+    <property name="geometry">
+     <rect>
+      <x>769</x>
+      <y>568</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>EurostileBla</family>
+      <pointsize>14</pointsize>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+      <fontweight>Black</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string notr="true">TROUBLESHOOT</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_support">
+    <property name="geometry">
+     <rect>
+      <x>1017</x>
+      <y>568</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>EurostileBla</family>
+      <pointsize>14</pointsize>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+      <fontweight>Black</fontweight>
+     </font>
+    </property>
+    <property name="text">
+     <string notr="true">SUPPORT</string>
+    </property>
+   </widget>
+  </widget>
+  <zorder>content</zorder>
+  <zorder>l_frame</zorder>
   <zorder>btn_minimize</zorder>
-  <zorder>btn_ticket</zorder>
-  <zorder>login_widget</zorder>
-  <zorder>l_issues</zorder>
-  <zorder>l_version</zorder>
-  <zorder>l_game_start_frame</zorder>
+  <zorder>btn_exit</zorder>
+  <zorder>btn_settings</zorder>
+  <zorder>alicia2</zorder>
+  <zorder>alicia1</zorder>
  </widget>
  <resources>
   <include location="master.qrc"/>

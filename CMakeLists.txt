@@ -16,9 +16,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent)
 
 qt_standard_project_setup()
 qt_add_executable(launcher
-        src/main.cpp src/launcher.cpp src/window.cpp src/util.cpp
+        src/main.cpp src/launcher.cpp src/window.cpp src/util.cpp src/ProgressDialog.cpp
         src/res/MasterFrame.ui src/res/LoginWidget.ui src/res/MenuWidget.ui src/res/ProgressWidget.ui src/res/master.qrc
-        src/include/window.hpp src/include/launcher.hpp src/include/util.hpp
+        src/include/window.hpp src/include/launcher.hpp src/include/util.hpp src/include/ProgressDialog.hpp
 )
 
 target_include_directories(launcher PRIVATE src/include)

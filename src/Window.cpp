@@ -30,13 +30,14 @@ int start(int argc, char* argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
+  _progressDialog->hide();
   _gameStartMovie = new QMovie(":/img/game_start_hover.gif");
 
   // to display frame 0, so the button is not empty
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
 
-  _masterFrameUI.setupUi(_masterFrame);
+  _masterFrameUI.setupUi(_master);
 
   _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
@@ -48,7 +49,9 @@ Window::Window(QWidget* parent)
   _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
   _masterFrameUI.menu_widget->hide();
 
-  _progressWidgetUI.setupUi(_currentDialog);
+  _masterFrameUI.l_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
+  _masterFrameUI.l_game_start_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
+
 
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_exit()));
   connect(_masterFrameUI.btn_minimize, SIGNAL(clicked()), this, SLOT(handle_minimize()));
@@ -67,8 +70,8 @@ Window::Window(QWidget* parent)
   setAttribute(Qt::WA_TranslucentBackground, true);
 
   // handle l_game_start_frame mouse tracking, because it sits at the top of Z-axis
-  _masterFrameUI.l_game_start_frame->setMouseTracking(true);
-  _masterFrameUI.l_game_start_frame->installEventFilter(this);
+  _masterFrameUI.l_game_start->setMouseTracking(true);
+  _masterFrameUI.l_game_start->installEventFilter(this);
 
   // to be able to stop the animation cleanly at frame 0
   connect(_gameStartMovie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
@@ -94,9 +97,12 @@ bool Window::eventFilter(QObject* object, QEvent* event)
 {
   // handling MouseButtonPress and MouseMove for _masterFrameUI.l_game_start_frame
   if (
-    object == _masterFrameUI.l_game_start_frame && (event->type() == QEvent::MouseMove) ||
+    object == _masterFrameUI.l_game_start && (event->type() == QEvent::MouseMove) ||
     (event->type() == QEvent::MouseButtonPress))
   {
+    if (!dynamic_cast<QWidget*>(object)->isEnabled())
+      return true;
+
     // sqrt((x1 - x2)^2 + (y1 - y2)^2)
     // using "scene" coordinates (window coordinates)
     double const distance = std::sqrt(
@@ -122,6 +128,8 @@ bool Window::eventFilter(QObject* object, QEvent* event)
         event->type() == QEvent::MouseButtonPress &&
         dynamic_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
       {
+        // stopping the animation so it doesn't get stuck replaying
+        _shouldAnimateGameStart = false;
         // launching the game when the mouse is pressed within the button
         handle_launch();
       }
@@ -162,40 +170,6 @@ void Window::handle_logout()
   _masterFrameUI.menu_widget->hide();
 }
 
-void Window::createProgressDialog(std::string const & title)
-{
-  QMetaObject::invokeMethod(this, [this, title]
-   {
-    _progressWidgetUI.progressBar->setValue(0);
-    _progressWidgetUI.l_status->setText(QString("0%"));
-    _progressWidgetUI.l_title->setText(QString(title.data()));
-    _currentDialog->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
-
-    auto geometry = _masterFrame->geometry().center();
-    _currentDialog->move(geometry.x() - _currentDialog->width() / 2, geometry.y() - _currentDialog->height() / 2);
-
-    auto blur = QGraphicsBlurEffect();
-
-    _masterFrame->setGraphicsEffect(&blur);
-
-    _currentDialog->exec();
-
-   }, Qt::QueuedConnection);
-}
-
-void Window::updateProgressDialog(int progress)
-{
-  QMetaObject::invokeMethod(this, [this, progress]
-   {
-    if (progress == 100)
-    {
-      _currentDialog->accept();
-    }
-    _progressWidgetUI.l_status->setText(QString("%1%").arg(progress));
-    _progressWidgetUI.progressBar->setValue(progress);
-   }, Qt::QueuedConnection);
-}
-
 // maybe remove slot specifier
 void Window::handle_launch()
 {
@@ -227,15 +201,24 @@ void Window::handle_launch()
         // patched will be set to true, if user picked the yes option
         if (patched)
         {
-          createProgressDialog("Patching");
+          QMetaObject::invokeMethod(this, [this]
+          {
+            this->_progressDialog->begin(_masterFrameUI.content);
+          }, Qt::QueuedConnection);
           try
           {
             launcher::fileUpdate(files, [this](const int progress) -> void
             {
-              updateProgressDialog(progress);
+              QMetaObject::invokeMethod(this, [this, progress]
+              {
+                this->_progressDialog->update(progress, "Patching");
+              }, Qt::QueuedConnection);
             });
 
-            updateProgressDialog(100); // make the widget close itself
+            QMetaObject::invokeMethod(this, [this]
+              {
+                this->_progressDialog->update(100, "Patching");
+              }, Qt::QueuedConnection); // make the widget close itself
           }
           catch (const std::exception& e)
           {
@@ -251,17 +234,17 @@ void Window::handle_launch()
       // if the files were recently patched
       if (patched)
       {
-        QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
+        //QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
         if (launcher::launch(this->_profile))
         {
-          std::this_thread::sleep_for(std::chrono::seconds(5));
+          //std::this_thread::sleep_for(std::chrono::seconds(5));
         }
         else
         {
           // TODO: log error
         }
 
-        QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
+        //QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
       }
 
       this->_workerRunning = false;

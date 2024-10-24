@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="/">
     <file>img/bg.png</file>
+    <file>img/frame.png</file>
     <file>img/btn/close.png</file>
     <file>img/btn/close_hover.png</file>
     <file>img/btn/close_pressed.png</file>

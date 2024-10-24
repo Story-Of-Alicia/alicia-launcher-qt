@@ -2,10 +2,11 @@
 #define LAUNCHER_MASTERWINDOW_HPP
 
 #include "Launcher.hpp"
+#include "ProgressDialog.hpp"
 #include "ui_LoginWidget.h"
 #include "ui_MasterFrame.h"
 #include "ui_MenuWidget.h"
-#include "ui_ProgressWidget.h"
+
 
 #include <memory>
 #include <thread>
@@ -46,21 +47,18 @@ private:
   std::atomic_bool _authenticated = false;
 
   QMovie* _gameStartMovie = nullptr;
-  QFrame* _masterFrame = new QFrame(this);
-  QDialog* _currentDialog = new QDialog(this);
+  QFrame* _master = new QFrame(this);
+  ProgressDialog* _progressDialog = new ProgressDialog(this);
 
   MasterFrame _masterFrameUI{};
   LoginWidget _loginWidgetUI{};
   MenuWidget _menuWidgetUI{};
-  ProgressWidget _progressWidgetUI{};
+
 
   void mousePressEvent(QMouseEvent* event) override;
   void mouseMoveEvent(QMouseEvent* event) override;
   void mouseReleaseEvent(QMouseEvent* event) override;
   bool eventFilter(QObject* object, QEvent* event) override;
-
-  void createProgressDialog(std::string const & title);
-  void updateProgressDialog(int progress);
 
   QPoint _mouseEventPos;
   bool _windowDragActive = false;
