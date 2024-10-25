@@ -14,8 +14,23 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#ProgressWidget {
-	background-image: url(&quot;:/img/progress_bg.png&quot;);
+   <string notr="true">QWidget#ProgressWidget {
+	background-image: url(&quot;:/img/progressbar_bg.png&quot;);
+}
+
+QProgressBar {
+	background-color: transparent;
+	background-image: url(&quot;:/img/progressbar_empty.png&quot;);
+	background-repeat: no-repeat;
+	border-radius: 0px;
+}
+
+QProgressBar::chunk{
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.818182, x2:0.491955, y2:0.091, stop:0 rgba(11, 172, 224, 255), stop:0.860231 rgba(140, 224, 248, 255), stop:0.861671 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
 }</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -44,8 +59,20 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
      <widget class="QProgressBar" name="progressBar">
+      <property name="minimumSize">
+       <size>
+        <width>388</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>388</width>
+        <height>19</height>
+       </size>
+      </property>
       <property name="value">
        <number>24</number>
       </property>
