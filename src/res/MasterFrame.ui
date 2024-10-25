@@ -523,6 +523,18 @@ QWidget#login_widget {
      <string notr="true">SUPPORT</string>
     </property>
    </widget>
+   <zorder>l_bg</zorder>
+   <zorder>l_corrupted</zorder>
+   <zorder>btn_repair</zorder>
+   <zorder>btn_ticket</zorder>
+   <zorder>login_widget</zorder>
+   <zorder>l_issues</zorder>
+   <zorder>l_version</zorder>
+   <zorder>l_game_start</zorder>
+   <zorder>menu_widget</zorder>
+   <zorder>l_troubleshoot</zorder>
+   <zorder>l_support</zorder>
+   <zorder>l_game_start_frame</zorder>
   </widget>
   <zorder>content</zorder>
   <zorder>l_frame</zorder>
