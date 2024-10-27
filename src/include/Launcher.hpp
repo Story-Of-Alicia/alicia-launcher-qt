@@ -1,6 +1,7 @@
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
 
+#include <condition_variable>
 #include <filesystem>
 #include <queue>
 
@@ -8,11 +9,6 @@
 
 namespace launcher
 {
-
-enum class State
-{
-  PAUSE, RESUME, STOP
-};
 
 struct Profile
 {
@@ -24,32 +20,66 @@ struct Profile
   uint64_t last_login;
 };
 
-
 class Launcher
 {
 public:
   Launcher();
 
-  [[nodiscard]] State state() const;
   [[nodiscard]] Profile profile() const;
   [[nodiscard]] int toPatch() const;
   [[nodiscard]] bool authenticated() const;
+  [[nodiscard]] bool updatePaused() const;
 
-  void setState(State const & ctrl);
-  void registerProgressCallback(std::function<void(int)> const * callback);
+  /*
+   * Sets _updatePaused to v.
+   * This will stop or resume any workers (file check, file update).
+   */
+  void setUpdatePaused(bool v);
 
-  bool authenticate(std::string const & username, std::string const & password);
-  void logout();
+  /*
+   * Sets _shouldStop to true
+   * This will stop any workers (file check, file update).
+   */
+  void stopUpdate();
 
-  bool checkFiles();
-  bool updateNextFile();
+  /*
+   * Authenticates specified user credentials.
+   * Returns true on success, false otherwise
+   */
+  bool authenticate(std::string const & username, std::string const & password) noexcept;
+
+  /*
+   * Logs out user.
+   */
+  void logout() noexcept;
+
+  /*
+   * Makes sure game files have correct checksums.
+   * Populates _toPatch queue.
+   * Can be interrupted with stopUpdate().
+   * In this case the function returns false.
+   * Returns true on success, false if an error occurred.
+   */
+  bool checkFiles() noexcept;
+
+  /*
+   * Iterates _toPatch and updates a single file.
+   * Can be interrupted with stopUpdate().
+   * In this case the function returns false.
+   * Returns true on success, false if an error occurred.
+   */
+  bool updateNextFile() noexcept;
 private:
-  State _state;
-  bool _authenticated;
-  Profile _profile;
+  std::mutex _mutex;
 
+  // requires _mutex lock
+  Profile _profile;
+  // requires _mutex lock
   std::queue<std::string> _toPatch;
-  std::function<void(int)> const * _progressCallback = nullptr;
+
+  std::atomic_bool _authenticated = false;
+  std::atomic_bool _shouldStop    = false;
+  std::atomic_bool _paused        = false;
 };
 }
 

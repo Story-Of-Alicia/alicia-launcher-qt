@@ -74,8 +74,6 @@ std::string sha256_checksum(const std::string& path)
 }
 
 Launcher::Launcher()
-    : _state()
-    , _authenticated(false)
 {
   _profile = Profile{
     .username = "%USERNAME%",
@@ -86,49 +84,41 @@ Launcher::Launcher()
   };
 }
 
-bool Launcher::authenticate(std::string const& username, std::string const& password)
+bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
 {
+  std::lock_guard lock(_mutex);
   _authenticated = true;
   return true;
 }
 
-void Launcher::logout()
+void Launcher::logout() noexcept { _authenticated = false; }
+
+Profile Launcher::profile() const { return _profile; }
+
+
+[[nodiscard]] int Launcher::toPatch() const { return static_cast<int>(_toPatch.size()); }
+
+[[nodiscard]] bool Launcher::authenticated() const { return _authenticated; }
+
+void Launcher::stopUpdate() { _shouldStop = true; }
+
+bool Launcher::updatePaused() const
 {
-  _authenticated = false;
+  return _paused;
 }
 
-Profile Launcher::profile() const
+void Launcher::setUpdatePaused(bool const v)
 {
-  return _profile;
+  _paused = v;
+  _paused.notify_all();
 }
 
-State Launcher::state() const {
-  return _state;
-}
-
-[[nodiscard]] int Launcher::toPatch() const
+bool Launcher::checkFiles() noexcept
 {
-  return static_cast<int>(_toPatch.size());
-}
+  std::lock_guard lock(_mutex);
 
-[[nodiscard]] bool Launcher::authenticated() const
-{
-  return _authenticated;
-}
-
-void Launcher::setState(State const& ctrl)
-{
-  _state = ctrl;
-}
-
-void Launcher::registerProgressCallback(std::function<void(int)> const * callback)
-{
-  _progressCallback = callback;
-}
-
-bool Launcher::checkFiles()
-{
-  if(!_toPatch.empty())
+  _shouldStop = false;
+  if (!_toPatch.empty())
   {
     std::queue<std::string> empty;
     std::swap(_toPatch, empty);
@@ -136,6 +126,10 @@ bool Launcher::checkFiles()
 
   for (const auto& [path, expected_sum] : obtainFileInfo())
   {
+    if (_shouldStop)
+      break;
+    // await unpaused state
+    _paused.wait(true);
     try
     {
       if (auto sum = sha256_checksum(path); sum != expected_sum)
@@ -151,13 +145,24 @@ bool Launcher::checkFiles()
   return _toPatch.empty();
 }
 
-bool Launcher::updateNextFile()
+bool Launcher::updateNextFile() noexcept
 {
-  if(_toPatch.empty())
+  std::lock_guard lock(_mutex);
+  // await un-paused state
+  _paused.wait(true);
+
+  if (_toPatch.empty())
     return false;
 
+  for(int i = 0; i < 5; i++)
+  {
+    if (_shouldStop)
+      break;
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // simulate heavy task
+  }
+
   _toPatch.pop();
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+
   return _toPatch.empty();
 }
 

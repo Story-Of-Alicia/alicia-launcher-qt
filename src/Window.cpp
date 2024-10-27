@@ -65,6 +65,11 @@ Window::Window(QWidget* parent)
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
+  connect(_progressDialog->_ui_progressWidget.btn_pause, SIGNAL(clicked()), this, SLOT(handle_install_pause()));
+  connect(_progressDialog->_ui_progressWidget.btn_close, SIGNAL(clicked()), this, SLOT(handle_install_stop()));
+
+  connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
+
   setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   setAttribute(Qt::WA_NoSystemBackground, true);
   setAttribute(Qt::WA_TranslucentBackground, true);
@@ -347,13 +352,12 @@ void Window::handle_frame_changed(int frameNumber)
 
 void Window::handle_install_pause()
 {
-  //if (_launcher.setState())
-  //_launcher.setState(launcher::State::PAUSE);
+  _launcher.setUpdatePaused(!_launcher.updatePaused());
 }
 
 void Window::handle_install_stop()
 {
-  _isPaused = !_isPaused;
+  _launcher.stopUpdate();
 }
 
 } // namespace ui

@@ -12,12 +12,13 @@ class ProgressDialog : public QDialog {
 public:
   explicit ProgressDialog(QWidget *parent = nullptr);
 
+  Ui::ProgressWidget _ui_progressWidget = Ui::ProgressWidget();
+
   void begin(QWidget * blur_target, QString const & title);
   void end();
   void update(const int &progress, QString const& text);
 
 private:
-  Ui::ProgressWidget _ui_progressWidget = Ui::ProgressWidget();
   QGraphicsBlurEffect *blur = nullptr;
   QWidget * blur_target = nullptr;
 };
