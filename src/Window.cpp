@@ -181,7 +181,7 @@ void Window::handle_launch()
   if (_workerRunning)
     return;
 
-  if (!_launcher.authenticated())
+  if (!_launcher.isAuthenticated())
     return;
 
   _workerRunning = true;
@@ -217,8 +217,12 @@ void Window::handle_launch()
           try
           {
             int done = 0;
-            while(_launcher.toPatch())
+            while(_launcher.toPatch() > 0)
             {
+              if(_launcher.isUpdateStopped())
+              {
+                break;
+              }
               _launcher.updateNextFile();
               done++;
 
@@ -230,15 +234,19 @@ void Window::handle_launch()
               }, Qt::BlockingQueuedConnection);
             }
 
-            isPatched = true;
 
-            QMetaObject::invokeMethod(this, [this]()
+            if (!_launcher.isUpdateStopped())
             {
+              QMetaObject::invokeMethod(this, [this]()
+              {
                this->_progressDialog->update(100, QString("Updating"));
-            }, Qt::BlockingQueuedConnection);
-
-            // make it pretty
-            std::this_thread::sleep_for(std::chrono::milliseconds(600));
+              }, Qt::BlockingQueuedConnection);
+              // make it pretty
+              std::this_thread::sleep_for(std::chrono::milliseconds(600));
+            } else
+            {
+              isPatched = true;
+            }
 
             QMetaObject::invokeMethod(this, [this]
             {
@@ -280,7 +288,7 @@ void Window::handle_launch()
 
 void Window::handle_post_login()
 {
-  if (_launcher.authenticated())
+  if (_launcher.isAuthenticated())
   {
     _menuWidgetUI.l_username_d->setText(QString(_launcher.profile().username.data()));
     _menuWidgetUI.l_player_d->setText(QString(_launcher.profile().character_name.data()));
@@ -352,7 +360,7 @@ void Window::handle_frame_changed(int frameNumber)
 
 void Window::handle_install_pause()
 {
-  _launcher.setUpdatePaused(!_launcher.updatePaused());
+  _launcher.setUpdatePaused(!_launcher.isUpdatePaused());
 }
 
 void Window::handle_install_stop()

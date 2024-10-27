@@ -44,7 +44,6 @@ private:
 
   std::unique_ptr<std::thread> _workerThread;
   std::atomic_bool _workerRunning  = false;
-  std::atomic_bool _isPaused       = false;
 
   QMovie*         _gameStartMovie = nullptr;
   QFrame*         _master         = new QFrame(this);

@@ -87,30 +87,34 @@ Launcher::Launcher()
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
 {
   std::lock_guard lock(_mutex);
-  _authenticated = true;
+  _isAuthenticated = true;
   return true;
 }
 
-void Launcher::logout() noexcept { _authenticated = false; }
+void Launcher::logout() noexcept { _isAuthenticated = false; }
 
 Profile Launcher::profile() const { return _profile; }
 
+int Launcher::toPatch() const { return static_cast<int>(_toPatch.size()); }
 
-[[nodiscard]] int Launcher::toPatch() const { return static_cast<int>(_toPatch.size()); }
+bool Launcher::isAuthenticated() const { return _isAuthenticated; }
 
-[[nodiscard]] bool Launcher::authenticated() const { return _authenticated; }
+bool Launcher::isUpdateStopped() const
+{
+  return _shouldStop;
+}
 
 void Launcher::stopUpdate() { _shouldStop = true; }
 
-bool Launcher::updatePaused() const
+bool Launcher::isUpdatePaused() const
 {
-  return _paused;
+  return _shouldPause;
 }
 
 void Launcher::setUpdatePaused(bool const v)
 {
-  _paused = v;
-  _paused.notify_all();
+  _shouldPause = v;
+  _shouldPause.notify_all();
 }
 
 bool Launcher::checkFiles() noexcept
@@ -129,7 +133,7 @@ bool Launcher::checkFiles() noexcept
     if (_shouldStop)
       break;
     // await unpaused state
-    _paused.wait(true);
+    _shouldPause.wait(true);
     try
     {
       if (auto sum = sha256_checksum(path); sum != expected_sum)
@@ -149,7 +153,7 @@ bool Launcher::updateNextFile() noexcept
 {
   std::lock_guard lock(_mutex);
   // await un-paused state
-  _paused.wait(true);
+  _shouldPause.wait(true);
 
   if (_toPatch.empty())
     return false;

@@ -27,8 +27,9 @@ public:
 
   [[nodiscard]] Profile profile() const;
   [[nodiscard]] int toPatch() const;
-  [[nodiscard]] bool authenticated() const;
-  [[nodiscard]] bool updatePaused() const;
+  [[nodiscard]] bool isAuthenticated() const;
+  [[nodiscard]] bool isUpdatePaused() const;
+  [[nodiscard]] bool isUpdateStopped() const;
 
   /*
    * Sets _updatePaused to v.
@@ -77,9 +78,9 @@ private:
   // requires _mutex lock
   std::queue<std::string> _toPatch;
 
-  std::atomic_bool _authenticated = false;
+  std::atomic_bool _isAuthenticated = false;
   std::atomic_bool _shouldStop    = false;
-  std::atomic_bool _paused        = false;
+  std::atomic_bool _shouldPause   = false;
 };
 }
 
