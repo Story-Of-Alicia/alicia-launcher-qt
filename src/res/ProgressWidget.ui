@@ -14,19 +14,35 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#ProgressWidget {
+   <string notr="true">QPushButton {
+	background: transparent;
+}
+QPushButton#btn_close {
+
+    border-image: url(:/img/btn/close_install.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_pause {
+    border-image: url(:/img/btn/pause_install.png);
+    background-repeat: no-repeat;
+}
+
+QWidget#ProgressWidget {
 	background-image: url(&quot;:/img/progressbar_bg.png&quot;);
 }
 
 QProgressBar {
 	background-color: transparent;
-	background-image: url(&quot;:/img/progressbar_empty.png&quot;);
-	background-repeat: no-repeat;
 	border-radius: 0px;
 }
 
+QLabel#l_progressBar_bg {
+	background-image: url(&quot;:/img/progressbar_empty.png&quot;);
+	background-repeat: no-repeat;
+}
+
 QProgressBar::chunk{
-	margin: 1px;
     border-width: 1px;
     border-style: solid;
     border-radius: 3px;
@@ -34,69 +50,114 @@ QProgressBar::chunk{
     background-color: qlineargradient(spread:pad, x1:0.503, y1:0.818182, x2:0.491955, y2:0.091, stop:0 rgba(11, 172, 224, 255), stop:0.860231 rgba(140, 224, 248, 255), stop:0.861671 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
 }</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QProgressBar" name="progressBar">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>471</width>
-     <height>121</height>
+     <x>52</x>
+     <y>61</y>
+     <width>388</width>
+     <height>17</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="leftMargin">
-     <number>10</number>
-    </property>
-    <property name="rightMargin">
-     <number>10</number>
-    </property>
-    <item>
-     <widget class="QLabel" name="l_title">
-      <property name="text">
-       <string>UPDATING</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
-     <widget class="QProgressBar" name="progressBar">
-      <property name="minimumSize">
-       <size>
-        <width>388</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>388</width>
-        <height>19</height>
-       </size>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-      <property name="format">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="l_status">
-      <property name="text">
-       <string>34%</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="minimumSize">
+    <size>
+     <width>388</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>388</width>
+     <height>19</height>
+    </size>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+   <property name="textVisible">
+    <bool>false</bool>
+   </property>
+   <property name="format">
+    <string/>
+   </property>
   </widget>
+  <widget class="QLabel" name="l_status">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>90</y>
+     <width>451</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>34%</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_title">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>451</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>UPDATING</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_progressBar_bg">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>65</y>
+     <width>407</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_pause">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>30</y>
+     <width>13</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_close">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>30</y>
+     <width>13</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>l_progressBar_bg</zorder>
+  <zorder>progressBar</zorder>
+  <zorder>l_status</zorder>
+  <zorder>l_title</zorder>
+  <zorder>btn_pause</zorder>
+  <zorder>btn_close</zorder>
  </widget>
  <resources>
   <include location="master.qrc"/>

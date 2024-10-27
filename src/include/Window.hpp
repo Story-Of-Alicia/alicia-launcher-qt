@@ -11,7 +11,6 @@
 #include <memory>
 #include <thread>
 
-#include <QDialog>
 #include <QMouseEvent>
 
 using namespace Ui;
@@ -37,22 +36,23 @@ private slots:
   void handle_settings();
   void handle_frame_changed(int frameNumber);
   void handle_post_login();
+  void handle_install_pause();
+  void handle_install_stop();
 
 private:
-  //not thread-safe
-  launcher::Profile _profile;
+  launcher::Launcher _launcher;
 
   std::unique_ptr<std::thread> _workerThread;
-  std::atomic_bool _workerRunning = false;
-  std::atomic_bool _authenticated = false;
+  std::atomic_bool _workerRunning  = false;
+  std::atomic_bool _isPaused       = false;
 
-  QMovie* _gameStartMovie = nullptr;
-  QFrame* _master = new QFrame(this);
+  QMovie*         _gameStartMovie = nullptr;
+  QFrame*         _master         = new QFrame(this);
   ProgressDialog* _progressDialog = new ProgressDialog(this);
 
   MasterFrame _masterFrameUI{};
   LoginWidget _loginWidgetUI{};
-  MenuWidget _menuWidgetUI{};
+  MenuWidget  _menuWidgetUI{};
 
 
   void mousePressEvent(QMouseEvent* event) override;

@@ -12,7 +12,7 @@ class ProgressDialog : public QDialog {
 public:
   explicit ProgressDialog(QWidget *parent = nullptr);
 
-  void begin(QWidget * blur_target);
+  void begin(QWidget * blur_target, QString const & title);
   void end();
   void update(const int &progress, QString const& text);
 

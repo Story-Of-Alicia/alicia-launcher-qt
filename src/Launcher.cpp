@@ -73,49 +73,92 @@ std::string sha256_checksum(const std::string& path)
   return ss.str();
 }
 
-Profile authenticate(std::string_view const& username, std::string_view const& password)
+Launcher::Launcher()
+    : _state()
+    , _authenticated(false)
 {
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-  return Profile{
-  .username = "%USERNAME%",
-  .character_name = "%CHARACTER%",
-  .guild = "%GUILD%",
-  .level = 69,
-  .last_login = 0,
+  _profile = Profile{
+    .username = "%USERNAME%",
+    .character_name = "%CHARACTER%",
+    .guild = "%GUILD%",
+    .level = 69,
+    .last_login = 0,
   };
 }
 
-std::vector<std::string> fileCheck() noexcept
+bool Launcher::authenticate(std::string const& username, std::string const& password)
 {
-  auto expected = obtainFileInfo();
-  auto unexpected = std::vector<std::string>();
-  for (const auto& [path, expected_sum] : expected)
+  _authenticated = true;
+  return true;
+}
+
+void Launcher::logout()
+{
+  _authenticated = false;
+}
+
+Profile Launcher::profile() const
+{
+  return _profile;
+}
+
+State Launcher::state() const {
+  return _state;
+}
+
+[[nodiscard]] int Launcher::toPatch() const
+{
+  return static_cast<int>(_toPatch.size());
+}
+
+[[nodiscard]] bool Launcher::authenticated() const
+{
+  return _authenticated;
+}
+
+void Launcher::setState(State const& ctrl)
+{
+  _state = ctrl;
+}
+
+void Launcher::registerProgressCallback(std::function<void(int)> const * callback)
+{
+  _progressCallback = callback;
+}
+
+bool Launcher::checkFiles()
+{
+  if(!_toPatch.empty())
+  {
+    std::queue<std::string> empty;
+    std::swap(_toPatch, empty);
+  }
+
+  for (const auto& [path, expected_sum] : obtainFileInfo())
   {
     try
     {
       if (auto sum = sha256_checksum(path); sum != expected_sum)
       {
-        unexpected.push_back(path);
+        _toPatch.push(path);
       }
     }
     catch (std::logic_error const& e)
     {
-      unexpected.push_back(path);
+      _toPatch.push(path);
     }
   }
-  return unexpected;
+  return _toPatch.empty();
 }
 
-bool fileUpdate(std::vector<std::string> const &files, const std::function<void(int)>& cb)
+bool Launcher::updateNextFile()
 {
-  cb(30);
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-  cb(65);
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-  cb(90);
-  return true;
-}
+  if(_toPatch.empty())
+    return false;
 
-bool launch(Profile const& profile) { return true; }
+  _toPatch.pop();
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  return _toPatch.empty();
+}
 
 } // namespace launcher

@@ -2,12 +2,17 @@
 #define LAUNCHER_HPP
 
 #include <filesystem>
-#include <vector>
+#include <queue>
 
 #include <QPromise>
 
 namespace launcher
 {
+
+enum class State
+{
+  PAUSE, RESUME, STOP
+};
 
 struct Profile
 {
@@ -19,17 +24,33 @@ struct Profile
   uint64_t last_login;
 };
 
-//TODO: docs
-Profile authenticate(std::string_view const & username, std::string_view const & password);
 
-//TODO: docs
-std::vector<std::string> fileCheck() noexcept;
+class Launcher
+{
+public:
+  Launcher();
 
-//TODO: docs
-bool fileUpdate(std::vector<std::string> const &files, const std::function<void(int)>&);
+  [[nodiscard]] State state() const;
+  [[nodiscard]] Profile profile() const;
+  [[nodiscard]] int toPatch() const;
+  [[nodiscard]] bool authenticated() const;
 
-//TODO: docs
-bool launch(Profile const &profile);
+  void setState(State const & ctrl);
+  void registerProgressCallback(std::function<void(int)> const * callback);
+
+  bool authenticate(std::string const & username, std::string const & password);
+  void logout();
+
+  bool checkFiles();
+  bool updateNextFile();
+private:
+  State _state;
+  bool _authenticated;
+  Profile _profile;
+
+  std::queue<std::string> _toPatch;
+  std::function<void(int)> const * _progressCallback = nullptr;
+};
 }
 
 #endif // LAUNCHER_HPP

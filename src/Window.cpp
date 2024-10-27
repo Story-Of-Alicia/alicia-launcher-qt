@@ -14,6 +14,7 @@
 
 constexpr char const* const WEB_STORYOFALICIA_TICKET = "https://storyofalicia.com/ticket";
 
+
 namespace ui
 {
 
@@ -164,7 +165,7 @@ void Window::handle_ticket() { QDesktopServices::openUrl(QString(WEB_STORYOFALIC
 
 void Window::handle_logout()
 {
-  _authenticated = false;
+  _launcher.logout();
   _masterFrameUI.login_widget->show();
   _masterFrameUI.menu_widget->hide();
 }
@@ -175,73 +176,94 @@ void Window::handle_launch()
   if (_workerRunning)
     return;
 
-  if (!_authenticated)
+  if (!_launcher.authenticated())
     return;
 
   _workerRunning = true;
   _workerThread = std::make_unique<std::thread>(
     [this]
     {
-      bool patched = false;
-      if (const auto files = launcher::fileCheck(); !files.empty())
+      bool shouldPatch = false;
+      bool isPatched = false;
+      if (!_launcher.checkFiles())
       {
+        int toPatch = _launcher.toPatch();
         QMetaObject::invokeMethod(
           this,
-          [this, files]()
+          [this, toPatch]()
           {
             QMessageBox box(this);
             box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             box.setIcon(QMessageBox::Icon::Critical);
-            box.setText(QString("%1 files need patching. Patch them?").arg(files.size()));
+            box.setText(QString("%1 files need patching. Patch them?").arg(toPatch));
             return box.exec() == QMessageBox::Yes;
           },
           Qt::BlockingQueuedConnection,
-          qReturnArg(patched));
+          qReturnArg(shouldPatch));
         // patched will be set to true, if user picked the yes option
-        if (patched)
+        if (shouldPatch)
         {
           QMetaObject::invokeMethod(this, [this]
           {
-            this->_progressDialog->begin(_masterFrameUI.content);
-          }, Qt::QueuedConnection);
+            this->_progressDialog->begin(_masterFrameUI.content, "Updating");
+          }, Qt::BlockingQueuedConnection);
+          int all = _launcher.toPatch();
+
           try
           {
-            launcher::fileUpdate(files, [this](const int progress) -> void
+            int done = 0;
+            while(_launcher.toPatch())
             {
-              QMetaObject::invokeMethod(this, [this, progress]
+              _launcher.updateNextFile();
+              done++;
+
+              int progress = static_cast<int>((static_cast<double>(done) / static_cast<double>(all)) * 100 ) ;
+
+              QMetaObject::invokeMethod(this, [this, progress]()
               {
-                this->_progressDialog->update(progress, "Patching");
-              }, Qt::QueuedConnection);
-            });
+                this->_progressDialog->update(progress, QString("Updating"));
+              }, Qt::BlockingQueuedConnection);
+            }
+
+            isPatched = true;
+
+            QMetaObject::invokeMethod(this, [this]()
+            {
+               this->_progressDialog->update(100, QString("Updating"));
+            }, Qt::BlockingQueuedConnection);
+
+            // make it pretty
+            std::this_thread::sleep_for(std::chrono::milliseconds(600));
 
             QMetaObject::invokeMethod(this, [this]
-              {
-                this->_progressDialog->update(100, "Patching");
-              }, Qt::QueuedConnection); // make the widget close itself
+            {
+              this->_progressDialog->end();
+            }, Qt::QueuedConnection);
+
           }
           catch (const std::exception& e)
           {
             // TODO: log patching error
-            patched = false;
+            isPatched = false;
           }
         }
       } else
       {
-        patched = true; // all files have the correct checksum
+        isPatched = true; // all files have the correct checksum
       }
 
       // if the files were recently patched
-      if (patched)
+      if (isPatched)
       {
         //QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
-        if (launcher::launch(this->_profile))
-        {
+        //if (launcher::launch(this->_profile))
+        //{
           //std::this_thread::sleep_for(std::chrono::seconds(5));
-        }
-        else
-        {
+        //}
+        //else
+        //{
           // TODO: log error
-        }
+        //}
 
         //QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
       }
@@ -253,14 +275,14 @@ void Window::handle_launch()
 
 void Window::handle_post_login()
 {
-  if (_authenticated)
+  if (_launcher.authenticated())
   {
-    _menuWidgetUI.l_username_d->setText(QString(_profile.username.data()));
-    _menuWidgetUI.l_player_d->setText(QString(_profile.character_name.data()));
+    _menuWidgetUI.l_username_d->setText(QString(_launcher.profile().username.data()));
+    _menuWidgetUI.l_player_d->setText(QString(_launcher.profile().character_name.data()));
 
-    _menuWidgetUI.l_level_d->setText(QString::number(_profile.level));
-    _menuWidgetUI.l_guild_d->setText(QString(_profile.guild.data()));
-    auto const date = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(_profile.last_login));
+    _menuWidgetUI.l_level_d->setText(QString::number(_launcher.profile().level));
+    _menuWidgetUI.l_guild_d->setText(QString(_launcher.profile().guild.data()));
+    auto const date = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(_launcher.profile().last_login));
     _menuWidgetUI.l_last_login_d->setText(date.toString("yy-MM-dd HH:mm:ss"));
 
     _masterFrameUI.menu_widget->show();
@@ -294,8 +316,7 @@ void Window::handle_login()
     {
       try
       {
-        this->_profile = launcher::authenticate(username, password);
-        this->_authenticated = true;
+        _launcher.authenticate(username, password);
         QMetaObject::invokeMethod(this, Window::handle_post_login, Qt::QueuedConnection);
       }
       catch (std::exception& e)
@@ -322,6 +343,17 @@ void Window::handle_frame_changed(int frameNumber)
     // stop the playback at frame 0, when _shouldAnimateGameStart is false
     _gameStartMovie->setPaused(true);
   }
+}
+
+void Window::handle_install_pause()
+{
+  //if (_launcher.setState())
+  //_launcher.setState(launcher::State::PAUSE);
+}
+
+void Window::handle_install_stop()
+{
+  _isPaused = !_isPaused;
 }
 
 } // namespace ui
