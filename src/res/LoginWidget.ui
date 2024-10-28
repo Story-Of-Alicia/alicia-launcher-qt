@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
-    <height>300</height>
+    <width>562</width>
+    <height>338</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <hintingpreference>PreferNoHinting</hintingpreference>
+    <fontweight>DemiBold</fontweight>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -35,7 +41,24 @@ QLabel#l_sign_up {
 }
 
 QLabel#l_error {
-	color: red;
+	color: white;
+	background-color: rgb(255, 68, 28);
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+QLabel#l_error_user {
+	border-width: 2px;
+	border-style: solid;
+    border-radius: 3px;
+    border-color: rgb(255, 68, 28);
+}
+
+QLabel#l_error_pass {
+	border-width: 2px;
+	border-style: solid;
+    border-radius: 3px;
+    border-color: rgb(255, 68, 28);
 }
 
 QLineEdit {
@@ -248,21 +271,64 @@ QPushButton#btn_login:disabled {
   <widget class="QLabel" name="l_error">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>0</y>
-     <width>301</width>
-     <height>41</height>
+     <x>59</x>
+     <y>24</y>
+     <width>272</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>20</pointsize>
+     <family>NanumGothic</family>
+     <pointsize>9</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight>ExtraBold</fontweight>
     </font>
    </property>
    <property name="text">
-    <string>%BAD PASSWORD%</string>
+    <string>Invalid username or password</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="l_error_user">
+   <property name="geometry">
+    <rect>
+     <x>43</x>
+     <y>45</y>
+     <width>304</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="l_error_pass">
+   <property name="geometry">
+    <rect>
+     <x>43</x>
+     <y>109</y>
+     <width>304</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>l_error</zorder>
+  <zorder>l_story_awaits</zorder>
+  <zorder>btn_login</zorder>
+  <zorder>l_sign_up</zorder>
+  <zorder>input_username</zorder>
+  <zorder>check_remember</zorder>
+  <zorder>input_password</zorder>
+  <zorder>l_remember_me</zorder>
+  <zorder>l_error_user</zorder>
+  <zorder>l_error_pass</zorder>
  </widget>
  <resources>
   <include location="master.qrc"/>
