@@ -26,7 +26,8 @@ public:
   Launcher();
 
   [[nodiscard]] Profile profile() const;
-  [[nodiscard]] int toPatch() const;
+  [[nodiscard]] int countToDownload() const;
+  [[nodiscard]] int countToPatch() const;
   [[nodiscard]] bool isAuthenticated() const;
   [[nodiscard]] bool isUpdatePaused() const;
   [[nodiscard]] bool isUpdateStopped() const;
@@ -57,19 +58,28 @@ public:
   /*
    * Makes sure game files have correct checksums.
    * Populates _toPatch queue.
-   * Can be interrupted with stopUpdate().
-   * In this case the function returns false.
-   * Returns true on success, false if an error occurred.
+   *
+   *
+   * TODO: docs
    */
   bool checkFiles() noexcept;
 
   /*
-   * Iterates _toPatch and updates a single file.
-   * Can be interrupted with stopUpdate().
-   * In this case the function returns false.
-   * Returns true on success, false if an error occurred.
+   * Iterates _toDownload and updates a single file.
+   *
+   *
+   * TODO: docs
    */
-  bool updateNextFile() noexcept;
+  bool downloadNextFile(std::function<void(int, std::string)> const &) noexcept;
+
+  /*
+  * Iterates _toPatch and updates a single file.
+  *
+  *
+  * TODO: docs
+  */
+  bool patchNextFile(std::function<void(int, std::string)> const & cb) noexcept;
+
 private:
   std::mutex _mutex;
 
@@ -77,6 +87,7 @@ private:
   Profile _profile;
   // requires _mutex lock
   std::queue<std::string> _toPatch;
+  std::queue<std::string> _toDownload;
 
   std::atomic_bool _isAuthenticated = false;
   std::atomic_bool _shouldStop    = false;

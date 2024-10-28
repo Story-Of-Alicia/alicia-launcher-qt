@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>486</width>
-    <height>135</height>
+    <width>500</width>
+    <height>173</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <kerning>false</kerning>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,6 +21,12 @@
   <property name="styleSheet">
    <string notr="true">QPushButton {
 	background: transparent;
+}
+
+QLabel#l_title {
+	font: 19px NotEurostile;
+	font-weight: regular;
+	color: #392518;
 }
 QPushButton#btn_close {
 
@@ -42,19 +53,30 @@ QLabel#l_progressBar_bg {
 	background-repeat: no-repeat;
 }
 
-QProgressBar::chunk{
+QProgressBar#pb_primary::chunk {
     border-width: 1px;
     border-style: solid;
     border-radius: 3px;
     border-color: rgb(47, 180, 224);
-    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.818182, x2:0.491955, y2:0.091, stop:0 rgba(11, 172, 224, 255), stop:0.860231 rgba(140, 224, 248, 255), stop:0.861671 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
-}</string>
+   background-color: qlineargradient(spread:pad, x1:0.503, y1:0.818182, x2:0.503, y2:0.091, stop:0 rgba(11, 172, 224, 255), stop:0.860231 rgba(140, 224, 248, 255), stop:0.861671 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
+}
+ 
+QProgressBar::chunk_error {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: rgb(204, 76, 1);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.818182, x2:0.503, y2:0.091, stop:0 rgba(237, 52, 8, 255), stop:0.860231 rgba(252, 132, 64, 255), stop:0.861671 rgba(246, 217, 153, 255), stop:1 rgba(246, 217, 153, 255));
+}
+
+
+</string>
   </property>
-  <widget class="QProgressBar" name="progressBar">
+  <widget class="QProgressBar" name="pb_primary">
    <property name="geometry">
     <rect>
      <x>52</x>
-     <y>61</y>
+     <y>86</y>
      <width>388</width>
      <height>17</height>
     </rect>
@@ -85,7 +107,7 @@ QProgressBar::chunk{
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>90</y>
+     <y>100</y>
      <width>451</width>
      <height>36</height>
     </rect>
@@ -107,30 +129,17 @@ QProgressBar::chunk{
     </rect>
    </property>
    <property name="text">
-    <string>UPDATING</string>
+    <string>DOWNLOADING ALICIA.EXE (1/4)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="l_progressBar_bg">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>65</y>
-     <width>407</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_pause">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>30</y>
+     <x>360</x>
+     <y>130</y>
      <width>13</width>
      <height>13</height>
     </rect>
@@ -142,7 +151,7 @@ QProgressBar::chunk{
   <widget class="QPushButton" name="btn_close">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>450</x>
      <y>30</y>
      <width>13</width>
      <height>13</height>
@@ -152,12 +161,37 @@ QProgressBar::chunk{
     <string/>
    </property>
   </widget>
-  <zorder>l_progressBar_bg</zorder>
-  <zorder>progressBar</zorder>
-  <zorder>l_status</zorder>
-  <zorder>l_title</zorder>
-  <zorder>btn_pause</zorder>
-  <zorder>btn_close</zorder>
+  <widget class="QProgressBar" name="pb_secondary">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>66</y>
+     <width>388</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>388</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>388</width>
+     <height>19</height>
+    </size>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+   <property name="textVisible">
+    <bool>false</bool>
+   </property>
+   <property name="format">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="master.qrc"/>

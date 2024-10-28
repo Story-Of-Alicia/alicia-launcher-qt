@@ -8,7 +8,7 @@
 #include <QPainter>
 #include <QtConcurrent>
 #include <QWidget>
-#include <QGraphicsBlurEffect>
+#include <QFontDatabase>
 
 #include <cmath>
 
@@ -21,6 +21,7 @@ namespace ui
 int start(int argc, char* argv[])
 {
   QApplication application(argc, argv);
+  QFontDatabase::addApplicationFont(":/font/NotEurostile.otf");
 
   Window window{};
   window.show();
@@ -188,49 +189,87 @@ void Window::handle_launch()
   _workerThread = std::make_unique<std::thread>(
     [this]
     {
-      bool shouldPatch = false;
-      bool isPatched = false;
+      bool isUpdated = false;
+
       if (!_launcher.checkFiles())
       {
-        int toPatch = _launcher.toPatch();
+        bool shouldUpdate = false;
+        int toDownload = _launcher.countToDownload();
         QMetaObject::invokeMethod(
           this,
-          [this, toPatch]()
+          [this, toDownload]()
           {
             QMessageBox box(this);
             box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             box.setIcon(QMessageBox::Icon::Critical);
-            box.setText(QString("%1 files need patching. Patch them?").arg(toPatch));
+            box.setText(QString("%1 files need patching. Patch them?").arg(toDownload));
             return box.exec() == QMessageBox::Yes;
           },
           Qt::BlockingQueuedConnection,
-          qReturnArg(shouldPatch));
-        // patched will be set to true, if user picked the yes option
-        if (shouldPatch)
+          qReturnArg(shouldUpdate));
+
+        // shouldUpdate will be set to true, if user picked the yes option
+        if (shouldUpdate)
         {
           QMetaObject::invokeMethod(this, [this]
           {
             this->_progressDialog->begin(_masterFrameUI.content, "Updating");
           }, Qt::BlockingQueuedConnection);
-          int all = _launcher.toPatch();
+
+          int to_download = _launcher.countToDownload();
+          int to_patch = to_download;
+          int all_files = _launcher.countToDownload() * 2;
+
+          int downloaded = 0;
+          int patched = 0;
+          int overall_done = 0;
 
           try
           {
-            int done = 0;
-            while(_launcher.toPatch() > 0)
+            while(_launcher.countToDownload() > 0)
             {
+              downloaded++;
               if(_launcher.isUpdateStopped())
               {
                 break;
               }
-              _launcher.updateNextFile();
-              done++;
 
-              int progress = static_cast<int>((static_cast<double>(done) / static_cast<double>(all)) * 100 ) ;
-
-              QMetaObject::invokeMethod(this, [this, progress]()
+              _launcher.downloadNextFile([this, downloaded, to_download](int progress, std::string name) -> void
               {
-                this->_progressDialog->update(progress, QString("Updating"));
+                QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), downloaded, to_download]() mutable
+                {
+                  std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+                  this->_progressDialog->updateSecondary(progress, QString("DOWNLOADING '%1' (%2 / %3)").arg(name.data()).arg(downloaded).arg(to_download));
+                }, Qt::QueuedConnection);
+              });
+
+              overall_done++;
+              QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
+              {
+                this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
+              }, Qt::BlockingQueuedConnection);
+            }
+
+            while(_launcher.countToPatch() > 0)
+            {
+              patched++;
+              if(_launcher.isUpdateStopped())
+              {
+                break;
+              }
+
+              _launcher.patchNextFile([this, to_patch, patched](int progress, std::string name) -> void
+              {
+                QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), to_patch, patched]() mutable
+                {
+                  std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+                  this->_progressDialog->updateSecondary(progress, QString("PATCHING '%1' (%2 / %3)").arg(name.data()).arg(patched).arg(to_patch));
+                }, Qt::BlockingQueuedConnection);
+              });
+              overall_done++;
+              QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
+              {
+                this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
               }, Qt::BlockingQueuedConnection);
             }
 
@@ -239,13 +278,13 @@ void Window::handle_launch()
             {
               QMetaObject::invokeMethod(this, [this]()
               {
-               this->_progressDialog->update(100, QString("Updating"));
+               this->_progressDialog->updateSecondary(100, QString("Finished"));
               }, Qt::BlockingQueuedConnection);
               // make it pretty
               std::this_thread::sleep_for(std::chrono::milliseconds(600));
             } else
             {
-              isPatched = true;
+              isUpdated = true;
             }
 
             QMetaObject::invokeMethod(this, [this]
@@ -257,16 +296,16 @@ void Window::handle_launch()
           catch (const std::exception& e)
           {
             // TODO: log patching error
-            isPatched = false;
+            isUpdated = false;
           }
         }
       } else
       {
-        isPatched = true; // all files have the correct checksum
+        isUpdated = true; // all files have the correct checksum
       }
 
       // if the files were recently patched
-      if (isPatched)
+      if (isUpdated)
       {
         //QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
         //if (launcher::launch(this->_profile))

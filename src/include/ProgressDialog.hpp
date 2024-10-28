@@ -16,11 +16,16 @@ public:
 
   void begin(QWidget * blur_target, QString const & title);
   void end();
-  void update(const int &progress, QString const& text);
+  void updatePrimary(const int &progress) const;
+  void updateSecondary(const int &progress, QString const& text) const;
 
 private:
   QGraphicsBlurEffect *blur = nullptr;
   QWidget * blur_target = nullptr;
+
+  std::atomic_bool _shouldRun = false;
+  std::atomic_int _primaryProgress = 0;
+  std::atomic_int _secondaryProgress = 0;
 };
 
 #endif // PROGRESSDIALOG_HPP

@@ -1,6 +1,7 @@
 #include "ProgressDialog.hpp"
 
 #include <QGraphicsBlurEffect>
+#include <QtConcurrent>
 
 ProgressDialog::ProgressDialog(QWidget * parent) : QDialog(parent)
 {
@@ -22,18 +23,38 @@ void ProgressDialog::begin(QWidget * blur_target, QString const & title)
   blur_target->setDisabled(true);
   setVisible(true);
 
-  update(0, title);
+  _ui_progressWidget.l_title->setText(title);
+  _ui_progressWidget.l_status->setText("0%");
+  _ui_progressWidget.pb_primary->setValue(0);
+  _ui_progressWidget.pb_secondary->setValue(0);
 }
 void ProgressDialog::end()
 {
   setVisible(false);
+  blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
   blur->setEnabled(false);
   blur_target->setDisabled(false);
 }
 
-void ProgressDialog::update(const int &progress, QString const& text)
+void ProgressDialog::updateSecondary(const int& progress, QString const& text) const
 {
   _ui_progressWidget.l_title->setText(text);
+  auto animation = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
+  animation->setDuration(100);
+  animation->setStartValue(_ui_progressWidget.pb_secondary->value());
+  animation->setEndValue(progress);
+  animation->setEasingCurve(QEasingCurve::Linear);
+  animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+
+void ProgressDialog::updatePrimary(const int& progress) const
+{
   _ui_progressWidget.l_status->setText(QString("%1%").arg(progress));
-  _ui_progressWidget.progressBar->setValue(progress);
+  auto animation = new QPropertyAnimation(_ui_progressWidget.pb_primary, "value");
+  animation->setDuration(100);
+  animation->setStartValue(_ui_progressWidget.pb_primary->value());
+  animation->setEndValue(progress);
+  animation->setEasingCurve(QEasingCurve::Linear);
+  animation->start(QAbstractAnimation::DeleteWhenStopped);
 }

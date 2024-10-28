@@ -95,21 +95,17 @@ void Launcher::logout() noexcept { _isAuthenticated = false; }
 
 Profile Launcher::profile() const { return _profile; }
 
-int Launcher::toPatch() const { return static_cast<int>(_toPatch.size()); }
+int Launcher::countToDownload() const { return static_cast<int>(_toDownload.size()); }
+
+int Launcher::countToPatch() const { return static_cast<int>(_toPatch.size()); }
 
 bool Launcher::isAuthenticated() const { return _isAuthenticated; }
 
-bool Launcher::isUpdateStopped() const
-{
-  return _shouldStop;
-}
+bool Launcher::isUpdateStopped() const { return _shouldStop; }
 
 void Launcher::stopUpdate() { _shouldStop = true; }
 
-bool Launcher::isUpdatePaused() const
-{
-  return _shouldPause;
-}
+bool Launcher::isUpdatePaused() const { return _shouldPause; }
 
 void Launcher::setUpdatePaused(bool const v)
 {
@@ -122,10 +118,10 @@ bool Launcher::checkFiles() noexcept
   std::lock_guard lock(_mutex);
 
   _shouldStop = false;
-  if (!_toPatch.empty())
+  if (!_toDownload.empty())
   {
     std::queue<std::string> empty;
-    std::swap(_toPatch, empty);
+    std::swap(_toDownload, empty);
   }
 
   for (const auto& [path, expected_sum] : obtainFileInfo())
@@ -138,36 +134,64 @@ bool Launcher::checkFiles() noexcept
     {
       if (auto sum = sha256_checksum(path); sum != expected_sum)
       {
-        _toPatch.push(path);
+        _toDownload.push(path);
       }
     }
     catch (std::logic_error const& e)
     {
-      _toPatch.push(path);
+      _toDownload.push(path);
     }
   }
-  return _toPatch.empty();
+  return _toDownload.empty();
 }
 
-bool Launcher::updateNextFile() noexcept
+bool Launcher::downloadNextFile(std::function<void(int, std::string)> const & cb) noexcept
 {
   std::lock_guard lock(_mutex);
   // await un-paused state
+  _shouldPause.wait(true);
+  auto file = _toDownload.front();
+
+  if (_toDownload.empty())
+    return false;
+
+  for (int i = 0; i < 5; i++)
+  {
+    if (_shouldStop)
+      break;
+    _shouldPause.wait(true);
+    cb(static_cast<int>((static_cast<double>(i+1) / static_cast<double>(5)) * 100), file);
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // simulate heavy task
+  }
+
+  _toDownload.pop();
+  _toPatch.push(file);
+
+  return true;
+}
+
+bool Launcher::patchNextFile(std::function<void(int, std::string)> const & cb) noexcept
+{
+  std::lock_guard lock(_mutex);
   _shouldPause.wait(true);
 
   if (_toPatch.empty())
     return false;
 
-  for(int i = 0; i < 5; i++)
+  auto file = _toPatch.front();
+
+  for (int i = 0; i < 5; i++)
   {
     if (_shouldStop)
       break;
+    _shouldPause.wait(true);
+    cb(static_cast<int>((static_cast<double>(i+1) / static_cast<double>(5)) * 100), file);
     std::this_thread::sleep_for(std::chrono::milliseconds(500)); // simulate heavy task
   }
 
   _toPatch.pop();
 
-  return _toPatch.empty();
+  return true;
 }
 
 } // namespace launcher
