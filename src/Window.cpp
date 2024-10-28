@@ -14,14 +14,14 @@
 
 constexpr char const* const WEB_STORYOFALICIA_TICKET = "https://storyofalicia.com/ticket";
 
-
 namespace ui
 {
 
 int start(int argc, char* argv[])
 {
   QApplication application(argc, argv);
-  QFontDatabase::addApplicationFont(":/font/NotEurostile.otf");
+  auto result = QFontDatabase::addApplicationFont(":/font/NotEurostile.otf");
+  assert( result != -1);
 
   Window window{};
   window.show();
