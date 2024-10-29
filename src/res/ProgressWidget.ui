@@ -159,7 +159,6 @@ QProgressBar#pb_secondary::chunk {
      <family>NotEurostile</family>
      <pointsize>14</pointsize>
      <italic>false</italic>
-     <fontweight></fontweight>
     </font>
    </property>
    <property name="text">
