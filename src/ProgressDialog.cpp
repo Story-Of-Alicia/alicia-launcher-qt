@@ -39,12 +39,19 @@ void ProgressDialog::end()
 void ProgressDialog::updateSecondary(const int& progress, QString const& text) const
 {
   _ui_progressWidget.l_title->setText(text);
-  auto animation = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
-  animation->setDuration(100);
-  animation->setStartValue(_ui_progressWidget.pb_secondary->value());
-  animation->setEndValue(progress);
-  animation->setEasingCurve(QEasingCurve::Linear);
-  animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+  if (progress == 0)
+  {
+    _ui_progressWidget.pb_secondary->setValue(0);
+  } else
+  {
+    auto animation = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
+    animation->setDuration(150);
+    animation->setStartValue(_ui_progressWidget.pb_secondary->value());
+    animation->setEndValue(progress);
+    animation->setEasingCurve(QEasingCurve::Linear);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+  }
 }
 
 

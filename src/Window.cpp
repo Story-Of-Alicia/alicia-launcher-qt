@@ -269,7 +269,7 @@ void Window::handle_launch()
               QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
               {
                 this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              }, Qt::BlockingQueuedConnection);
+              }, Qt::QueuedConnection);
             }
 
             while(_launcher.countToPatch() > 0)
@@ -286,39 +286,47 @@ void Window::handle_launch()
                 {
                   std::transform(name.begin(), name.end(), name.begin(), ::toupper);
                   this->_progressDialog->updateSecondary(progress, QString("PATCHING '%1' (%2/%3)").arg(name.data()).arg(patched).arg(to_patch));
-                }, Qt::BlockingQueuedConnection);
+                }, Qt::QueuedConnection);
               });
               overall_done++;
               QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
               {
                 this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              }, Qt::BlockingQueuedConnection);
+              }, Qt::QueuedConnection);
             }
 
-
-            if (!_launcher.isUpdateStopped())
+            if (_launcher.isUpdateStopped())
             {
-              QMetaObject::invokeMethod(this, [this]()
+              QMetaObject::invokeMethod(this, [this]
               {
-               this->_progressDialog->updateSecondary(100, QString("FINISHED"));
-              }, Qt::BlockingQueuedConnection);
-              // make it pretty
-              std::this_thread::sleep_for(std::chrono::milliseconds(600));
+                this->_progressDialog->end();
+              }, Qt::QueuedConnection);
+              isUpdated = false; // not finished updating
             } else
             {
-              isUpdated = true;
+              isUpdated = true; // updated
+              auto thread = std::thread([this]
+              {
+                QMetaObject::invokeMethod(this, [this]()
+                {
+                  this->_progressDialog->updateSecondary(100, QString("FINISHED"));
+                  this->_progressDialog->updatePrimary(100);
+                }, Qt::BlockingQueuedConnection);
+                // make it pretty
+                std::this_thread::sleep_for(std::chrono::milliseconds(600));
+
+                QMetaObject::invokeMethod(this, [this]
+                {
+                  this->_progressDialog->end();
+                }, Qt::QueuedConnection);
+              });
+              thread.detach();
             }
-
-            QMetaObject::invokeMethod(this, [this]
-            {
-              this->_progressDialog->end();
-            }, Qt::QueuedConnection);
-
           }
           catch (const std::exception& e)
           {
             // TODO: log patching error
-            isUpdated = false;
+            isUpdated = false; // interrupted by error
           }
         }
       } else

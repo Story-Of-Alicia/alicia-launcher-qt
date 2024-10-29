@@ -155,6 +155,7 @@ bool Launcher::downloadNextFile(std::function<void(int, std::string)> const & cb
   // await un-paused state
   _shouldPause.wait(true);
   auto file = _toDownload.front();
+  cb(0, file);
 
   if (_toDownload.empty())
     return false;
@@ -183,6 +184,7 @@ bool Launcher::patchNextFile(std::function<void(int, std::string)> const & cb) n
     return false;
 
   auto file = _toPatch.front();
+  cb(0, file);
 
   for (int i = 0; i < 5; i++)
   {
