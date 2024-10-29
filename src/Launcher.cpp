@@ -87,8 +87,12 @@ Launcher::Launcher()
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
 {
   std::lock_guard lock(_mutex);
-  _isAuthenticated = true;
-  return true;
+  if(username == "test")
+  {
+    return _isAuthenticated = false;
+  }
+
+  return _isAuthenticated = true;
 }
 
 void Launcher::logout() noexcept { _isAuthenticated = false; }
