@@ -92,6 +92,14 @@ QPushButton#btn_login:disabled {
     background-repeat: no-repeat;
 }
 
+QCheckBox#check_remember::indicator:unchecked {
+	image: url(&quot;:/img/btn/checkbox.png&quot;)
+}
+
+QCheckBox#check_remember::indicator:checked {
+	image: url(&quot;:/img/btn/checkbox_checked.png&quot;)
+}
+
 </string>
   </property>
   <widget class="QLabel" name="l_story_awaits">
@@ -195,15 +203,22 @@ QPushButton#btn_login:disabled {
     <rect>
      <x>45</x>
      <y>188</y>
-     <width>13</width>
-     <height>20</height>
+     <width>18</width>
+     <height>18</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>18</width>
+     <height>18</height>
+    </size>
    </property>
    <property name="font">
     <font>
      <family>NanumGothic</family>
      <pointsize>13</pointsize>
      <bold>false</bold>
+     <hintingpreference>PreferDefaultHinting</hintingpreference>
     </font>
    </property>
    <property name="text">
@@ -211,8 +226,8 @@ QPushButton#btn_login:disabled {
    </property>
    <property name="iconSize">
     <size>
-     <width>18</width>
-     <height>18</height>
+     <width>26</width>
+     <height>23</height>
     </size>
    </property>
    <property name="checked">

@@ -34,6 +34,8 @@
     <file>img/btn/info_pressed.png</file>
     <file>img/btn/close_install.png</file>
     <file>img/btn/pause_install.png</file>
+    <file>img/btn/checkbox.png</file>
+    <file>img/btn/checkbox_checked.png</file>
     <file>img/game_start_hover.gif</file>
     <file>img/game_start_frame.png</file>
     <file>img/progressbar_bg.png</file>
