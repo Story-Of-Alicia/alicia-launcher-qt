@@ -9,6 +9,7 @@
 #include <QtConcurrent>
 #include <QWidget>
 #include <QFontDatabase>
+#include <QStyle>
 
 #include <cmath>
 
@@ -32,27 +33,42 @@ int start(int argc, char* argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
-  _progressDialog->hide();
   _gameStartMovie = new QMovie(":/img/game_start_hover.gif");
-
-  // to display frame 0, so the button is not empty
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
 
   _masterFrameUI.setupUi(_master);
-
   _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
+  // login widget
   _loginWidgetUI.setupUi(_masterFrameUI.login_widget);
+
   _loginWidgetUI.l_error->hide();
+  _loginWidgetUI.l_error_user->hide();
+  _loginWidgetUI.l_error_user->setAttribute(Qt::WA_TransparentForMouseEvents);
+  _loginWidgetUI.l_error_pass->hide();
+  _loginWidgetUI.l_error_pass->setAttribute(Qt::WA_TransparentForMouseEvents);
 
   _masterFrameUI.login_widget->show();
 
+  // menu widget
   _menuWidgetUI.setupUi(_masterFrameUI.menu_widget);
   _masterFrameUI.menu_widget->hide();
 
+  // transparent frames
   _masterFrameUI.l_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
   _masterFrameUI.l_game_start_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+  // main window attributes
+  setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+  setAttribute(Qt::WA_NoSystemBackground, true);
+  setAttribute(Qt::WA_TranslucentBackground, true);
+
+
+  // event filters
+  _masterFrameUI.l_game_start->setMouseTracking(true);
+  _masterFrameUI.l_game_start->installEventFilter(this);
+  _masterFrameUI.l_game_start_frame->installEventFilter(this);
 
   connect(_masterFrameUI.btn_exit, SIGNAL(clicked()), this, SLOT(handle_exit()));
   connect(_masterFrameUI.btn_minimize, SIGNAL(clicked()), this, SLOT(handle_minimize()));
@@ -70,14 +86,6 @@ Window::Window(QWidget* parent)
   connect(_progressDialog->_ui_progressWidget.btn_close, SIGNAL(clicked()), this, SLOT(handle_install_stop()));
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
-
-  setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
-  setAttribute(Qt::WA_NoSystemBackground, true);
-  setAttribute(Qt::WA_TranslucentBackground, true);
-
-  // handle l_game_start mouse tracking
-  _masterFrameUI.l_game_start->setMouseTracking(true);
-  _masterFrameUI.l_game_start->installEventFilter(this);
 
   // to be able to stop the animation cleanly at frame 0
   connect(_gameStartMovie, SIGNAL(frameChanged(int)), this, SLOT(handle_frame_changed(int)));
@@ -101,6 +109,17 @@ void Window::mouseMoveEvent(QMouseEvent* event)
 
 bool Window::eventFilter(QObject* object, QEvent* event)
 {
+  // handling paint events for _masterFrameUI.l_game_start_frame
+  if (object == _masterFrameUI.l_game_start_frame && event->type() == QEvent::Paint)
+  {
+    auto *label = dynamic_cast<QLabel*>(object);
+    QPainter painter(label);
+
+    const auto pixmap = label->pixmap().scaled(label->size());
+    label->style()->drawItemPixmap(&painter, label->rect(), Qt::AlignCenter, pixmap);
+    return true;
+  }
+
   // handling MouseButtonPress and MouseMove for _masterFrameUI.l_game_start
   if (
     object == _masterFrameUI.l_game_start && (event->type() == QEvent::MouseMove) ||
@@ -214,6 +233,7 @@ void Window::handle_launch()
           QMetaObject::invokeMethod(this, [this]
           {
             this->_progressDialog->begin(_masterFrameUI.content, "Updating");
+            this->_masterFrameUI.l_game_start_frame->setDisabled(false);
           }, Qt::BlockingQueuedConnection);
 
           int to_download = _launcher.countToDownload();
@@ -342,8 +362,10 @@ void Window::handle_post_login()
   }
   else
   {
-    _loginWidgetUI.l_error->setText("Authentication failed");
+    //_loginWidgetUI.l_error->setText("Authentication failed");
     _loginWidgetUI.l_error->show();
+    _loginWidgetUI.l_error_pass->show();
+    _loginWidgetUI.l_error_user->show();
   }
   _masterFrameUI.login_widget->setDisabled(false);
 }
@@ -354,6 +376,9 @@ void Window::handle_login()
     return;
 
   _loginWidgetUI.l_error->hide();
+  _loginWidgetUI.l_error_pass->hide();
+  _loginWidgetUI.l_error_user->hide();
+
   _masterFrameUI.login_widget->setDisabled(true);
 
   auto const username = _loginWidgetUI.input_username->text().toStdString();
@@ -388,6 +413,17 @@ void Window::handle_info()
   // TODO: implement info
 }
 
+void Window::handle_install_pause()
+{
+  _launcher.setUpdatePaused(!_launcher.isUpdatePaused());
+}
+
+void Window::handle_install_stop()
+{
+  _launcher.setUpdatePaused(false); // resume, to be able to stop
+  _launcher.stopUpdate();
+}
+
 void Window::handle_frame_changed(int frameNumber)
 {
   if (!_shouldAnimateGameStart && frameNumber == 0)
@@ -397,14 +433,6 @@ void Window::handle_frame_changed(int frameNumber)
   }
 }
 
-void Window::handle_install_pause()
-{
-  _launcher.setUpdatePaused(!_launcher.isUpdatePaused());
-}
 
-void Window::handle_install_stop()
-{
-  _launcher.stopUpdate();
-}
 
 } // namespace ui
