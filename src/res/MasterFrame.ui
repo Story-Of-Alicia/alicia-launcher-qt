@@ -14,7 +14,21 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame#MasterFrame {
+   <string notr="true">QPushButton {
+	border: none;
+	background: transparent;
+}
+
+QPushButton:focus {
+    border: none;
+    outline: none;
+}
+
+QPushButton:hover {
+	background: transparent;
+}
+
+QFrame#MasterFrame {
 	background: transparent;
 }
 
@@ -26,17 +40,13 @@ QLabel#l_frame {
 	background-image: url(&quot;:/img/frame.png&quot;)
 }
 
-QPushButton {
-	border: none;
-	background: transparent;
-}
-
-QPushButton:hover {
-	background: transparent;
-}
-
 QPushButton#btn_exit {
     border-image: url(:/img/btn/close.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:focus {
+    border-image: url(:/img/btn/close_hover.png);
     background-repeat: no-repeat;
 }
 
@@ -55,6 +65,11 @@ QPushButton#btn_minimize {
     background-repeat: no-repeat;
 }
 
+QPushButton#btn_minimize:focus {
+    border-image: url(:/img/btn/minimize_hover.png);
+    background-repeat: no-repeat;
+}
+
 QPushButton#btn_minimize:hover {
     border-image: url(:/img/btn/minimize_hover.png);
     background-repeat: no-repeat;
@@ -67,6 +82,11 @@ QPushButton#btn_minimize:pressed  {
 
 QPushButton#btn_settings {
     border-image: url(:/img/btn/settings.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_settings:focus {
+    border-image: url(:/img/btn/settings_hover.png);
     background-repeat: no-repeat;
 }
 
