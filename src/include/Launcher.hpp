@@ -1,11 +1,11 @@
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
 
-#include <condition_variable>
-#include <filesystem>
+#include <string>
+#include <mutex>
+#include <functional>
 #include <queue>
-
-#include <QPromise>
+#include <atomic>
 
 namespace launcher
 {

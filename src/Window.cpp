@@ -22,11 +22,11 @@ int start(int argc, char* argv[])
 {
   QApplication application(argc, argv);
 
-  assert( QFontDatabase::addApplicationFont(":/font/not_eurostile.otf") != -1);
-  assert( QFontDatabase::addApplicationFont(":/font/eurostile.otf") != -1);
-  assert( QFontDatabase::addApplicationFont(":/font/eurostile-black.otf") != -1);
-  assert( QFontDatabase::addApplicationFont(":/font/nanum_gothic-extra_bold.ttf") != -1);
-  assert( QFontDatabase::addApplicationFont(":/font/nanum_gothic-regular.ttf") != -1);
+  QFontDatabase::addApplicationFont(":/font/not_eurostile.otf");
+  QFontDatabase::addApplicationFont(":/font/eurostile.otf");
+  QFontDatabase::addApplicationFont(":/font/eurostile-black.otf");
+  QFontDatabase::addApplicationFont(":/font/nanum_gothic-extra_bold.ttf");
+  QFontDatabase::addApplicationFont(":/font/nanum_gothic-regular.ttf");
 
   Window window{};
   window.show();

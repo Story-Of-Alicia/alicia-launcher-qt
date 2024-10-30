@@ -1,10 +1,8 @@
 #ifndef PROGRESSDIALOG_HPP
 #define PROGRESSDIALOG_HPP
-
-#include <QDialog>
-
 #include "ui_ProgressWidget.h"
 
+#include <QDialog>
 #include <QGraphicsBlurEffect>
 
 class ProgressDialog : public QDialog {

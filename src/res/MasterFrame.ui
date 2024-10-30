@@ -127,7 +127,7 @@ QWidget#login_widget {
 </string>
   </property>
   <property name="frameShape">
-   <enum>QFrame::Shape::StyledPanel</enum>
+   <enum>QFrame::Shape::NoFrame</enum>
   </property>
   <property name="frameShadow">
    <enum>QFrame::Shadow::Raised</enum>

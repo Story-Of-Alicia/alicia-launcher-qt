@@ -6,6 +6,7 @@
 #include <openssl/evp.h>
 #include <thread>
 #include <vector>
+#include <sstream>
 
 #include <QString>
 
