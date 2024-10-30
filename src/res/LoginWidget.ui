@@ -345,6 +345,12 @@ QCheckBox#check_remember::indicator:checked {
   <zorder>l_error_user</zorder>
   <zorder>l_error_pass</zorder>
  </widget>
+ <tabstops>
+  <tabstop>input_username</tabstop>
+  <tabstop>input_password</tabstop>
+  <tabstop>check_remember</tabstop>
+  <tabstop>btn_login</tabstop>
+ </tabstops>
  <resources>
   <include location="master.qrc"/>
  </resources>

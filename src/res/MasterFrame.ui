@@ -577,6 +577,15 @@ QWidget#login_widget {
   <zorder>alicia2</zorder>
   <zorder>alicia1</zorder>
  </widget>
+ <tabstops>
+  <tabstop>btn_repair</tabstop>
+  <tabstop>btn_ticket</tabstop>
+  <tabstop>alicia1</tabstop>
+  <tabstop>alicia2</tabstop>
+  <tabstop>btn_settings</tabstop>
+  <tabstop>btn_minimize</tabstop>
+  <tabstop>btn_exit</tabstop>
+ </tabstops>
  <resources>
   <include location="master.qrc"/>
  </resources>
