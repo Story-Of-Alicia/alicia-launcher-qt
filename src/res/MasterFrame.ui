@@ -17,6 +17,7 @@
    <string notr="true">QFrame#MasterFrame {
 	background: transparent;
 }
+
 QLabel#l_bg {
 	background-image: url(&quot;:/img/bg.png&quot;);
 }
@@ -24,11 +25,15 @@ QLabel#l_bg {
 QLabel#l_frame {
 	background-image: url(&quot;:/img/frame.png&quot;)
 }
-QPushButton {
 
+QPushButton {
+	border: none;
 	background: transparent;
 }
 
+QPushButton:hover {
+	background: transparent;
+}
 
 QPushButton#btn_exit {
     border-image: url(:/img/btn/close.png);
@@ -45,7 +50,6 @@ QPushButton#btn_exit:pressed  {
     background-repeat: no-repeat;
 }
 
-
 QPushButton#btn_minimize {
     border-image: url(:/img/btn/minimize.png);
     background-repeat: no-repeat;
@@ -60,7 +64,6 @@ QPushButton#btn_minimize:pressed  {
     border-image: url(:/img/btn/minimize_pressed.png);
     background-repeat: no-repeat;
 }
-
 
 QPushButton#btn_settings {
     border-image: url(:/img/btn/settings.png);
@@ -200,6 +203,15 @@ QWidget#login_widget {
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string notr="true"/>
    </property>
@@ -214,7 +226,7 @@ QWidget#login_widget {
     </size>
    </property>
    <property name="flat">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="alicia2">
@@ -246,7 +258,7 @@ QWidget#login_widget {
     </size>
    </property>
    <property name="flat">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_minimize">
@@ -283,6 +295,9 @@ QWidget#login_widget {
      <height>848</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -297,12 +312,10 @@ QWidget#login_widget {
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#content {
-	background: transparent;
-}</string>
+    <string notr="true"/>
    </property>
    <property name="frameShape">
-    <enum>QFrame::Shape::WinPanel</enum>
+    <enum>QFrame::Shape::NoFrame</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
