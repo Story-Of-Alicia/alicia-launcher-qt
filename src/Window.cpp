@@ -21,8 +21,12 @@ namespace ui
 int start(int argc, char* argv[])
 {
   QApplication application(argc, argv);
-  auto result = QFontDatabase::addApplicationFont(":/font/NotEurostile.otf");
-  assert( result != -1);
+
+  assert( QFontDatabase::addApplicationFont(":/font/not_eurostile.otf") != -1);
+  assert( QFontDatabase::addApplicationFont(":/font/eurostile.otf") != -1);
+  assert( QFontDatabase::addApplicationFont(":/font/eurostile-black.otf") != -1);
+  assert( QFontDatabase::addApplicationFont(":/font/nanum_gothic-extra_bold.ttf") != -1);
+  assert( QFontDatabase::addApplicationFont(":/font/nanum_gothic-regular.ttf") != -1);
 
   Window window{};
   window.show();
@@ -39,7 +43,7 @@ Window::Window(QWidget* parent)
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
 
-  _masterFrameUI.setupUi(_master);
+  _masterFrameUI.setupUi(_masterFrame);
   _masterFrameUI.l_game_start->setMovie(_gameStartMovie);
 
   // login widget
@@ -62,10 +66,16 @@ Window::Window(QWidget* parent)
   _masterFrameUI.l_game_start_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
 
   // main window attributes
-  setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
-  setAttribute(Qt::WA_NoSystemBackground, true);
-  setAttribute(Qt::WA_TranslucentBackground, true);
+  setWindowFlags( Qt::Window | Qt::FramelessWindowHint);
 
+  setAttribute(Qt::WA_TranslucentBackground, true);
+  setAttribute(Qt::WA_NoSystemBackground, true);
+
+  _masterFrame->setAttribute(Qt::WA_TranslucentBackground, true);
+  _masterFrame->setAttribute(Qt::WA_NoSystemBackground, true);
+
+  _masterFrameUI.content->setAttribute(Qt::WA_TranslucentBackground, true);
+  _masterFrameUI.content->setAttribute(Qt::WA_NoSystemBackground, true);
 
   // event filters
   _masterFrameUI.l_game_start->setMouseTracking(true);

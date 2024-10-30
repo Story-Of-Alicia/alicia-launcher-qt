@@ -46,7 +46,7 @@ private:
   std::atomic_bool _workerRunning  = false;
 
   QMovie*         _gameStartMovie = nullptr;
-  QFrame*         _master         = new QFrame(this);
+  QFrame*         _masterFrame         = new QFrame(this);
   ProgressDialog* _progressDialog = new ProgressDialog(this);
 
   MasterFrame _masterFrameUI{};

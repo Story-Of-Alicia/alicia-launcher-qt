@@ -41,6 +41,10 @@
     <file>img/progressbar_bg.png</file>
     <file>img/menu.png</file>
     <file>img/login.png</file>
-    <file>font/NotEurostile.otf</file>
+    <file>font/not_eurostile.otf</file>
+    <file>font/eurostile.otf</file>
+    <file>font/eurostile-black.otf</file>
+    <file>font/nanum_gothic-extra_bold.ttf</file>
+    <file>font/nanum_gothic-regular.ttf</file>
   </qresource>
 </RCC>

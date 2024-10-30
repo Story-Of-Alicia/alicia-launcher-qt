@@ -14,7 +14,10 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel#l_bg {
+   <string notr="true">QFrame#MasterFrame {
+	background: transparent;
+}
+QLabel#l_bg {
 	background-image: url(&quot;:/img/bg.png&quot;);
 }
 
@@ -293,8 +296,13 @@ QWidget#login_widget {
      <height>840</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame#content {
+	background: transparent;
+}</string>
+   </property>
    <property name="frameShape">
-    <enum>QFrame::Shape::StyledPanel</enum>
+    <enum>QFrame::Shape::WinPanel</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
