@@ -26,36 +26,7 @@ QLabel#l_username_d {
 QPushButton {
 	background: transparent;
 }
-
-QPushButton#btn_logout {
-    border-image: url(:/img/btn/logout.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_logout:hover {
-    border-image: url(:/img/btn/logout_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_logout:pressed  {
-    border-image: url(:/img/btn/logout_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_info {
-    border-image: url(:/img/btn/info.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_info:hover {
-    border-image: url(:/img/btn/info_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_info:pressed  {
-    border-image: url(:/img/btn/info_pressed.png);
-    background-repeat: no-repeat;
-}</string>
+</string>
   </property>
   <widget class="QPushButton" name="btn_logout">
    <property name="geometry">
@@ -66,11 +37,52 @@ QPushButton#btn_info:pressed  {
      <height>32</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>-1</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.07, stop:0 rgba(237, 52, 8, 255), stop:0.892045 rgba(254, 135, 64, 255), stop:0.98184 rgba(254, 135, 64, 255), stop:0.981958 rgba(248, 219, 154, 255), stop:1 rgba(248, 219, 154, 255));
+}
+
+QPushButton:hover {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:1, x2:0.503, y2:0.07, stop:0 rgba(237, 52, 8, 255), stop:0.892045 rgba(254, 157, 64, 255), stop:0.98184 rgba(254, 157, 64, 255), stop:0.981958 rgba(248, 219, 154, 255), stop:1 rgba(248, 219, 154, 255));
+}
+
+QPushButton:pressed {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.965, x2:0.503, y2:0.04, stop:0 rgba(248, 219, 154, 255), stop:0.0454545 rgba(248, 219, 154, 255), stop:0.0464217 rgba(241, 94, 53, 255), stop:0.424354 rgba(242, 61, 1, 255), stop:0.87801 rgba(251, 89, 1, 255), stop:1 rgba(206, 76, 0, 255));
+}
+</string>
+   </property>
    <property name="text">
-    <string/>
+    <string>LOGOUT</string>
    </property>
    <property name="iconSize">
     <size>
@@ -187,11 +199,51 @@ QPushButton#btn_info:pressed  {
      <height>32</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>EurostileBla</family>
+     <pointsize>-1</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.07, stop:0 rgba(9, 171, 224, 255), stop:0.892045 rgba(125, 220, 247, 255), stop:0.981889 rgba(125, 220, 247, 255), stop:0.981958 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
+}
+
+QPushButton:hover {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.07, stop:0 rgba(12, 199, 238, 255), stop:0.981889 rgba(160, 236, 251, 255), stop:0.981958 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
+}
+
+QPushButton:pressed {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.975, x2:0.503, y2:0.03, stop:0 rgba(222, 248, 255, 255), stop:0.0454545 rgba(222, 248, 255, 255), stop:0.0464217 rgba(67, 191, 232, 255), stop:0.424354 rgba(35, 183, 230, 255), stop:0.87801 rgba(92, 210, 244, 255), stop:1 rgba(71, 174, 208, 255));
+}</string>
+   </property>
    <property name="text">
-    <string/>
+    <string>MY INFO</string>
    </property>
    <property name="iconSize">
     <size>

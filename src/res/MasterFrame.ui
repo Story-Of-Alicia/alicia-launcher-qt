@@ -14,128 +14,8 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
-	border: none;
+   <string notr="true">QFrame#MasterFrame {
 	background: transparent;
-}
-
-QPushButton:focus {
-    border: none;
-    outline: none;
-}
-
-QPushButton:hover {
-	background: transparent;
-}
-
-QFrame#MasterFrame {
-	background: transparent;
-}
-
-QLabel#l_bg {
-	background-image: url(&quot;:/img/bg.png&quot;);
-}
-
-QLabel#l_frame {
-	background-image: url(&quot;:/img/frame.png&quot;)
-}
-
-QPushButton#btn_exit {
-    border-image: url(:/img/btn/close.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_exit:focus {
-    border-image: url(:/img/btn/close_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_exit:hover {
-    border-image: url(:/img/btn/close_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_exit:pressed  {
-    border-image: url(:/img/btn/close_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_minimize {
-    border-image: url(:/img/btn/minimize.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_minimize:focus {
-    border-image: url(:/img/btn/minimize_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_minimize:hover {
-    border-image: url(:/img/btn/minimize_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_minimize:pressed  {
-    border-image: url(:/img/btn/minimize_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_settings {
-    border-image: url(:/img/btn/settings.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_settings:focus {
-    border-image: url(:/img/btn/settings_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_settings:hover {
-    border-image: url(:/img/btn/settings_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_settings:pressed  {
-    border-image: url(:/img/btn/settings_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_repair {
-    border-image: url(:/img/btn/repair.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_repair:hover {
-    border-image: url(:/img/btn/repair_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_repair:pressed  {
-    border-image: url(:/img/btn/repair_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_ticket {
-    border-image: url(:/img/btn/ticket.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_ticket:hover {
-    border-image: url(:/img/btn/ticket_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_ticket:pressed  {
-    border-image: url(:/img/btn/ticket_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QLabel {
-	color: #4F1717;
-}
-
-QLabel#l_version {
-		color: #E4E8EA;
 }
 
 QWidget#menu_widget {
@@ -147,7 +27,36 @@ QWidget#login_widget {
 	background-image: url(&quot;:img/login.png&quot;);
 	background-repeat: no-repeat;
 }
-</string>
+
+QLabel#l_bg {
+	background-image: url(&quot;:/img/bg.png&quot;);
+}
+
+QLabel#l_frame {
+	background-image: url(&quot;:/img/frame.png&quot;)
+}
+
+QLabel {
+	color: #4F1717;
+}
+
+QLabel#l_version {
+		color: #E4E8EA;
+}
+
+QPushButton {
+	border: none;
+	background: transparent;
+}
+
+QPushButton:focus {
+    border: none;
+    outline: none;
+}
+
+QPushButton:hover {
+	background: transparent;
+}</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::Shape::NoFrame</enum>
@@ -169,6 +78,27 @@ QWidget#login_widget {
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#btn_exit {
+    border-image: url(:/img/btn/close.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:focus {
+    border-image: url(:/img/btn/close_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:hover {
+    border-image: url(:/img/btn/close_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_exit:pressed  {
+    border-image: url(:/img/btn/close_pressed.png);
+    background-repeat: no-repeat;
+}</string>
    </property>
    <property name="text">
     <string notr="true"/>
@@ -194,6 +124,27 @@ QWidget#login_widget {
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    border-image: url(:/img/btn/settings.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton:focus {
+    border-image: url(:/img/btn/settings_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton:hover {
+    border-image: url(:/img/btn/settings_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton:pressed  {
+    border-image: url(:/img/btn/settings_pressed.png);
+    background-repeat: no-repeat;
+}</string>
    </property>
    <property name="text">
     <string notr="true"/>
@@ -293,6 +244,27 @@ QWidget#login_widget {
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#btn_minimize {
+    border-image: url(:/img/btn/minimize.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:focus {
+    border-image: url(:/img/btn/minimize_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:hover {
+    border-image: url(:/img/btn/minimize_hover.png);
+    background-repeat: no-repeat;
+}
+
+QPushButton#btn_minimize:pressed  {
+    border-image: url(:/img/btn/minimize_pressed.png);
+    background-repeat: no-repeat;
+}</string>
+   </property>
    <property name="text">
     <string notr="true"/>
    </property>
@@ -387,8 +359,39 @@ QWidget#login_widget {
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.07, stop:0 rgba(237, 52, 8, 255), stop:0.892045 rgba(254, 135, 64, 255), stop:0.98184 rgba(254, 135, 64, 255), stop:0.981958 rgba(248, 219, 154, 255), stop:1 rgba(248, 219, 154, 255));
+}
+
+QPushButton:hover {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:1, x2:0.503, y2:0.07, stop:0 rgba(237, 52, 8, 255), stop:0.892045 rgba(254, 157, 64, 255), stop:0.98184 rgba(254, 157, 64, 255), stop:0.981958 rgba(248, 219, 154, 255), stop:1 rgba(248, 219, 154, 255));
+}
+
+QPushButton:pressed {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 76, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.965, x2:0.503, y2:0.04, stop:0 rgba(248, 219, 154, 255), stop:0.0454545 rgba(248, 219, 154, 255), stop:0.0464217 rgba(241, 94, 53, 255), stop:0.424354 rgba(242, 61, 1, 255), stop:0.87801 rgba(251, 89, 1, 255), stop:1 rgba(206, 76, 0, 255));
+}</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>REPAIR</string>
     </property>
     <property name="iconSize">
      <size>
@@ -409,8 +412,40 @@ QWidget#login_widget {
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    font: 17px EurostileBla;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 109, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.07, stop:0 rgba(237, 128, 8, 255), stop:0.892045 rgba(254, 197, 64, 255), stop:0.98184 rgba(254, 197, 64, 255), stop:0.981958 rgba(255, 249, 236, 255), stop:1 rgba(255, 249, 236, 255));
+}
+
+QPushButton:hover {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 109, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:1, x2:0.503, y2:0.07, stop:0 rgba(237, 128, 8, 255), stop:0.892045 rgba(254, 215, 62, 255), stop:0.98184 rgba(254, 215, 62, 255), stop:0.981958 rgba(255, 249, 236, 255), stop:1 rgba(255, 249, 236, 255));
+}
+
+QPushButton:pressed {
+    font: 17px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(206, 109, 0);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.965, x2:0.503, y2:0.04, stop:0 rgba(255, 249, 236, 255), stop:0.0454545 rgba(255, 249, 236, 255), stop:0.0464217 rgba(241, 157, 64, 255), stop:0.424354 rgba(243, 142, 1, 255), stop:0.87801 rgba(253, 174, 1, 255), stop:1 rgba(212, 150, 8, 255));
+}
+</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>SUBMIT TICKET</string>
     </property>
     <property name="iconSize">
      <size>

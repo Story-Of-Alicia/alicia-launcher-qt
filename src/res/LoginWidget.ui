@@ -72,25 +72,6 @@ QLabel {
 	color: #4F1717;
 }
 
-QPushButton#btn_login {
-    border-image: url(:/img/btn/login.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_login:hover {
-    border-image: url(:/img/btn/login_hover.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_login:pressed  {
-    border-image: url(:/img/btn/login_pressed.png);
-    background-repeat: no-repeat;
-}
-
-QPushButton#btn_login:disabled {
-	 border-image: url(:/img/btn/login_disabled.png);
-    background-repeat: no-repeat;
-}
 
 QCheckBox#check_remember::indicator:unchecked {
 	image: url(&quot;:/img/btn/checkbox.png&quot;)
@@ -136,8 +117,51 @@ QCheckBox#check_remember::indicator:checked {
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    font: 25px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.03, stop:0 rgba(9, 171, 224, 255), stop:0.999893 rgba(125, 220, 247, 255), stop:0.999906 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
+}
+
+QPushButton:hover{
+    font: 25px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0.03, stop:0 rgba(4, 197, 237, 255), stop:0.999893 rgba(160, 237, 252, 255), stop:0.999906 rgba(222, 248, 255, 255), stop:1 rgba(222, 248, 255, 255));
+}
+
+QPushButton:pressed{
+    font: 25px EurostileBla;
+     color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(47, 180, 224);
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.985, x2:0.503, y2:0, stop:0 rgba(222, 248, 255, 255), stop:0.01 rgba(222, 248, 255, 255), stop:0.011 rgba(67, 191, 232, 255), stop:0.35 rgba(35, 183, 230, 255), stop:0.95 rgba(92, 210, 244, 255), stop:1 rgba(71, 174, 208, 255));
+}
+
+QPushButton:disabled {
+    font: 25px EurostileBla;
+    color: rgb(155, 145, 133);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: rgb(146, 121, 103);
+    
+    background-color: qlineargradient(spread:pad, x1:0.503, y1:0.704546, x2:0.503, y2:0, stop:0 rgba(185, 179, 167, 255), stop:0.830508 rgba(168, 150, 137, 255), stop:1 rgba(143, 120, 110, 255));
+}
+</string>
+   </property>
    <property name="text">
-    <string/>
+    <string>LOGIN</string>
    </property>
    <property name="iconSize">
     <size>

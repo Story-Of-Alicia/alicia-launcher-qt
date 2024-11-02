@@ -21,6 +21,8 @@ qt_add_executable(launcher
         src/include/window.hpp src/include/launcher.hpp src/include/util.hpp src/include/ProgressDialog.hpp
 )
 
+target_compile_options(launcher PRIVATE -fno-inline -fno-omit-frame-pointer)
+
 target_include_directories(launcher PRIVATE src/include)
 
 target_link_libraries(launcher PUBLIC
