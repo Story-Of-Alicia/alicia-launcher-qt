@@ -20,6 +20,7 @@ namespace ui
 
 int start(int argc, char* argv[])
 {
+  QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
   QApplication application(argc, argv);
 
   QFontDatabase::addApplicationFont(":/font/not_eurostile.otf");
