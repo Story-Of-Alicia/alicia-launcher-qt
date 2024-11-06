@@ -2,14 +2,14 @@
 #include "Launcher.hpp"
 
 #include <QDesktopServices>
+#include <QFontDatabase>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QMovie>
 #include <QPainter>
+#include <QStyle>
 #include <QtConcurrent>
 #include <QWidget>
-#include <QFontDatabase>
-#include <QStyle>
 
 #include <cmath>
 
@@ -20,7 +20,7 @@ namespace ui
 
 int start(int argc, char* argv[])
 {
-  //QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+  // QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
   QApplication application(argc, argv);
 
   QFontDatabase::addApplicationFont(":/font/not_eurostile.otf");
@@ -67,7 +67,7 @@ Window::Window(QWidget* parent)
   _masterFrameUI.l_game_start_frame->setAttribute(Qt::WA_TransparentForMouseEvents);
 
   // main window attributes
-  setWindowFlags( Qt::Window | Qt::FramelessWindowHint);
+  setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
   setAttribute(Qt::WA_TranslucentBackground, true);
   setAttribute(Qt::WA_NoSystemBackground, true);
@@ -95,8 +95,16 @@ Window::Window(QWidget* parent)
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
-  connect(_progressDialog->_ui_progressWidget.btn_pause, SIGNAL(clicked()), this, SLOT(handle_install_pause()));
-  connect(_progressDialog->_ui_progressWidget.btn_close, SIGNAL(clicked()), this, SLOT(handle_install_stop()));
+  connect(
+    _progressDialog->_ui_progressWidget.btn_pause,
+    SIGNAL(clicked()),
+    this,
+    SLOT(handle_install_pause()));
+  connect(
+    _progressDialog->_ui_progressWidget.btn_close,
+    SIGNAL(clicked()),
+    this,
+    SLOT(handle_install_stop()));
 
   connect(_menuWidgetUI.btn_info, SIGNAL(clicked()), this, SLOT(handle_info()));
 
@@ -125,7 +133,7 @@ bool Window::eventFilter(QObject* object, QEvent* event)
   // handling paint events for _masterFrameUI.l_game_start_frame
   if (object == _masterFrameUI.l_game_start_frame && event->type() == QEvent::Paint)
   {
-    auto *label = dynamic_cast<QLabel*>(object);
+    auto* label = dynamic_cast<QLabel*>(object);
     QPainter painter(label);
 
     const auto pixmap = label->pixmap().scaled(label->size());
@@ -225,135 +233,144 @@ void Window::handle_launch()
 
       if (!_launcher.checkFiles())
       {
-        bool shouldUpdate = false;
-        int toDownload = _launcher.countToDownload();
         QMetaObject::invokeMethod(
           this,
-          [this, toDownload]()
-          {
-            QMessageBox box(this);
-            box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-            box.setIcon(QMessageBox::Icon::Critical);
-            box.setText(QString("%1 files need patching. Patch them?").arg(toDownload));
-            return box.exec() == QMessageBox::Yes;
-          },
-          Qt::BlockingQueuedConnection,
-          qReturnArg(shouldUpdate));
-
-        // shouldUpdate will be set to true, if user picked the yes option
-        if (shouldUpdate)
-        {
-          QMetaObject::invokeMethod(this, [this]
+          [this]
           {
             this->_progressDialog->begin(_masterFrameUI.content, "Updating");
             this->_masterFrameUI.l_game_start_frame->setDisabled(false);
-          }, Qt::BlockingQueuedConnection);
+          },
+          Qt::BlockingQueuedConnection);
 
-          int to_download = _launcher.countToDownload();
-          int to_patch = to_download;
-          int all_files = _launcher.countToDownload() * 2;
+        int to_download = _launcher.countToDownload();
+        int to_patch = to_download;
+        int all_files = _launcher.countToDownload() * 2;
 
-          int downloaded = 0;
-          int patched = 0;
-          int overall_done = 0;
+        int downloaded = 0;
+        int patched = 0;
+        int overall_done = 0;
 
-          try
+        try
+        {
+          while (_launcher.countToDownload() > 0)
           {
-            while(_launcher.countToDownload() > 0)
-            {
-              downloaded++;
-              if(_launcher.isUpdateStopped())
-              {
-                break;
-              }
-
-              _launcher.downloadNextFile([this, downloaded, to_download](int progress, std::string name) -> void
-              {
-                //TODO: remove mutable
-                QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), downloaded, to_download]() mutable
-                {
-                  if(_launcher.isUpdateStopped())
-                    return;
-                  std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-                  this->_progressDialog->updateSecondary(progress, QString("DOWNLOADING '%1' (%2/%3)").arg(name.data()).arg(downloaded).arg(to_download));
-                }, Qt::QueuedConnection);
-              });
-
-              overall_done++;
-              QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
-              {
-                if(_launcher.isUpdateStopped())
-                  return;
-                this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              }, Qt::QueuedConnection);
-            }
-
-            while(_launcher.countToPatch() > 0)
-            {
-              patched++;
-              if(_launcher.isUpdateStopped())
-              {
-                break;
-              }
-
-              _launcher.patchNextFile([this, to_patch, patched](int progress, std::string name) -> void
-              {
-                //TODO: remove mutable
-                QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), to_patch, patched]() mutable
-                {
-                  if(_launcher.isUpdateStopped())
-                    return;
-                  std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-                  this->_progressDialog->updateSecondary(progress, QString("PATCHING '%1' (%2/%3)").arg(name.data()).arg(patched).arg(to_patch));
-                }, Qt::QueuedConnection);
-              });
-              overall_done++;
-
-              QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
-              {
-                if(_launcher.isUpdateStopped())
-                  return;
-                this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              }, Qt::QueuedConnection);
-            }
-
+            downloaded++;
             if (_launcher.isUpdateStopped())
             {
-              isUpdated = false; // not finished updating
-              // if update was stopped, just end the dialog
-              QMetaObject::invokeMethod(this, [this]
+              break;
+            }
+
+            _launcher.downloadNextFile(
+              [this, downloaded, to_download](int progress, std::string name) -> void
               {
-                this->_progressDialog->end();
-              }, Qt::QueuedConnection);
-            } else
+                // TODO: remove mutable
+                QMetaObject::invokeMethod(
+                  this,
+                  [this, progress, name = std::move(name), downloaded, to_download]() mutable
+                  {
+                    if (_launcher.isUpdateStopped())
+                      return;
+                    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+                    this->_progressDialog->updateSecondary(
+                      progress,
+                      QString("DOWNLOADING '%1' (%2/%3)")
+                        .arg(name.data())
+                        .arg(downloaded)
+                        .arg(to_download));
+                  },
+                  Qt::QueuedConnection);
+              });
+
+            overall_done++;
+            QMetaObject::invokeMethod(
+              this,
+              [this, all_files, overall_done]()
+              {
+                if (_launcher.isUpdateStopped())
+                  return;
+                this->_progressDialog->updatePrimary(static_cast<int>(
+                  (static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
+              },
+              Qt::QueuedConnection);
+          }
+
+          while (_launcher.countToPatch() > 0)
+          {
+            patched++;
+            if (_launcher.isUpdateStopped())
             {
-              isUpdated = true; // updated
-              // if the dialog wasn't stopped, animate finish
-              auto thread = std::thread([this]
+              break;
+            }
+
+            _launcher.patchNextFile(
+              [this, to_patch, patched](int progress, std::string name) -> void
               {
-                QMetaObject::invokeMethod(this, [this]()
-                {
-                  this->_progressDialog->updateSecondary(100, QString("FINISHED"));
-                  this->_progressDialog->updatePrimary(100);
-                }, Qt::BlockingQueuedConnection);
+                // TODO: remove mutable
+                QMetaObject::invokeMethod(
+                  this,
+                  [this, progress, name = std::move(name), to_patch, patched]() mutable
+                  {
+                    if (_launcher.isUpdateStopped())
+                      return;
+                    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+                    this->_progressDialog->updateSecondary(
+                      progress,
+                      QString("PATCHING '%1' (%2/%3)").arg(name.data()).arg(patched).arg(to_patch));
+                  },
+                  Qt::QueuedConnection);
+              });
+            overall_done++;
+
+            QMetaObject::invokeMethod(
+              this,
+              [this, all_files, overall_done]()
+              {
+                if (_launcher.isUpdateStopped())
+                  return;
+                this->_progressDialog->updatePrimary(static_cast<int>(
+                  (static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
+              },
+              Qt::QueuedConnection);
+          }
+
+          if (_launcher.isUpdateStopped())
+          {
+            isUpdated = false; // not finished updating
+            // if update was stopped, just end the dialog
+            QMetaObject::invokeMethod(
+              this, [this] { this->_progressDialog->end(); }, Qt::QueuedConnection);
+          }
+          else
+          {
+            isUpdated = true; // updated
+            // if the dialog wasn't stopped, animate finish
+            auto thread = std::thread(
+              [this]
+              {
+                QMetaObject::invokeMethod(
+                  this,
+                  [this]()
+                  {
+                    this->_progressDialog->updateSecondary(100, QString("FINISHED"));
+                    this->_progressDialog->updatePrimary(100);
+                  },
+                  Qt::BlockingQueuedConnection);
                 // make it pretty
                 std::this_thread::sleep_for(std::chrono::milliseconds(600));
 
-                QMetaObject::invokeMethod(this, [this]
-                {
-                  this->_progressDialog->end();
-                }, Qt::QueuedConnection);
+                QMetaObject::invokeMethod(
+                  this, [this] { this->_progressDialog->end(); }, Qt::QueuedConnection);
               });
-              thread.detach();
-            }
-          }
-          catch (const std::exception& e)
-          {
-            // TODO: log patching error
-            isUpdated = false; // interrupted by error
+            thread.detach();
           }
         }
-      } else
+        catch (const std::exception& e)
+        {
+          // TODO: log patching error
+          isUpdated = false; // interrupted by error
+        }
+      }
+      else
       {
         isUpdated = true; // all files have the correct checksum
       }
@@ -361,17 +378,17 @@ void Window::handle_launch()
       // if the files were recently patched
       if (isUpdated)
       {
-        //QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
-        //if (launcher::launch(this->_profile))
+        // QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
+        // if (launcher::launch(this->_profile))
         //{
-          //std::this_thread::sleep_for(std::chrono::seconds(5));
+        // std::this_thread::sleep_for(std::chrono::seconds(5));
         //}
-        //else
+        // else
         //{
-          // TODO: log error
+        // TODO: log error
         //}
 
-        //QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
+        // QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
       }
 
       this->_workerRunning = false;
@@ -388,7 +405,8 @@ void Window::handle_post_login()
 
     _menuWidgetUI.l_level_d->setText(QString::number(_launcher.profile().level));
     _menuWidgetUI.l_guild_d->setText(QString(_launcher.profile().guild.data()));
-    auto const date = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(_launcher.profile().last_login));
+    auto const date =
+      QDateTime::fromSecsSinceEpoch(static_cast<qint64>(_launcher.profile().last_login));
     _menuWidgetUI.l_last_login_d->setText(date.toString("yy-MM-dd HH:mm:ss"));
 
     _masterFrameUI.menu_widget->show();
@@ -447,10 +465,7 @@ void Window::handle_info()
   // TODO: implement info
 }
 
-void Window::handle_install_pause()
-{
-  _launcher.setUpdatePaused(!_launcher.isUpdatePaused());
-}
+void Window::handle_install_pause() { _launcher.setUpdatePaused(!_launcher.isUpdatePaused()); }
 
 void Window::handle_install_stop()
 {
@@ -466,7 +481,4 @@ void Window::handle_frame_changed(int frameNumber)
     _gameStartMovie->setPaused(true);
   }
 }
-
-
-
 } // namespace ui
