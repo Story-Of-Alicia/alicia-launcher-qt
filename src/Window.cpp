@@ -20,7 +20,7 @@ namespace ui
 
 int start(int argc, char* argv[])
 {
-  QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+  //QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
   QApplication application(argc, argv);
 
   QFontDatabase::addApplicationFont(":/font/not_eurostile.otf");
@@ -269,8 +269,11 @@ void Window::handle_launch()
 
               _launcher.downloadNextFile([this, downloaded, to_download](int progress, std::string name) -> void
               {
+                //TODO: remove mutable
                 QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), downloaded, to_download]() mutable
                 {
+                  if(_launcher.isUpdateStopped())
+                    return;
                   std::transform(name.begin(), name.end(), name.begin(), ::toupper);
                   this->_progressDialog->updateSecondary(progress, QString("DOWNLOADING '%1' (%2/%3)").arg(name.data()).arg(downloaded).arg(to_download));
                 }, Qt::QueuedConnection);
@@ -279,6 +282,8 @@ void Window::handle_launch()
               overall_done++;
               QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
               {
+                if(_launcher.isUpdateStopped())
+                  return;
                 this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
               }, Qt::QueuedConnection);
             }
@@ -293,29 +298,37 @@ void Window::handle_launch()
 
               _launcher.patchNextFile([this, to_patch, patched](int progress, std::string name) -> void
               {
+                //TODO: remove mutable
                 QMetaObject::invokeMethod(this, [this, progress, name = std::move(name), to_patch, patched]() mutable
                 {
+                  if(_launcher.isUpdateStopped())
+                    return;
                   std::transform(name.begin(), name.end(), name.begin(), ::toupper);
                   this->_progressDialog->updateSecondary(progress, QString("PATCHING '%1' (%2/%3)").arg(name.data()).arg(patched).arg(to_patch));
                 }, Qt::QueuedConnection);
               });
               overall_done++;
+
               QMetaObject::invokeMethod(this, [this, all_files, overall_done]()
               {
+                if(_launcher.isUpdateStopped())
+                  return;
                 this->_progressDialog->updatePrimary(static_cast<int>((static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
               }, Qt::QueuedConnection);
             }
 
             if (_launcher.isUpdateStopped())
             {
+              isUpdated = false; // not finished updating
+              // if update was stopped, just end the dialog
               QMetaObject::invokeMethod(this, [this]
               {
                 this->_progressDialog->end();
               }, Qt::QueuedConnection);
-              isUpdated = false; // not finished updating
             } else
             {
               isUpdated = true; // updated
+              // if the dialog wasn't stopped, animate finish
               auto thread = std::thread([this]
               {
                 QMetaObject::invokeMethod(this, [this]()
