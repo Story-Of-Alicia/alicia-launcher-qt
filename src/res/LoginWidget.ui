@@ -41,6 +41,7 @@ QLabel#l_sign_up {
 }
 
 QLabel#l_error {
+	font-size: 13px;
 	color: white;
 	background-color: rgb(255, 68, 28);
 	border-top-left-radius: 3px;
@@ -114,12 +115,22 @@ QCheckBox#check_remember::indicator:checked {
      <height>111</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>EurostileHea</family>
+     <pointsize>-1</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+    </font>
+   </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    font: 25px EurostileBla;
+    font-size: 25px;
      color: white;
     border-style: solid;
     border-width: 1px;
@@ -129,7 +140,7 @@ QCheckBox#check_remember::indicator:checked {
 }
 
 QPushButton:hover{
-    font: 25px EurostileBla;
+    font-size: 25px;
      color: white;
     border-style: solid;
     border-width: 1px;
@@ -139,7 +150,7 @@ QPushButton:hover{
 }
 
 QPushButton:pressed{
-    font: 25px EurostileBla;
+    font-size: 25px;
      color: white;
     border-style: solid;
     border-width: 1px;
@@ -185,6 +196,7 @@ QPushButton:disabled {
      <pointsize>14</pointsize>
      <bold>true</bold>
      <underline>true</underline>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
@@ -245,6 +257,9 @@ QPushButton:disabled {
      <hintingpreference>PreferDefaultHinting</hintingpreference>
     </font>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -288,7 +303,7 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_remember_me">
    <property name="geometry">
     <rect>
-     <x>67</x>
+     <x>80</x>
      <y>189</y>
      <width>120</width>
      <height>16</height>
@@ -311,15 +326,15 @@ QPushButton:disabled {
    <property name="geometry">
     <rect>
      <x>59</x>
-     <y>24</y>
+     <y>21</y>
      <width>272</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>NanumGothic</family>
-     <pointsize>9</pointsize>
+     <pointsize>-1</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>ExtraBold</fontweight>
@@ -341,6 +356,13 @@ QPushButton:disabled {
      <height>48</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <bold>false</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+    </font>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -353,6 +375,13 @@ QPushButton:disabled {
      <width>304</width>
      <height>48</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <bold>false</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+    </font>
    </property>
    <property name="text">
     <string/>

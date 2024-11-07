@@ -44,6 +44,14 @@ QLabel#l_version {
 		color: #E4E8EA;
 }
 
+QLabel#l_corrupted {
+	font-size: 14px;
+}
+
+QLabel#l_issues {
+	font-size: 14px;
+}
+
 QPushButton {
 	border: none;
 	background: transparent;
@@ -329,7 +337,7 @@ QPushButton#btn_minimize:pressed  {
     <property name="geometry">
      <rect>
       <x>769</x>
-      <y>595</y>
+      <y>594</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -337,8 +345,9 @@ QPushButton#btn_minimize:pressed  {
     <property name="font">
      <font>
       <family>NanumGothic</family>
-      <pointsize>11</pointsize>
+      <pointsize>-1</pointsize>
       <italic>false</italic>
+      <stylestrategy>PreferAntialias</stylestrategy>
       <hintingpreference>PreferNoHinting</hintingpreference>
       <fontweight>DemiBold</fontweight>
      </font>
@@ -356,13 +365,23 @@ QPushButton#btn_minimize:pressed  {
       <height>32</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>EurostileHea</family>
+      <pointsize>-1</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+      <stylestrategy>PreferAntialias</stylestrategy>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+     </font>
+    </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-    font: 17px EurostileBla;
-     color: white;
+    font-size: 16px;
+    color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -371,8 +390,8 @@ QPushButton#btn_minimize:pressed  {
 }
 
 QPushButton:hover {
-    font: 17px EurostileBla;
-     color: white;
+    font-size: 16px;
+    color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -381,8 +400,8 @@ QPushButton:hover {
 }
 
 QPushButton:pressed {
-    font: 17px EurostileBla;
-     color: white;
+    font-size: 16px;
+    color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -409,12 +428,23 @@ QPushButton:pressed {
       <height>32</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>EurostileHea</family>
+      <pointsize>-1</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <stylestrategy>PreferAntialias</stylestrategy>
+      <kerning>true</kerning>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+     </font>
+    </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    font: 17px EurostileBla;
+    font-size: 16px;
     color: white;
     border-style: solid;
     border-width: 1px;
@@ -424,8 +454,8 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    font: 17px EurostileBla;
-     color: white;
+    font-size: 16px;
+    color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -434,8 +464,8 @@ QPushButton:hover {
 }
 
 QPushButton:pressed {
-    font: 17px EurostileBla;
-     color: white;
+    font-size: 16px;
+    color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
@@ -471,7 +501,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>1017</x>
-      <y>595</y>
+      <y>594</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -479,8 +509,9 @@ QPushButton:pressed {
     <property name="font">
      <font>
       <family>NanumGothic</family>
-      <pointsize>11</pointsize>
+      <pointsize>-1</pointsize>
       <italic>false</italic>
+      <stylestrategy>PreferAntialias</stylestrategy>
       <hintingpreference>PreferNoHinting</hintingpreference>
       <fontweight>DemiBold</fontweight>
      </font>
@@ -546,6 +577,12 @@ QPushButton:pressed {
       <height>298</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <stylestrategy>PreferAntialias</stylestrategy>
+      <hintingpreference>PreferNoHinting</hintingpreference>
+     </font>
+    </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
@@ -603,6 +640,7 @@ QPushButton:pressed {
      <font>
       <family>EurostileBla</family>
       <pointsize>14</pointsize>
+      <stylestrategy>PreferAntialias</stylestrategy>
       <hintingpreference>PreferNoHinting</hintingpreference>
       <fontweight>Black</fontweight>
      </font>

@@ -138,6 +138,9 @@ QProgressBar#pb_secondary::chunk {
      <fontweight>DemiBold</fontweight>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>34%</string>
    </property>
@@ -159,6 +162,10 @@ QProgressBar#pb_secondary::chunk {
      <family>NotEurostile</family>
      <pointsize>14</pointsize>
      <italic>false</italic>
+     <stylestrategy>PreferAntialias</stylestrategy>
+     <kerning>true</kerning>
+     <hintingpreference>PreferNoHinting</hintingpreference>
+     <fontweight></fontweight>
     </font>
    </property>
    <property name="text">
@@ -177,7 +184,7 @@ QProgressBar#pb_secondary::chunk {
   <widget class="QPushButton" name="btn_pause">
    <property name="geometry">
     <rect>
-     <x>433</x>
+     <x>432</x>
      <y>19</y>
      <width>10</width>
      <height>12</height>
