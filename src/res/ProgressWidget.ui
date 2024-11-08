@@ -25,14 +25,16 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
+   <string notr="true">QLabel {
+	color: #392518;
+}
+
+QPushButton {
 	background: transparent;
 }
 
 QLabel#l_title {
-	font: 14 NotEurostile;
-	font-weight: regular;
-	color: #392518;
+	font: 19px NotEurostile;
 }
 
 QPushButton#btn_close {
@@ -160,12 +162,12 @@ QProgressBar#pb_secondary::chunk {
    <property name="font">
     <font>
      <family>NotEurostile</family>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
      <italic>false</italic>
+     <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>
      <kerning>true</kerning>
      <hintingpreference>PreferNoHinting</hintingpreference>
-     <fontweight></fontweight>
     </font>
    </property>
    <property name="text">

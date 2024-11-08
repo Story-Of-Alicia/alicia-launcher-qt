@@ -33,10 +33,12 @@ QLabel#l_remember_me {
 }
 
 QLabel#l_story_awaits {
+	font-size: 16px;
 	color: #453327;
 }
 
 QLabel#l_sign_up {
+	font-size: 18px;
 	color: #FF441C;
 }
 
@@ -69,10 +71,10 @@ QLineEdit {
 	border: none;
 	placeholder-text-color: #392518;
 }
+
 QLabel {
 	color: #4F1717;
 }
-
 
 QCheckBox#check_remember::indicator:unchecked {
 	image: url(&quot;:/img/btn/checkbox.png&quot;)
@@ -87,8 +89,8 @@ QCheckBox#check_remember::indicator:checked {
   <widget class="QLabel" name="l_story_awaits">
    <property name="geometry">
     <rect>
-     <x>266</x>
-     <y>218</y>
+     <x>272</x>
+     <y>217</y>
      <width>135</width>
      <height>20</height>
     </rect>
@@ -96,7 +98,7 @@ QCheckBox#check_remember::indicator:checked {
    <property name="font">
     <font>
      <family>NanumGothic</family>
-     <pointsize>12</pointsize>
+     <pointsize>-1</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>DemiBold</fontweight>
@@ -111,8 +113,8 @@ QCheckBox#check_remember::indicator:checked {
     <rect>
      <x>361</x>
      <y>45</y>
-     <width>112</width>
-     <height>111</height>
+     <width>114</width>
+     <height>113</height>
     </rect>
    </property>
    <property name="font">
@@ -184,8 +186,8 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_sign_up">
    <property name="geometry">
     <rect>
-     <x>405</x>
-     <y>215</y>
+     <x>412</x>
+     <y>214</y>
      <width>65</width>
      <height>22</height>
     </rect>
@@ -193,7 +195,7 @@ QPushButton:disabled {
    <property name="font">
     <font>
      <family>EurostileBla</family>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
      <bold>true</bold>
      <underline>true</underline>
      <stylestrategy>PreferAntialias</stylestrategy>
@@ -237,9 +239,9 @@ QPushButton:disabled {
   <widget class="QCheckBox" name="check_remember">
    <property name="geometry">
     <rect>
-     <x>45</x>
+     <x>42</x>
      <y>188</y>
-     <width>18</width>
+     <width>19</width>
      <height>18</height>
     </rect>
    </property>
@@ -303,7 +305,7 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_remember_me">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>75</x>
      <y>189</y>
      <width>120</width>
      <height>16</height>
@@ -325,7 +327,7 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_error">
    <property name="geometry">
     <rect>
-     <x>59</x>
+     <x>58</x>
      <y>21</y>
      <width>272</width>
      <height>25</height>
@@ -350,7 +352,7 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_error_user">
    <property name="geometry">
     <rect>
-     <x>43</x>
+     <x>42</x>
      <y>45</y>
      <width>304</width>
      <height>48</height>
@@ -370,7 +372,7 @@ QPushButton:disabled {
   <widget class="QLabel" name="l_error_pass">
    <property name="geometry">
     <rect>
-     <x>43</x>
+     <x>42</x>
      <y>109</y>
      <width>304</width>
      <height>48</height>

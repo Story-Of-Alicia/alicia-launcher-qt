@@ -19,6 +19,14 @@
 	background-repeat: no-repeat;
 }
 
+QLabel {
+	color: #392518;
+}
+
+QLabel#l_welcome {
+	font-size: 22px;
+}
+
 QLabel#l_username_d {
 	color: #FF441C;
 }
@@ -31,10 +39,10 @@ QPushButton {
   <widget class="QPushButton" name="btn_logout">
    <property name="geometry">
     <rect>
-     <x>42</x>
-     <y>205</y>
-     <width>112</width>
-     <height>32</height>
+     <x>40</x>
+     <y>204</y>
+     <width>114</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -134,6 +142,7 @@ QPushButton:pressed {
     <font>
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>DemiBold</fontweight>
     </font>
@@ -158,6 +167,7 @@ QPushButton:pressed {
     <font>
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>DemiBold</fontweight>
     </font>
@@ -182,6 +192,7 @@ QPushButton:pressed {
     <font>
      <family>NanumGothic</family>
      <pointsize>11</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>DemiBold</fontweight>
     </font>
@@ -196,10 +207,10 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btn_info">
    <property name="geometry">
     <rect>
-     <x>378</x>
+     <x>377</x>
      <y>44</y>
-     <width>96</width>
-     <height>32</height>
+     <width>98</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -293,6 +304,7 @@ QPushButton:pressed {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
@@ -314,6 +326,7 @@ QPushButton:pressed {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
@@ -335,6 +348,7 @@ QPushButton:pressed {
      <family>EurostileBla</family>
      <pointsize>13</pointsize>
      <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
    </property>
@@ -342,11 +356,11 @@ QPushButton:pressed {
     <string>Not joined yet</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="l_welcome">
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>45</y>
+     <y>46</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -354,10 +368,14 @@ QPushButton:pressed {
    <property name="font">
     <font>
      <family>NanumGothic</family>
-     <pointsize>16</pointsize>
+     <pointsize>-1</pointsize>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
      <fontweight>DemiBold</fontweight>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 22px;</string>
    </property>
    <property name="text">
     <string>Welcome,</string>
@@ -366,7 +384,7 @@ QPushButton:pressed {
   <widget class="QLabel" name="l_username_d">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>158</x>
      <y>44</y>
      <width>191</width>
      <height>31</height>
@@ -377,8 +395,12 @@ QPushButton:pressed {
      <family>EurostileBla</family>
      <pointsize>19</pointsize>
      <bold>true</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
      <hintingpreference>PreferNoHinting</hintingpreference>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>storyofalicia</string>
