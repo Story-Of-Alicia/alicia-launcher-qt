@@ -8,7 +8,8 @@ ProgressDialog::ProgressDialog(QWidget * parent) : QDialog(parent)
   _ui_progressWidget.setupUi(this);
   this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
   blur = new QGraphicsBlurEffect(this);
-  blur->setBlurRadius(3);
+  blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+  blur->setBlurRadius(6);
   blur->setEnabled(false);
 }
 
@@ -31,7 +32,6 @@ void ProgressDialog::begin(QWidget * blur_target, QString const & title)
 void ProgressDialog::end()
 {
   setVisible(false);
-  blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
   blur->setEnabled(false);
   blur_target->setDisabled(false);
 }
@@ -45,6 +45,7 @@ void ProgressDialog::updateSecondary(const int& progress, QString const& text) c
     _ui_progressWidget.pb_secondary->setValue(0);
   } else
   {
+    //probably a memory leak ig
     auto animation = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
     animation->setDuration(150);
     animation->setStartValue(_ui_progressWidget.pb_secondary->value());

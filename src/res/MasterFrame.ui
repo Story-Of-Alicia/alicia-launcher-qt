@@ -611,6 +611,26 @@ QPushButton:pressed {
      <string notr="true">SUPPORT</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>200</y>
+      <width>69</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_2">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>200</y>
+      <width>69</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>l_bg</zorder>
    <zorder>l_corrupted</zorder>
    <zorder>btn_repair</zorder>
@@ -623,13 +643,15 @@ QPushButton:pressed {
    <zorder>l_troubleshoot</zorder>
    <zorder>l_support</zorder>
    <zorder>l_game_start_frame</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>comboBox_2</zorder>
   </widget>
   <zorder>content</zorder>
   <zorder>l_frame</zorder>
-  <zorder>btn_minimize</zorder>
-  <zorder>btn_exit</zorder>
   <zorder>btn_settings</zorder>
   <zorder>alicia2</zorder>
+  <zorder>btn_minimize</zorder>
+  <zorder>btn_exit</zorder>
   <zorder>alicia1</zorder>
  </widget>
  <tabstops>
