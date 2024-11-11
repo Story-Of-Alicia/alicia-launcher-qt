@@ -61,7 +61,7 @@ private:
 
   QPoint _mouseEventPos;
   bool _windowDragActive = false;
-  bool _shouldAnimateGameStart = false;
+  bool _leftGameStart = true;
 };
 } // namespace ui
 

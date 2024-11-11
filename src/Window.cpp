@@ -167,15 +167,16 @@ bool Window::eventFilter(QObject* object, QEvent* event)
       if (event->type() == QEvent::MouseMove)
       {
         // playing animation when the mouse is within the button
-        _shouldAnimateGameStart = true;
-        _gameStartMovie->setPaused(false);
+        if(_leftGameStart)
+        {
+          _gameStartMovie->setPaused(false);
+          _leftGameStart = false;
+        }
       }
       else if (
         event->type() == QEvent::MouseButtonPress &&
         dynamic_cast<QMouseEvent*>(event)->button() == Qt::LeftButton)
       {
-        // stopping the animation so it doesn't get stuck replaying
-        _shouldAnimateGameStart = false;
         // launching the game when the mouse is pressed within the button
         handle_launch();
       }
@@ -184,8 +185,7 @@ bool Window::eventFilter(QObject* object, QEvent* event)
     {
       if (event->type() == QEvent::MouseMove)
       {
-        // signal to stop the animation when the mouse leaves the button
-        _shouldAnimateGameStart = false;
+        _leftGameStart = true;
       }
     }
   }
@@ -475,7 +475,7 @@ void Window::handle_install_stop()
 
 void Window::handle_frame_changed(int frameNumber)
 {
-  if (!_shouldAnimateGameStart && frameNumber == 0)
+  if (frameNumber == 0)
   {
     // stop the playback at frame 0, when _shouldAnimateGameStart is false
     _gameStartMovie->setPaused(true);

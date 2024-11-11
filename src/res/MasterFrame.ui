@@ -547,7 +547,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="text">
      <string/>
