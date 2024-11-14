@@ -1,68 +1,90 @@
 #include "ProgressDialog.hpp"
 
+#include "Launcher.hpp"
+
 #include <QGraphicsBlurEffect>
 #include <QtConcurrent>
+#include <QTimer>
 
 ProgressDialog::ProgressDialog(QWidget * parent) : QDialog(parent)
 {
   _ui_progressWidget.setupUi(this);
-  this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
-  blur = new QGraphicsBlurEffect(this);
-  blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
-  blur->setBlurRadius(6);
-  blur->setEnabled(false);
+  setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
 }
 
-void ProgressDialog::begin(QWidget * blur_target, QString const & title)
+void ProgressDialog::begin(QWidget * blur_target, launcher::Launcher * launcher)
 {
   auto geometry = dynamic_cast<QWidget*>(parent())->geometry();
   this->move(geometry.width() / 2 - this->geometry().width() / 2, geometry.height() / 2 - this->geometry().height() / 2);
-  this->blur_target = blur_target;
+  this->_target = blur_target;
+  this->_launcher = launcher;
 
-  blur->setEnabled(true);
-  blur_target->setGraphicsEffect(this->blur);
+  if(_blur == nullptr)
+  {
+    _blur = new QGraphicsBlurEffect(this);
+    _blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+    _blur->setBlurRadius(6);
+  }
+
+  _blur->setEnabled(true);
+  blur_target->setGraphicsEffect(this->_blur);
   blur_target->setDisabled(true);
   setVisible(true);
 
-  _ui_progressWidget.l_title->setText(title);
+  _ui_progressWidget.l_title->setText("");
   _ui_progressWidget.l_status->setText("0%");
   _ui_progressWidget.pb_primary->setValue(0);
   _ui_progressWidget.pb_secondary->setValue(0);
+
+  _timer = new QTimer(this);
+  connect(_timer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+  _timer->start(100);
 }
+
 void ProgressDialog::end()
 {
   setVisible(false);
-  blur->setEnabled(false);
-  blur_target->setDisabled(false);
+  _blur->setEnabled(false);
+  _target->setDisabled(false);
+  _timer->stop();
 }
 
-void ProgressDialog::updateSecondary(const int& progress, QString const& text) const
+void ProgressDialog::updateProgress()
 {
-  _ui_progressWidget.l_title->setText(text);
-
-  if (progress == 0)
+  if (_launcher->isUpdatePaused())
   {
-    _ui_progressWidget.pb_secondary->setValue(0);
+    return;
+  }
+
+  if (_launcher->progressTotal() == 100)
+  {
+    _ui_progressWidget.l_title->setText("Finished");
   } else
   {
-    //probably a memory leak ig
-    auto animation = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
-    animation->setDuration(150);
-    animation->setStartValue(_ui_progressWidget.pb_secondary->value());
-    animation->setEndValue(progress);
-    animation->setEasingCurve(QEasingCurve::Linear);
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
+    if(_launcher->state() == launcher::State::DOWNLOADING)
+    {
+      _ui_progressWidget.l_title->setText(QString("Downloading... (%1 left)").arg(_launcher->countToDownload()));
+    } else
+    {
+      _ui_progressWidget.l_title->setText(QString("Patching... (%1 left)").arg(_launcher->countToPatch()));
+    }
   }
+
+  _ui_progressWidget.l_status->setText(QString("%1%").arg(_ui_progressWidget.pb_primary->value()));
+
+  //TODO: when progress == 0 animate going back to zero after a while
+  auto primary_forward = new QPropertyAnimation(_ui_progressWidget.pb_primary, "value");
+  primary_forward->setDuration(100);
+  primary_forward->setStartValue(_ui_progressWidget.pb_primary->value());
+  primary_forward->setEndValue(_launcher->progressTotal());
+  primary_forward->setEasingCurve(QEasingCurve::Linear);
+  primary_forward->start(QAbstractAnimation::DeleteWhenStopped);
+
+  auto secondary_forward = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
+  secondary_forward->setDuration(100);
+  secondary_forward->setStartValue(_ui_progressWidget.pb_secondary->value());
+  secondary_forward->setEndValue(_launcher->progress());
+  secondary_forward->setEasingCurve(QEasingCurve::Linear);
+  secondary_forward->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-
-void ProgressDialog::updatePrimary(const int& progress) const
-{
-  _ui_progressWidget.l_status->setText(QString("%1%").arg(progress));
-  auto animation = new QPropertyAnimation(_ui_progressWidget.pb_primary, "value");
-  animation->setDuration(100);
-  animation->setStartValue(_ui_progressWidget.pb_primary->value());
-  animation->setEndValue(progress);
-  animation->setEasingCurve(QEasingCurve::Linear);
-  animation->start(QAbstractAnimation::DeleteWhenStopped);
-}
