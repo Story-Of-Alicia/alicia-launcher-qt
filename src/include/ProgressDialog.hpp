@@ -1,5 +1,6 @@
 #ifndef PROGRESSDIALOG_HPP
 #define PROGRESSDIALOG_HPP
+#include "Launcher.hpp"
 #include "ui_ProgressWidget.h"
 
 #include <QDialog>
@@ -12,18 +13,17 @@ public:
 
   Ui::ProgressWidget _ui_progressWidget = Ui::ProgressWidget();
 
-  void begin(QWidget * blur_target, QString const & title);
+  void begin(QWidget * blur_target, launcher::Launcher * launcher);
   void end();
-  void updatePrimary(const int &progress) const;
-  void updateSecondary(const int &progress, QString const& text) const;
+
+private slots:
+  void updateProgress();
 
 private:
-  QGraphicsBlurEffect *blur = nullptr;
-  QWidget * blur_target = nullptr;
-
-  std::atomic_bool _shouldRun = false;
-  std::atomic_int _primaryProgress = 0;
-  std::atomic_int _secondaryProgress = 0;
+  QGraphicsBlurEffect *_blur = nullptr;
+  QWidget * _target = nullptr;
+  launcher::Launcher * _launcher = nullptr;
+  QTimer * _timer = nullptr;
 };
 
 #endif // PROGRESSDIALOG_HPP

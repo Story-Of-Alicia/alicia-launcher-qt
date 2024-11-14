@@ -20,17 +20,29 @@ struct Profile
   uint64_t last_login;
 };
 
+enum class State
+{
+  DOWNLOADING, PATCHING, NONE
+};
+
 class Launcher
 {
 public:
   Launcher();
 
   [[nodiscard]] Profile profile() const;
+
   [[nodiscard]] int countToDownload() const;
   [[nodiscard]] int countToPatch() const;
+
   [[nodiscard]] bool isAuthenticated() const;
   [[nodiscard]] bool isUpdatePaused() const;
   [[nodiscard]] bool isUpdateStopped() const;
+
+  [[nodiscard]] State state() const;
+
+  [[nodiscard]] int progress() const;
+  [[nodiscard]] int progressTotal() const;
 
   /*
    * Sets _updatePaused to v.
@@ -64,34 +76,24 @@ public:
    */
   bool checkFiles() noexcept;
 
-  /*
-   * Iterates _toDownload and updates a single file.
-   *
-   *
-   * TODO: docs
-   */
-  bool downloadNextFile(std::function<void(int, std::string)> const &) noexcept;
-
-  /*
-  * Iterates _toPatch and updates a single file.
-  *
-  *
-  * TODO: docs
-  */
-  bool patchNextFile(std::function<void(int, std::string)> const & cb) noexcept;
+  void update() noexcept;
 
 private:
   std::mutex _mutex;
 
   // requires _mutex lock
   Profile _profile;
+  State   _state;
+
   // requires _mutex lock
   std::queue<std::string> _toPatch;
   std::queue<std::string> _toDownload;
 
   std::atomic_bool _isAuthenticated = false;
-  std::atomic_bool _shouldStop    = false;
-  std::atomic_bool _shouldPause   = false;
+  std::atomic_bool _shouldStop      = false;
+  std::atomic_bool _shouldPause     = false;
+  std::atomic_int _progress         = 0;
+  std::atomic_int _progressTotal    = 0;
 };
 }
 

@@ -75,6 +75,7 @@ std::string sha256_checksum(const std::string& path)
 }
 
 Launcher::Launcher()
+    : _state(State::NONE)
 {
   _profile = Profile{
     .username = "%USERNAME%",
@@ -83,6 +84,20 @@ Launcher::Launcher()
     .level = 69,
     .last_login = 0,
   };
+}
+
+State Launcher::state() const
+{
+  return _state;
+}
+
+int Launcher::progress() const
+{
+  return _progress;
+}
+int Launcher::progressTotal() const
+{
+  return _progressTotal;
 }
 
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
@@ -150,55 +165,93 @@ bool Launcher::checkFiles() noexcept
   return _toDownload.empty();
 }
 
-bool Launcher::downloadNextFile(std::function<void(int, std::string)> const & cb) noexcept
+void Launcher::update() noexcept
 {
   std::lock_guard lock(_mutex);
-  // await un-paused state
-  _shouldPause.wait(true);
-  auto file = _toDownload.front();
-  cb(0, file);
+  if(_toDownload.empty())
+    return;
 
-  if (_toDownload.empty())
-    return false;
+  _progress = 0;
+  _progressTotal = 0;
 
-  for (int i = 0; i < 5; i++)
+  int counter = 0;
+  size_t total = _toDownload.size() * 2;
+
+  do
   {
     if (_shouldStop)
-      break;
+    {
+      _state = State::NONE;
+      return;
+    }
+    _state = State::DOWNLOADING;
+
     _shouldPause.wait(true);
-    cb(static_cast<int>((static_cast<double>(i+1) / static_cast<double>(5)) * 100), file);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // simulate heavy task
+    auto file = _toDownload.front();
+    _progress = 0;
+    // heavy task simulation
+    for (int i = 0; i < 5; i++)
+    {
+      if (_shouldStop)
+      {
+        _state = State::NONE;
+        return;
+      }
+      _shouldPause.wait(true);
+
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      _progress = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
+    }
+
+    _toDownload.pop();
+    _toPatch.push(file);
+    counter++;
+
+    _progressTotal = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
+  } while(!_toDownload.empty());
+
+
+  if(_toPatch.empty())
+  {
+    _state = State::NONE;
+    return;
   }
 
-  _toDownload.pop();
-  _toPatch.push(file);
-
-  return true;
-}
-
-bool Launcher::patchNextFile(std::function<void(int, std::string)> const & cb) noexcept
-{
-  std::lock_guard lock(_mutex);
-  _shouldPause.wait(true);
-
-  if (_toPatch.empty())
-    return false;
-
-  auto file = _toPatch.front();
-  cb(0, file);
-
-  for (int i = 0; i < 5; i++)
+  do
   {
     if (_shouldStop)
-      break;
+    {
+      _state = State::NONE;
+      return;
+    }
+
+    _state = State::PATCHING;
+
     _shouldPause.wait(true);
-    cb(static_cast<int>((static_cast<double>(i+1) / static_cast<double>(5)) * 100), file);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // simulate heavy task
-  }
+    auto file = _toPatch.front();
+    _progress = 0;
+    // heavy task simulation
+    for (int i = 0; i < 5; i++)
+    {
+      if (_shouldStop)
+      {
+        _state = State::NONE;
+        return;
+      }
 
-  _toPatch.pop();
+      _shouldPause.wait(true);
 
-  return true;
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      _progress = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
+    }
+
+    _toPatch.pop();
+    counter++;
+
+    _progressTotal = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
+  } while(!_toPatch.empty());
+
+  _state = State::NONE;
 }
 
 } // namespace launcher

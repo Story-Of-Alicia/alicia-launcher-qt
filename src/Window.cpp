@@ -229,169 +229,27 @@ void Window::handle_launch()
   _workerThread = std::make_unique<std::thread>(
     [this]
     {
-      bool isUpdated = false;
-
-      if (!_launcher.checkFiles())
+      bool shouldRun = false;
+      if(!_launcher.checkFiles())
       {
-        QMetaObject::invokeMethod(
-          this,
-          [this]
-          {
-            this->_progressDialog->begin(_masterFrameUI.content, "Updating");
-            this->_masterFrameUI.l_game_start_frame->setDisabled(false);
-          },
-          Qt::BlockingQueuedConnection);
-
-        int to_download = _launcher.countToDownload();
-        int to_patch = to_download;
-        int all_files = _launcher.countToDownload() * 2;
-
-        int downloaded = 0;
-        int patched = 0;
-        int overall_done = 0;
-
-        try
+        QMetaObject::invokeMethod(this, [this]() -> void
         {
-          while (_launcher.countToDownload() > 0)
-          {
-            downloaded++;
-            if (_launcher.isUpdateStopped())
-            {
-              break;
-            }
+          _progressDialog->begin(_masterFrameUI.content, &_launcher);
+        }, Qt::QueuedConnection);
 
-            _launcher.downloadNextFile(
-              [this, downloaded, to_download](int progress, std::string name) -> void
-              {
-                // TODO: remove mutable
-                QMetaObject::invokeMethod(
-                  this,
-                  [this, progress, name = std::move(name), downloaded, to_download]() mutable
-                  {
-                    if (_launcher.isUpdateStopped())
-                      return;
-                    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-                    this->_progressDialog->updateSecondary(
-                      progress,
-                      QString("DOWNLOADING '%1' (%2/%3)")
-                        .arg(name.data())
-                        .arg(downloaded)
-                        .arg(to_download));
-                  },
-                  Qt::QueuedConnection);
-              });
-
-            overall_done++;
-            QMetaObject::invokeMethod(
-              this,
-              [this, all_files, overall_done]()
-              {
-                if (_launcher.isUpdateStopped())
-                  return;
-                this->_progressDialog->updatePrimary(static_cast<int>(
-                  (static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              },
-              Qt::QueuedConnection);
-          }
-
-          while (_launcher.countToPatch() > 0)
-          {
-            patched++;
-            if (_launcher.isUpdateStopped())
-            {
-              break;
-            }
-
-            _launcher.patchNextFile(
-              [this, to_patch, patched](int progress, std::string name) -> void
-              {
-                // TODO: remove mutable
-                QMetaObject::invokeMethod(
-                  this,
-                  [this, progress, name = std::move(name), to_patch, patched]() mutable
-                  {
-                    if (_launcher.isUpdateStopped())
-                      return;
-                    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-                    this->_progressDialog->updateSecondary(
-                      progress,
-                      QString("PATCHING '%1' (%2/%3)").arg(name.data()).arg(patched).arg(to_patch));
-                  },
-                  Qt::QueuedConnection);
-              });
-            overall_done++;
-
-            QMetaObject::invokeMethod(
-              this,
-              [this, all_files, overall_done]()
-              {
-                if (_launcher.isUpdateStopped())
-                  return;
-                this->_progressDialog->updatePrimary(static_cast<int>(
-                  (static_cast<double>(overall_done) / static_cast<double>(all_files)) * 100));
-              },
-              Qt::QueuedConnection);
-          }
-
-          if (_launcher.isUpdateStopped())
-          {
-            isUpdated = false; // not finished updating
-            // if update was stopped, just end the dialog
-            QMetaObject::invokeMethod(
-              this, [this] { this->_progressDialog->end(); }, Qt::QueuedConnection);
-          }
-          else
-          {
-            isUpdated = true; // updated
-            // if the dialog wasn't stopped, animate finish
-            auto thread = std::thread(
-              [this]
-              {
-                QMetaObject::invokeMethod(
-                  this,
-                  [this]()
-                  {
-                    this->_progressDialog->updateSecondary(100, QString("FINISHED"));
-                    this->_progressDialog->updatePrimary(100);
-                  },
-                  Qt::BlockingQueuedConnection);
-                // make it pretty
-                std::this_thread::sleep_for(std::chrono::milliseconds(600));
-
-                QMetaObject::invokeMethod(
-                  this, [this] { this->_progressDialog->end(); }, Qt::QueuedConnection);
-              });
-            thread.detach();
-          }
-        }
-        catch (const std::exception& e)
-        {
-          // TODO: log patching error
-          isUpdated = false; // interrupted by error
-        }
-      }
-      else
+        _launcher.update();
+      } else
       {
-        isUpdated = true; // all files have the correct checksum
+        shouldRun = true;
       }
 
-      // if the files were recently patched
-      if (isUpdated)
+      if (shouldRun)
       {
-        // QMetaObject::invokeMethod(this, [this] { this->hide(); }, Qt::QueuedConnection);
-        // if (launcher::launch(this->_profile))
-        //{
-        // std::this_thread::sleep_for(std::chrono::seconds(5));
-        //}
-        // else
-        //{
-        // TODO: log error
-        //}
-
-        // QMetaObject::invokeMethod(this, [this] { handle_exit(); }, Qt::QueuedConnection);
+        _progressDialog->end();
+        // start the game
       }
 
-      this->_workerRunning = false;
+      _workerRunning = false;
     });
   _workerThread->detach();
 }
