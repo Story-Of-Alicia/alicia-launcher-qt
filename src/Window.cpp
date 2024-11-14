@@ -245,9 +245,13 @@ void Window::handle_launch()
 
       if (shouldRun)
       {
-        _progressDialog->end();
+        QMetaObject::invokeMethod(this, [this]() -> void
+        {
+          _progressDialog->end();
+        }, Qt::QueuedConnection);
         // start the game
       }
+
 
       _workerRunning = false;
     });
@@ -327,8 +331,11 @@ void Window::handle_install_pause() { _launcher.setUpdatePaused(!_launcher.isUpd
 
 void Window::handle_install_stop()
 {
-  _launcher.setUpdatePaused(false); // resume, to be able to stop
   _launcher.stopUpdate();
+  QMetaObject::invokeMethod(this, [this]() -> void
+  {
+  _progressDialog->end();
+  }, Qt::QueuedConnection);
 }
 
 void Window::handle_frame_changed(int frameNumber)

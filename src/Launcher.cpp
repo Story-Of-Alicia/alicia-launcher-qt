@@ -188,7 +188,6 @@ void Launcher::update() noexcept
 
     _shouldPause.wait(true);
     auto file = _toDownload.front();
-    _progress = 0;
     // heavy task simulation
     for (int i = 0; i < 5; i++)
     {
@@ -229,7 +228,6 @@ void Launcher::update() noexcept
 
     _shouldPause.wait(true);
     auto file = _toPatch.front();
-    _progress = 0;
     // heavy task simulation
     for (int i = 0; i < 5; i++)
     {
