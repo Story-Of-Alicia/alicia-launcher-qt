@@ -7,7 +7,7 @@
 #include "ui_MasterFrame.h"
 #include "ui_MenuWidget.h"
 
-
+#include <QMovie>
 #include <memory>
 #include <thread>
 
@@ -45,8 +45,8 @@ private:
   std::unique_ptr<std::thread> _workerThread;
   std::atomic_bool _workerRunning  = false;
 
-  QMovie*         _gameStartMovie = nullptr;
-  QFrame*         _masterFrame         = new QFrame(this);
+  QMovie*         _gameStartMovie = new QMovie(this);
+  QFrame*         _masterFrame    = new QFrame(this);
   ProgressDialog* _progressDialog = new ProgressDialog(this);
 
   MasterFrame _masterFrameUI{};

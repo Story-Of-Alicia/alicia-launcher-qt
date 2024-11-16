@@ -137,7 +137,12 @@ bool Launcher::checkFiles() noexcept
 {
   std::lock_guard lock(_mutex);
 
-  _shouldStop = false;
+  std::queue<std::string> toDownload;
+  _toDownload.swap(toDownload);
+
+  std::queue<std::string> toPatch;
+  _toPatch.swap(toPatch);
+
   if (!_toDownload.empty())
   {
     std::queue<std::string> empty;
@@ -146,10 +151,6 @@ bool Launcher::checkFiles() noexcept
 
   for (const auto& [path, expected_sum] : obtainFileInfo())
   {
-    if (_shouldStop)
-      break;
-    // await unpaused state
-    _shouldPause.wait(true);
     try
     {
       if (auto sum = sha256_checksum(path); sum != expected_sum)
@@ -170,6 +171,9 @@ void Launcher::update() noexcept
   std::lock_guard lock(_mutex);
   if(_toDownload.empty())
     return;
+
+  _shouldPause = false;
+  _shouldStop = false;
 
   _progress = 0;
   _progressTotal = 0;
