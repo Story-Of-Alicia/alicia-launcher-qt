@@ -25,10 +25,20 @@ enum class State
   DOWNLOADING, PATCHING, NONE
 };
 
+struct Progress
+{
+  int progressPrimary;
+  int progressSecondary;
+
+  std::string fileName;
+  State state;
+};
+
 class Launcher
 {
 public:
   Launcher();
+  ~Launcher();
 
   [[nodiscard]] Profile profile() const;
 
@@ -39,10 +49,7 @@ public:
   [[nodiscard]] bool isUpdatePaused() const;
   [[nodiscard]] bool isUpdateStopped() const;
 
-  [[nodiscard]] State state() const;
-
-  [[nodiscard]] int progress() const;
-  [[nodiscard]] int progressTotal() const;
+  [[nodiscard]] Progress getProgress() const;
 
   /*
    * Sets _updatePaused to v.
@@ -52,7 +59,7 @@ public:
 
   /*
    * Sets _shouldStop to true
-   * This will stop any workers (file check, file update).
+   * This will stop any active workers (file check, file update).
    */
   void stopUpdate();
 
@@ -63,7 +70,7 @@ public:
   bool authenticate(std::string const & username, std::string const & password) noexcept;
 
   /*
-   * Logs out user.
+   * Logs out the current user.
    */
   void logout() noexcept;
 
@@ -76,6 +83,10 @@ public:
    */
   bool checkFiles() noexcept;
 
+  /*
+   *
+   *
+   */
   void update() noexcept;
 
 private:
@@ -89,11 +100,13 @@ private:
   std::queue<std::string> _toPatch;
   std::queue<std::string> _toDownload;
 
-  std::atomic_bool _isAuthenticated = false;
-  std::atomic_bool _shouldStop      = false;
-  std::atomic_bool _shouldPause     = false;
-  std::atomic_int _progress         = 0;
-  std::atomic_int _progressTotal    = 0;
+  std::atomic<char*> _fileName        = static_cast<char*>(calloc(255, sizeof(char)));
+
+  std::atomic_bool _isAuthenticated   = false;
+  std::atomic_bool _shouldStop        = false;
+  std::atomic_bool _shouldPause       = false;
+  std::atomic_int  _progressSecondary = 0;
+  std::atomic_int  _progressPrimary   = 0;
 };
 }
 

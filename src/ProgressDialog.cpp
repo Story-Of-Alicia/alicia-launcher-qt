@@ -49,19 +49,21 @@ void ProgressDialog::end()
   _timer->stop();
 }
 
-void ProgressDialog::updateProgress()
+void ProgressDialog::updateProgress() const
 {
   if (_launcher->isUpdatePaused())
   {
     return;
   }
 
-  if (_launcher->progressTotal() == 100)
+  auto progress = _launcher->getProgress();
+
+  if (progress.progressPrimary == 100)
   {
     _ui_progressWidget.l_title->setText("Finished");
   } else
   {
-    if(_launcher->state() == launcher::State::DOWNLOADING)
+    if(progress.state == launcher::State::DOWNLOADING)
     {
       _ui_progressWidget.l_title->setText(QString("Downloading... (%1 left)").arg(_launcher->countToDownload()));
     } else
@@ -72,18 +74,19 @@ void ProgressDialog::updateProgress()
 
   _ui_progressWidget.l_status->setText(QString("%1%").arg(_ui_progressWidget.pb_primary->value()));
 
-  //TODO: when progress == 0 animate going back to zero after a while
+  //TODO: when progress == 100 animate going back to zero after a while
+  // the memory is not leaked, i hope
   auto primary_forward = new QPropertyAnimation(_ui_progressWidget.pb_primary, "value");
   primary_forward->setDuration(100);
   primary_forward->setStartValue(_ui_progressWidget.pb_primary->value());
-  primary_forward->setEndValue(_launcher->progressTotal());
+  primary_forward->setEndValue(progress.progressPrimary);
   primary_forward->setEasingCurve(QEasingCurve::Linear);
   primary_forward->start(QAbstractAnimation::DeleteWhenStopped);
 
   auto secondary_forward = new QPropertyAnimation(_ui_progressWidget.pb_secondary, "value");
   secondary_forward->setDuration(100);
   secondary_forward->setStartValue(_ui_progressWidget.pb_secondary->value());
-  secondary_forward->setEndValue(_launcher->progress());
+  secondary_forward->setEndValue(progress.progressSecondary);
   secondary_forward->setEasingCurve(QEasingCurve::Linear);
   secondary_forward->start(QAbstractAnimation::DeleteWhenStopped);
 }

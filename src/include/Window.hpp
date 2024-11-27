@@ -42,17 +42,16 @@ private slots:
 private:
   launcher::Launcher _launcher;
 
-  std::unique_ptr<std::thread> _workerThread;
-  std::atomic_bool _workerRunning  = false;
+  MasterFrame _masterFrameUI;
+  LoginWidget _loginWidgetUI;
+  MenuWidget  _menuWidgetUI;
+
+  std::unique_ptr<std::thread> _workerThread = nullptr;
+  std::atomic_bool _workerRunning = false;
 
   QMovie*         _gameStartMovie = nullptr;
-  QFrame*         _masterFrame         = new QFrame(this);
+  QFrame*         _masterFrame    = new QFrame(this);
   ProgressDialog* _progressDialog = new ProgressDialog(this);
-
-  MasterFrame _masterFrameUI{};
-  LoginWidget _loginWidgetUI{};
-  MenuWidget  _menuWidgetUI{};
-
 
   void mousePressEvent(QMouseEvent* event) override;
   void mouseMoveEvent(QMouseEvent* event) override;
@@ -60,8 +59,9 @@ private:
   bool eventFilter(QObject* object, QEvent* event) override;
 
   QPoint _mouseEventPos;
+
   bool _windowDragActive = false;
-  bool _leftGameStart = true;
+  bool _leftGameStart    = true;
 };
 } // namespace ui
 

@@ -17,7 +17,7 @@ public:
   void end();
 
 private slots:
-  void updateProgress();
+  void updateProgress() const;
 
 private:
   QGraphicsBlurEffect *_blur = nullptr;

@@ -86,18 +86,9 @@ Launcher::Launcher()
   };
 }
 
-State Launcher::state() const
+Launcher::~Launcher()
 {
-  return _state;
-}
-
-int Launcher::progress() const
-{
-  return _progress;
-}
-int Launcher::progressTotal() const
-{
-  return _progressTotal;
+  free(_fileName);
 }
 
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
@@ -122,6 +113,16 @@ int Launcher::countToPatch() const { return static_cast<int>(_toPatch.size()); }
 bool Launcher::isAuthenticated() const { return _isAuthenticated; }
 
 bool Launcher::isUpdateStopped() const { return _shouldStop; }
+
+Progress Launcher::getProgress() const
+{
+  return {
+    .progressPrimary = _progressPrimary,
+    .progressSecondary = _progressSecondary,
+    .fileName = std::string(_fileName.load()),
+    .state = _state,
+  };
+}
 
 void Launcher::stopUpdate() { _shouldStop = true; }
 
@@ -171,8 +172,8 @@ void Launcher::update() noexcept
   if(_toDownload.empty())
     return;
 
-  _progress = 0;
-  _progressTotal = 0;
+  _progressSecondary = 0;
+  _progressPrimary = 0;
 
   int counter = 0;
   size_t total = _toDownload.size() * 2;
@@ -199,14 +200,14 @@ void Launcher::update() noexcept
       _shouldPause.wait(true);
 
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      _progress = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
+      _progressSecondary = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
     }
 
     _toDownload.pop();
     _toPatch.push(file);
     counter++;
 
-    _progressTotal = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
+    _progressPrimary = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
   } while(!_toDownload.empty());
 
 
@@ -240,13 +241,13 @@ void Launcher::update() noexcept
       _shouldPause.wait(true);
 
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      _progress = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
+      _progressSecondary = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
     }
 
     _toPatch.pop();
     counter++;
 
-    _progressTotal = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
+    _progressPrimary = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
   } while(!_toPatch.empty());
 
   _state = State::NONE;
