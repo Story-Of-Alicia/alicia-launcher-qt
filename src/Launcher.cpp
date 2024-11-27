@@ -86,11 +86,6 @@ Launcher::Launcher()
   };
 }
 
-Launcher::~Launcher()
-{
-  free(_fileName);
-}
-
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
 {
   std::lock_guard lock(_mutex);
@@ -113,16 +108,6 @@ int Launcher::countToPatch() const { return static_cast<int>(_toPatch.size()); }
 bool Launcher::isAuthenticated() const { return _isAuthenticated; }
 
 bool Launcher::isUpdateStopped() const { return _shouldStop; }
-
-Progress Launcher::getProgress() const
-{
-  return {
-    .progressPrimary = _progressPrimary,
-    .progressSecondary = _progressSecondary,
-    .fileName = std::string(_fileName.load()),
-    .state = _state,
-  };
-}
 
 void Launcher::stopUpdate() { _shouldStop = true; }
 
@@ -172,8 +157,11 @@ void Launcher::update() noexcept
   if(_toDownload.empty())
     return;
 
-  _progressSecondary = 0;
+  _shouldPause = false;
+  _shouldStop = false;
+
   _progressPrimary = 0;
+  _progressSecondary = 0;
 
   int counter = 0;
   size_t total = _toDownload.size() * 2;
@@ -241,13 +229,13 @@ void Launcher::update() noexcept
       _shouldPause.wait(true);
 
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      _progressSecondary = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
+      _progressPrimary = static_cast<int>((static_cast<float>(i+1) / 5.0f) * 100);
     }
 
     _toPatch.pop();
     counter++;
 
-    _progressPrimary = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
+    _progressSecondary = static_cast<int>((static_cast<float>(counter) / static_cast<float>(total) ) * 100);
   } while(!_toPatch.empty());
 
   _state = State::NONE;

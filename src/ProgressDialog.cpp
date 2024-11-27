@@ -29,15 +29,20 @@ void ProgressDialog::begin(QWidget * blur_target, launcher::Launcher * launcher)
   _blur->setEnabled(true);
   blur_target->setGraphicsEffect(this->_blur);
   blur_target->setDisabled(true);
+
   setVisible(true);
 
   _ui_progressWidget.l_title->setText("");
-  _ui_progressWidget.l_status->setText("0%");
+  _ui_progressWidget.l_status->setText("");
   _ui_progressWidget.pb_primary->setValue(0);
   _ui_progressWidget.pb_secondary->setValue(0);
 
-  _timer = new QTimer(this);
-  connect(_timer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+  if (_timer == nullptr)
+  {
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+
+  }
   _timer->start(100);
 }
 
@@ -60,19 +65,19 @@ void ProgressDialog::updateProgress() const
 
   if (progress.progressPrimary == 100)
   {
-    _ui_progressWidget.l_title->setText("Finished");
+    _ui_progressWidget.l_title->setText("FINISHED");
   } else
   {
     if(progress.state == launcher::State::DOWNLOADING)
     {
-      _ui_progressWidget.l_title->setText(QString("Downloading... (%1 left)").arg(_launcher->countToDownload()));
+      _ui_progressWidget.l_title->setText(QString("DOWNLOADING (%1 left)").arg(_launcher->countToDownload()));
     } else
     {
-      _ui_progressWidget.l_title->setText(QString("Patching... (%1 left)").arg(_launcher->countToPatch()));
+      _ui_progressWidget.l_title->setText(QString("PATCHING (%1 left)").arg(_launcher->countToPatch()));
     }
   }
 
-  _ui_progressWidget.l_status->setText(QString("%1%").arg(_ui_progressWidget.pb_primary->value()));
+  _ui_progressWidget.l_status->setText("DOPICE");
 
   //TODO: when progress == 100 animate going back to zero after a while
   // the memory is not leaked, i hope

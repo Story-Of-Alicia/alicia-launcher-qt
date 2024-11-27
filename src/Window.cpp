@@ -38,9 +38,7 @@ int start(int argc, char* argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
-  _progressDialog->hide();
-
-  _gameStartMovie = new QMovie(":/img/game_start_hover.gif");
+  _gameStartMovie->setFileName(":/img/game_start_hover.gif");
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
 
@@ -190,6 +188,12 @@ bool Window::eventFilter(QObject* object, QEvent* event)
     }
   }
 
+  if (_progressDialog == nullptr)
+  {
+    _progressDialog = new ProgressDialog(this);
+    _progressDialog->setVisible(false);
+  }
+
   return false;
 }
 
@@ -251,7 +255,6 @@ void Window::handle_launch()
         }, Qt::QueuedConnection);
         // start the game
       }
-
 
       _workerRunning = false;
     });
@@ -331,10 +334,13 @@ void Window::handle_install_pause() { _launcher.setUpdatePaused(!_launcher.isUpd
 
 void Window::handle_install_stop()
 {
+
   _launcher.stopUpdate();
+  _launcher.setUpdatePaused(false);
+  _progressDialog->end();
   QMetaObject::invokeMethod(this, [this]() -> void
   {
-  _progressDialog->end();
+
   }, Qt::QueuedConnection);
 }
 

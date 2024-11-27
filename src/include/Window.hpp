@@ -49,7 +49,7 @@ private:
   std::unique_ptr<std::thread> _workerThread = nullptr;
   std::atomic_bool _workerRunning = false;
 
-  QMovie*         _gameStartMovie = nullptr;
+  QMovie*         _gameStartMovie = new QMovie(this);
   QFrame*         _masterFrame    = new QFrame(this);
   ProgressDialog* _progressDialog = new ProgressDialog(this);
 
