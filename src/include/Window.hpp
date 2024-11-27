@@ -12,6 +12,7 @@
 #include <thread>
 
 #include <QMouseEvent>
+#include <QMovie>
 
 using namespace Ui;
 

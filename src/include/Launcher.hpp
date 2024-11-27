@@ -94,14 +94,13 @@ private:
 
   // requires _mutex lock
   Profile _profile;
-  State   _state;
 
   // requires _mutex lock
   std::queue<std::string> _toPatch;
   std::queue<std::string> _toDownload;
 
   std::atomic<char*> _fileName        = static_cast<char*>(calloc(255, sizeof(char)));
-
+  std::atomic<State> _state           = State::NONE;
   std::atomic_bool _isAuthenticated   = false;
   std::atomic_bool _shouldStop        = false;
   std::atomic_bool _shouldPause       = false;

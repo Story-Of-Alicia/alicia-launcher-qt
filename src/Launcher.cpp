@@ -85,6 +85,10 @@ Launcher::Launcher()
     .last_login = 0,
   };
 }
+Launcher::~Launcher()
+{
+  free(_fileName);
+}
 
 bool Launcher::authenticate(std::string const& username, std::string const& password) noexcept
 {
@@ -108,6 +112,16 @@ int Launcher::countToPatch() const { return static_cast<int>(_toPatch.size()); }
 bool Launcher::isAuthenticated() const { return _isAuthenticated; }
 
 bool Launcher::isUpdateStopped() const { return _shouldStop; }
+
+Progress Launcher::getProgress() const
+{
+  return {
+    .progressPrimary = _progressPrimary.load(),
+    .progressSecondary = _progressSecondary.load(),
+    .fileName = std::string(_fileName.load()),
+    .state =  _state.load(),
+  };
+}
 
 void Launcher::stopUpdate() { _shouldStop = true; }
 

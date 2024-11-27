@@ -38,6 +38,8 @@ int start(int argc, char* argv[])
 Window::Window(QWidget* parent)
     : QWidget(parent)
 {
+  _progressDialog->setVisible(false);
+
   _gameStartMovie->setFileName(":/img/game_start_hover.gif");
   _gameStartMovie->start();
   _gameStartMovie->setPaused(true);
@@ -187,13 +189,6 @@ bool Window::eventFilter(QObject* object, QEvent* event)
       }
     }
   }
-
-  if (_progressDialog == nullptr)
-  {
-    _progressDialog = new ProgressDialog(this);
-    _progressDialog->setVisible(false);
-  }
-
   return false;
 }
 
