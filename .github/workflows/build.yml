@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install Qt
-      uses: WillBrennan/yaqti@latest
+      uses: WillBrennan/yaqti@2021.07.27.1
       with:
         os: 'windows'
         platform: 'desktop'
