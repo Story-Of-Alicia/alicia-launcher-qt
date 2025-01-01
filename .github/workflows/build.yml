@@ -28,7 +28,7 @@ jobs:
         host: 'windows'
         version: '6.8.1'
         target: 'desktop'
-        tools: 'tools_opensslv3_x64'
+        tools: 'tools_opensslv3_src'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
