@@ -29,18 +29,21 @@ jobs:
         version: '6.8.1'
         target: 'desktop'
         tools: 'tools_opensslv3_src'
+    
+    - name: List contents of OpenSSLv3 src
+      run: dir ${{ env.IQTA_TOOLS }}\OpenSSLv3\src\include
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=False -DCMAKE_PREFIX_PATH=${{ env.IQTA_TOOLS }}/OpenSSLv3/src/include
+      run: cmake -B ${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=False -DCMAKE_PREFIX_PATH=${{ env.IQTA_TOOLS }}\OpenSSLv3\src\include
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}}
 
     - name: Test
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{github.workspace}}\build
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
