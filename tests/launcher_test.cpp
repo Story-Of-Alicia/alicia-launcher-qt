@@ -11,7 +11,7 @@ int main()
   a->detach();
 
   std::this_thread::sleep_for(std::chrono::seconds(1));
-  a.get().
+  a.get();
 
   printf("%d\n", a==nullptr);
 }
