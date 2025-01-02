@@ -28,8 +28,8 @@ target_link_libraries(launcher PUBLIC
         Qt::Gui
         Qt::Widgets
         Qt::Concurrent
-        ssl
-        crypto
+        OpenSSL::SSL
+        OpenSSL::Crypto
 )
 
 set_target_properties(launcher PROPERTIES
