@@ -25,18 +25,17 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
-        host: 'windows'
+        aqtversion: '==3.1.*'
         version: '6.8.1'
+        host: 'windows'
         target: 'desktop'
-        tools: 'tools_opensslv3_src'
-    
-    - name: List contents of OpenSSLv3 src
-      run: dir ${{ env.IQTA_TOOLS }}\OpenSSLv3\src\include
+        arch: 'win64_mingw'
+        tools: 'tools_opensslv3_x64'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=False -DCMAKE_PREFIX_PATH=${{ env.IQTA_TOOLS }}\OpenSSLv3\src\include
+      run: cmake -B ${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=False -DOPENSSL_ROOT_DIR=${{ env.IQTA_TOOLS }}\OpenSSLv3\Win_x64
 
     - name: Build
       # Build your program with the given configuration
