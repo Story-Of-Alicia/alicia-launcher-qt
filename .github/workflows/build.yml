@@ -55,10 +55,7 @@ jobs:
       working-directory: ${{ env.IQTA_TOOLS }}/OpenSSLv3/Win_x64/bin/
       run: cp libcrypto-3-x64.dll,libssl-3-x64.dll ${{ github.workspace }}/dist/bin/
 
-    - name: Packing
-      run: Compress-Archive -Path ${{ github.workspace }}/dist/* -Destination ${{ github.workspace }}/launcher.zip
-
     - name: Upload zip
       uses: actions/upload-artifact@v4
       with:
-          path: ${{ github.workspace }}/launcher.zip
+          path: ${{ github.workspace }}/dist/
