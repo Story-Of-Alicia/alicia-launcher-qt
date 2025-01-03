@@ -4,13 +4,15 @@ name: Build launcher
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - "v*.*.*"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -55,7 +57,11 @@ jobs:
       working-directory: ${{ env.IQTA_TOOLS }}/OpenSSLv3/Win_x64/bin/
       run: cp libcrypto-3-x64.dll,libssl-3-x64.dll ${{ github.workspace }}/dist/bin/
 
-    - name: Upload zip
-      uses: actions/upload-artifact@v4
+    - name: Packing
+      run: Compress-Archive -Path ${{ github.workspace }}/dist/* -Destination ${{ github.workspace }}/launcher-win64.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
       with:
-          path: ${{ github.workspace }}/dist/
+        files: ${{ github.workspace }}/launcher-win64.zip
+        fail_on_unmatched_files: true
