@@ -50,6 +50,11 @@ jobs:
     - name: Install
       run: cmake --install ${{ github.workspace }}/build --prefix ${{ github.workspace }}/dist
 
+    # Copy DLLs needed to run launcher
+    - name: Copy libraries (OpenSSL)
+      working-directory: ${{ env.IQTA_TOOLS }}/OpenSSLv3/Win_x64/bin/
+      run: cp libcrypto-3-x64.dll,libssl-3-x64.dll ${{ github.workspace }}/dist/bin/
+
     - name: Packing
       run: Compress-Archive -Path ${{ github.workspace }}/dist/* -Destination ${{ github.workspace }}/launcher.zip
 
