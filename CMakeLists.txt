@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent)
+find_package(OpenSSL 3 REQUIRED SSL Crypto)
 
 qt_standard_project_setup()
 qt_add_executable(launcher
@@ -30,8 +31,8 @@ target_link_libraries(launcher PUBLIC
         Qt::Gui
         Qt::Widgets
         Qt::Concurrent
-        ssl
-        crypto
+        OpenSSL::SSL
+        OpenSSL::Crypto
 )
 
 set_target_properties(launcher PROPERTIES
