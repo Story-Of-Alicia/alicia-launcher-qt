@@ -44,7 +44,7 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2022_64'
-        tools: 'tools_opensslv3_x64 tools_cmake tools_ninja'
+        tools: 'tools_opensslv3_x64 tools_cmake tools_ninja tools_mingw1310'
 
     - name: Configure
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
