@@ -44,12 +44,12 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2022_64'
-        tools: 'tools_opensslv3_x64'
+        tools: 'tools_opensslv3_x64 tools_cmake tools_ninja'
 
     - name: Configure
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DOPENSSL_ROOT_DIR=${{ env.IQTA_TOOLS }}/OpenSSLv3/Win_x64
+      run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DOPENSSL_ROOT_DIR=${{ env.IQTA_TOOLS }}/OpenSSLv3/Win_x64 -G "Ninja Multi-Config"
 
     - name: Build
       # Build your program with the given configuration
