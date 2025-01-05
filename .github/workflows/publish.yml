@@ -6,10 +6,22 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
+          - RelWithDebInfo
+          - MinSizeRel
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  BUILD_TYPE: ${{ github.event.inputs.build_type }}
 
 permissions:
   contents: write
