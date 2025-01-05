@@ -6,9 +6,6 @@ on:
   push:
     tags:
       - "v*.*.*"
-  pull_request:
-    branches: [master, development]
-
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
