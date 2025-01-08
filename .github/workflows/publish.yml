@@ -58,11 +58,11 @@ jobs:
           OPENSSL_ROOT_DIR=${{ env.QT6_INSTALL_DIR }}/Qt/Tools/OpenSSLv3/Win_x64
         build-args: '--config ${{ env.BUILD_TYPE }} --parallel'
 
-    - name: Test Project
-      uses: threeal/ctest-action@v1.1.0
-      with:
-        test-dir: ${{ github.workspace }}/build
-        build-config: ${{ env.BUILD_TYPE }}
+    - name: Test
+      working-directory: ${{ github.workspace }}/build
+      # Execute tests defined by the CMake configuration.
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -C ${{ env.BUILD_TYPE }}
 
     - name: Install
       run: cmake --install ${{ github.workspace }}/build --prefix ${{ github.workspace }}/dist
